@@ -23,7 +23,7 @@ body #gallery-gnb{
 body #gnb-menu{
     float: right;
     height: 33px;
-    margin: 0 10px 10px 0;
+    margin: 10px 10px 0 0;
 }
 
 
@@ -116,7 +116,7 @@ body #gnb-menu{
     display: inline-block;
     width: 19%;
     height: 300px;
-    margin-top: 15px;
+    margin: 6px 0 0 15px;
 }
 
 
@@ -213,6 +213,7 @@ body #gnb-menu{
 
 
 #left_container .info_box{
+	display:inline-block;
     font-family: '맑은 고딕','Malgun Gothic','Apple SD Gothic Neo',sans-serif;
     font-size: 9pt;
     border-bottom: 1px dotted #b9b9b9;
@@ -266,10 +267,10 @@ body #gnb-menu{
 
 #main_area{
     font-family: '맑은 고딕','Malgun Gothic','Apple SD Gothic Neo',sans-serif;
-    float: right;
+	float:right;
     background-color: #fffafa;
-    margin-top: 15px;
-    width: 800px;
+    margin: 6px 12px 0 0;
+    width: 77%;
     height: auto;
 }
 
@@ -283,11 +284,11 @@ body #gnb-menu{
 #main_area .main_img{
     border: #ececec 7px solid;
     text-align: center;
-    padding: 14px;
+    padding: 10px;
 }
 
 #main_area .main_news{
-    width: 848px;
+    width: 830px;
     height: 546px;
 }
 
@@ -331,6 +332,7 @@ body #gnb-menu{
     font-size: 10pt;
     height: 25px;
 }
+
 
 .dd_tit .main_box_sub{
     font-weight: 900;
