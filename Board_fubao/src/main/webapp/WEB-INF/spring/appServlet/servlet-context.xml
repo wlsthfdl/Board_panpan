@@ -28,37 +28,28 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<!-- ==== #18. bean으로 등록될 @Component 클래스가 위치하는 패키지명 지정하기 ====  -->
-	<!--  
-	<context:component-scan base-package="com.spring.board" />
-	-->
+ 
+   <!-- ======= #20. 실행시 모든 페이지에 기본틀이 되어지는 틀을 배치하기 위한 템플릿 프레임워크인 TilesViewResolver 를 사용하기 위해 빈으로 등록한다. ======= -->
+   <beans:bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+        <beans:property name="definitions">
+            <beans:list>
+                 <beans:value>/WEB-INF/tiles/tiles-layout.xml</beans:value>
+            </beans:list>
+        </beans:property>
+    </beans:bean>
+   
+   
+   
+   <beans:bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+        <beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView" />
+        <beans:property name="order" value="1"/>
+    </beans:bean>
+    
+    
+ 	<!-- <context:component-scan base-package="com.spring.gotgongbang" /> -->
 	<context:component-scan base-package="com.spring.*" name-generator="com.spring.board_fubao.common.FullBeanNameGenerator"/>
+ 
 	
-	<!-- 앞으로 생성할 모든 컨트롤러, 서비스단, Aspect 등  모든 클래스들(*.java)은
-            항상 com.test.* 패키지 안에서 생성되어져야만 스프링컨테이너에 의해 스캔되어 자동적으로 bean 으로 등록되어진다.
-        bean 으로 등록되어진 객체들만이 스프링컨테이너에 의해 의존객체주입(Dependency Injection)되는 등 
-           스프링컨테이너가 자동으로 관리해주는 대상이 되어진다. 
-           그러면 스프링컨테이너에 의해 자동으로 관리되어지도록 클래스를 bean 으로 등록시키고자 할때 사용되어지는 방법이 component-scan 을 사용하는 것이다.  
-        component-scan 은 특정 클래스가 bean 으로 등록되어져 사용되도록 XML 파일에 일일이 bean등록을 하지 않더라도, 
-        bean으로 등록되어 사용되어질 클래스는 패키지를 base-package 속에 만들고  클래스 명 위에 @Component 애노테이션만 써주기만 하면 
-            해당 클래스는 자동으로 bean으로 등록되어 사용할 수 있게 되어진다. 
-            그런데 @Controller , @Service , @Repository 애노테이션을 사용하는 클래스는
-        @Controller , @Service , @Repository 애노테이션 속에 @Component 기능이 이미 포함되어져 있으므로
-           굳이 @Component 를 또 다시 기술할 필요가 없다.
-        @Controller , @Service , @Repository 기능이 없는 일반 클래스를 bean 으로 등록하여 사용하고자 할때  
-            그 클래스는 패키지를 base-package 로 하고 클래스명 위에 @Component 애노테이션을 붙이기만 하면 된다.  
-            
-        bean 으로 등록되어진 클래스만이 스프링컨테이너가 자동적으로 관리를 해줄 수 있게 된다.
-        
-        name-generator="com.spring.board.common.FullBeanNameGenerator" 은  
-        spring annotation-driven 시 bean name 중복(충돌,conflicts)을 해결하기 위해서 사용하는 커스트마이징된 BeanNameGenerator 이다. 
-   -->
-	
-	<!-- ===== #22. 일단 스프링에서 트랜잭션 처리를 하기 위해서는
-            먼저 src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml 파일에
-        Namespaces 에 aop를 체크를 하고, 아래와 같이 트랜잭션 처리를 위한 aop 포인트컷을 등록을 해야 한다.    
-       - 아래의 <aop:aspectj-autoproxy />가 AOP 관련 어노테이션 동작이 가능하게 설정해주는 것임.
-    -->   
    <!--  AOP 관련 어노테이션 동작이 가능하게 설정 -->   
    <aop:aspectj-autoproxy /> <!-- 추가 -->        
     
