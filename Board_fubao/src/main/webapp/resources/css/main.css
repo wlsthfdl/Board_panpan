@@ -216,7 +216,6 @@ body #gnb-menu{
 	display:inline-block;
     font-family: '맑은 고딕','Malgun Gothic','Apple SD Gothic Neo',sans-serif;
     font-size: 9pt;
-    border-bottom: 1px dotted #b9b9b9;
     padding: 3px 0 0 3px;
     height: 43px;
     list-style-type: none;
@@ -418,13 +417,14 @@ body #gnb-menu{
 
 .list_box {
     background-color: #f7ffee;
-    width: auto;
+    width: 845px;
     height: 1068.8px;
 }
 
 .list_box .list_tit h3{
-    font-size: 18pt;
-    margin: 0;
+    font-size: 17pt;
+    margin: 10px;
+    font-weight: bold;
 }
 
 
@@ -434,7 +434,7 @@ body #gnb-menu{
     border-top: 1px solid rgb(133, 133, 133);
     table-layout: fixed;
     margin-top: 22px;
-    width: 851px;
+    width: 835px;
 }
 
 .list_box .list_content thead{ 
@@ -446,6 +446,7 @@ body #gnb-menu{
     font-size: 10.5pt;
     padding: 10px; 
     border-bottom: 1px solid rgb(233, 233, 233);
+	text-align: center;
 }
 
 .list_box .list_content tbody tr td{
@@ -467,7 +468,7 @@ body #gnb-menu{
 
 
 .list_paginate{
-    width: 850px;
+    width: 835px;
     margin-top: 25px;
     padding: 20px 0;
 }
@@ -705,7 +706,7 @@ font-weight: 400;
 
 /*게시글쓰기*/
 .board_viewbox{
-    width: 848px;
+    width: 835px;
     height: 813px;
 }
 

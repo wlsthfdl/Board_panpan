@@ -47,11 +47,12 @@
                     <li><img src="<%= ctxPath %>/resources/image/list.png" width="16" height="16" class="ico-list">꿀팁게시판</li>
                     <li><img src="<%= ctxPath %>/resources/image/list.png" width="16" height="16" class="ico-list">질문게시판</li>
                 <h3><span>동물자랑단</span></h3>
-                    <li style="padding-bottom: 19px;"><img src="/photo/list.png" width="16" height="16" class="ico-list">팬아트</li>
+                    <li style="padding-bottom: 19px;"><img src="<%= ctxPath %>/resources/image/list.png" width="16" height="16" class="ico-list">팬아트</li>
             </div>
-
         </div>
         <!-- end of left side -->
+        
+        
         <!-- main area -->
         <div id="main_area">
             <div class="main_box">

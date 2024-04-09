@@ -8,6 +8,7 @@
     String ctxPath = request.getContextPath();
 
 %>   
+<div style="background-color: #f7ffee; width: 1080px; margin: 0 auto;">
 	<!-- login form -->
         <section class="login">
             <div class="login_box">
@@ -31,5 +32,4 @@
             </div>
         </section>
         <!-- login form -->
-    </div>
-        
+</div>        
