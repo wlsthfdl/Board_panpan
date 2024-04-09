@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class FubaoBoardController {
 
+
 	@RequestMapping(value="/index.fu")
 	public ModelAndView index(ModelAndView mav) {
 		
@@ -20,9 +21,9 @@ public class FubaoBoardController {
 		
 		return mav;
 	}
-	   
+	
 	@RequestMapping(value="/login.fu")
-	public ModelAndView login_form(ModelAndView mav) {
+	public ModelAndView login(ModelAndView mav) {
 		
 		mav.setViewName("member/login.tiles1");
 		//   /WEB-INF/views/main/index.jsp 파일을 생성한다.
@@ -39,6 +40,23 @@ public class FubaoBoardController {
 		return mav;
 	}
 
+
+	@RequestMapping(value="/view.fu")
+	public ModelAndView board_view(ModelAndView mav) {
+		
+		mav.setViewName("board/view.tiles1");
+		//   /WEB-INF/views/main/index.jsp 파일을 생성한다.
+		
+		return mav;
+	}
+
 	
-	
+	@RequestMapping(value="/join.fu")
+	public ModelAndView join(ModelAndView mav) {
+		
+		mav.setViewName("member/join.tiles1");
+		//   /WEB-INF/views/main/index.jsp 파일을 생성한다.
+		
+		return mav;
+	}
 }
