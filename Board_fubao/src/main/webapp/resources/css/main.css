@@ -236,8 +236,8 @@ body #gnb-menu{
 }
 
 #category h3{
-    margin: 32px 0 3px 0;
-    padding: 7px 5px;
+    margin: 28px 0 3px 0;
+    padding: 0 5px;
     border-top: solid 3px #8bb772;
     border-bottom: solid 1px #bebebec4;
 }
