@@ -516,12 +516,12 @@ body #gnb-menu{
 
 
 .article_paginate .prev {
-	background:#f8f8f8 url('/photo/pagenate/page_prev.png') no-repeat center center;
+	background:#f8f8f8 url('../image/pagenate/page_prev.png') no-repeat center center;
 	margin-right:7px;
 }
 
 .article_paginate .next {
-	background:#f8f8f8 url('/photo/pagenate/page_next.png') no-repeat center center;
+	background:#f8f8f8 url('../image/pagenate/page_next.png') no-repeat center center;
 	margin-left:7px;
 }
 
