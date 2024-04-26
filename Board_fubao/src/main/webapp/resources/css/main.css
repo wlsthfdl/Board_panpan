@@ -23,7 +23,7 @@ body #gallery-gnb{
 body #gnb-menu{
     float: right;
     height: 33px;
-    margin: 10px 10px 0 0;
+    margin: 10px 10px 0 0; 
 }
 
 
@@ -545,8 +545,32 @@ body #gnb-menu{
   
 
 #do_join .textForm {
-    margin: 21px;
+    margin: 19px;
     padding: 10px 10px;
+}
+
+#do_join .error{
+	display:block; 
+	text-align:left; 
+	padding-left:20px; 
+	color:red; 
+	font-size:10pt;
+}
+
+#do_join .available{
+	display:block; 
+	text-align:left; 
+	padding-left:20px; 
+	color: #02A54B;
+	font-size:10pt;
+}
+
+.pw_info{
+	display:block; 
+	text-align:left; 
+	padding-left:20px; 
+	color: #808080;
+	font-size:10pt;
 }
 
 #do_join .join_frm{
@@ -562,6 +586,9 @@ body #gnb-menu{
     font-weight: 600;
     font-size: 14px;
 }
+
+
+
 
 #do_join .btn {
     position:relative;
@@ -585,7 +612,6 @@ body #gnb-menu{
 #do_join .btn:hover {
     background-position: right;
 }
-
 
 
 /*로그인*/
