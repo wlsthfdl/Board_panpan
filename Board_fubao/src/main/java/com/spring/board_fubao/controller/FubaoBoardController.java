@@ -29,7 +29,7 @@ public class FubaoBoardController {
 	}
 
 	
-	/*회원 가입*/
+	
 	@RequestMapping(value="/join.fu")
 	public ModelAndView join(ModelAndView mav) {
 		
@@ -38,22 +38,29 @@ public class FubaoBoardController {
 		return mav;
 	}
  
-	/*회원가입 정보 insert*/
-	@RequestMapping(value="/join.fu", method= {RequestMethod.POST})
+	/*회원가입  요청 처리 (insert)
+	@RequestMapping(value="/join_complete.fu", method= {RequestMethod.POST})
 	public ModelAndView register(MemberVO membervo, ModelAndView mav) {
 		int n = service.insertMember(membervo);
 		System.out.println(n);
+		mav.setViewName("member/join_complete.tiles1");
+
+		return mav;
+	}*/
+	
+	@RequestMapping(value="/join_complete.fu", method = {RequestMethod.POST})
+	public ModelAndView join_complete(MemberVO membervo, ModelAndView mav) {
+		int n = service.insertMember(membervo);
 		if(n==1) {
-			mav.setViewName("member/join_seccess.tiles1");
+			mav.setViewName("member/join_complete.tiles1");
 		}
 		else {
 			mav.setViewName("board/home.tiles1");
+
 		}
 		return mav;
 	}
  
-	
-	
 
 	@RequestMapping(value="/login.fu")
 	public ModelAndView login(ModelAndView mav) {

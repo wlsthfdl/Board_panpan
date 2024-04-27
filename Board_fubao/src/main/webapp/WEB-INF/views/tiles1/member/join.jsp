@@ -19,7 +19,6 @@
 		
 		
 		
-		
 		/* mobile, birthday 입력시 자동 하이픈 */
 		$("#mobile").on('keydown keyup',function() {
 	         this.value = this.value.replace(/[^0-9]/g, '');
@@ -73,15 +72,14 @@
 		/* 자동 하이픈 끝 */
 		
 		
-	});
+	});	//end of $(document).ready(function(){})--------------------
 	 
 	 
 	function go_register() {
-
 		const frm = document.sign_frm;
+	    frm.action = "<%= ctxPath%>/join_complete.fu";
 		frm.method="post";
 		frm.submit();
-		
 	} //end of go_register() --------------------------
 	
 </script>

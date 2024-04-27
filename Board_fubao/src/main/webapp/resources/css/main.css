@@ -833,7 +833,7 @@ font-weight: 400;
 .join_complete {
     position: relative;
     width:630px;
-    height:370px;
+    height:340px;
     background-color:#FFFFFF;
     text-align:center;
     top:27%;
@@ -859,7 +859,7 @@ font-weight: 400;
     font-size: 11pt;
 }
 
-.join_complete .btn {
+.join_complete .complete_btn {
     margin: 40px;
     width:40%;
     height:40px;
