@@ -18,5 +18,12 @@ public class BoardDAO implements InterBoardDAO{
 	public int insertMember(MemberVO membervo) {
 		int n = sqlsession.insert("board.insertMember", membervo);
 		return n;
+	}
+	
+	//ID 중복체크 Ajax
+	@Override
+	public int id_check(String id) {
+		int n = sqlsession.selectOne("board.id_check", id);
+		return n;	
 	}  
 }

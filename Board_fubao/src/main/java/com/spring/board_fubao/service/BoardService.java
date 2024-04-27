@@ -47,11 +47,19 @@ public class BoardService implements InterBoardService{
     }
 	
 	*/
-    
+   
+    // 회원가입 요청처리 insert
     @Override
     public int insertMember(MemberVO membervo) {
     	int n = dao.insertMember(membervo);
     	return n;
     }
+
+    // ID 중복체크 Ajax
+	@Override
+	public int id_check(String id) {
+		int n = dao.id_check(id);	//n은 0 또는 1
+		return n;
+	}
     
 }

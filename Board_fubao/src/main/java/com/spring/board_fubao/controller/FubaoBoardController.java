@@ -1,10 +1,15 @@
 package com.spring.board_fubao.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.board_fubao.model.MemberVO;
@@ -38,16 +43,31 @@ public class FubaoBoardController {
 		return mav;
 	}
  
-	/*회원가입  요청 처리 (insert)
-	@RequestMapping(value="/join_complete.fu", method= {RequestMethod.POST})
-	public ModelAndView register(MemberVO membervo, ModelAndView mav) {
-		int n = service.insertMember(membervo);
-		System.out.println(n);
-		mav.setViewName("member/join_complete.tiles1");
-
-		return mav;
-	}*/
 	
+	// ID 중복 체크 Ajax
+   @ResponseBody
+   @RequestMapping(value = "/id_check.fu", method = {RequestMethod.POST})
+   public String id_check(HttpServletRequest request, HttpServletResponse response) {
+      String id = request.getParameter("id");
+      int n = 0;
+      try {
+         n = service.id_check(id);
+      } catch (Throwable e) {
+            e.printStackTrace();
+      }
+      System.out.println(n);
+      JSONObject jsonObj = new JSONObject();
+      jsonObj.put("n", n);
+
+      
+      return jsonObj.toString();
+      
+   }
+   
+
+	
+	
+	// 회원가입  요청 처리 (insert)
 	@RequestMapping(value="/join_complete.fu", method = {RequestMethod.POST})
 	public ModelAndView join_complete(MemberVO membervo, ModelAndView mav) {
 		int n = service.insertMember(membervo);
@@ -61,6 +81,8 @@ public class FubaoBoardController {
 		return mav;
 	}
  
+	
+	
 
 	@RequestMapping(value="/login.fu")
 	public ModelAndView login(ModelAndView mav) {

@@ -10,5 +10,10 @@
 				status, role)
 		values (#{id}, #{nickname}, #{name}, #{pwd}, #{email}, #{birthday}, default, #{mobile}, default, default)
 	</insert>
+		
+	<select id="id_check" parameterType="String" resultType="int">
+	 	select count(*) from TBL_MEMBER where id=#{id}
+	</select>
+
 
 </mapper>
