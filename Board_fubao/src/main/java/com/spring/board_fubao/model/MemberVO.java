@@ -1,7 +1,7 @@
 package com.spring.board_fubao.model;
 
 
-public class MemeberVO {
+public class MemberVO {
 
 	private String id;
 	private String nickname;

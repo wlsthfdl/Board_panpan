@@ -9,5 +9,14 @@ import org.springframework.stereotype.Repository;
 public class BoardDAO implements InterBoardDAO{
 
 	@Resource
-	private SqlSessionTemplate sqlsession;  
+	private SqlSessionTemplate sqlsession;
+
+	//============================================//
+	
+	//회원가입 정보 insert
+	@Override
+	public int insertMember(MemberVO membervo) {
+		int n = sqlsession.insert("board.insertMember", membervo);
+		return n;
+	}  
 }

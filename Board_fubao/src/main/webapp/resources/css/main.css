@@ -532,7 +532,7 @@ body #gnb-menu{
 #do_join{
     position: relative;
     width:430px;
-    height:780px;
+    height:810px;
     background-color:#FFFFFF;
     text-align:center;
     top:50%;
@@ -542,10 +542,14 @@ body #gnb-menu{
     box-shadow: 1px 4px 22px -8px #0004;
 
   }
-  
+ 
+#do_join h2{
+	margin-top: 15px;
+}
+
 
 #do_join .textForm {
-    margin: 19px;
+    margin: 16px;
     padding: 10px 10px;
 }
 
@@ -554,7 +558,7 @@ body #gnb-menu{
 	text-align:left; 
 	padding-left:20px; 
 	color:red; 
-	font-size:10pt;
+	font-size:9pt;
 }
 
 #do_join .available{
@@ -562,7 +566,7 @@ body #gnb-menu{
 	text-align:left; 
 	padding-left:20px; 
 	color: #02A54B;
-	font-size:10pt;
+	font-size:9pt;
 }
 
 .pw_info{
@@ -570,7 +574,7 @@ body #gnb-menu{
 	text-align:left; 
 	padding-left:20px; 
 	color: #808080;
-	font-size:10pt;
+	font-size:9pt;
 }
 
 #do_join .join_frm{
@@ -588,7 +592,22 @@ body #gnb-menu{
 }
 
 
+#do_join .e_bnt{
+	display: inline-block;
+	width: 84px;
+	font-size: 8pt;
+	color: #FFF;
+    border-radius: 5px;
+    transition: all 0.2s ;
+    height: 28px;
+    border: none;
+    background-color: #02A54B;
+}
 
+#do_join .e_bnt:hover 
+{
+ 	background-color: #8bb772;
+}
 
 #do_join .btn {
     position:relative;
@@ -809,3 +828,49 @@ font-weight: 400;
     padding: 6px 0;
 }
 
+
+/*회원가입 완료*/
+.join_complete {
+    position: relative;
+    width:630px;
+    height:370px;
+    background-color:#FFFFFF;
+    text-align:center;
+    top:27%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    border-radius: 10px;
+    box-shadow: 1px 4px 22px -8px #0004;
+}
+
+.join_complete h2{
+    padding: 50px 30px 0 0;
+    font-weight: 600;
+    color:#02A54B;
+}
+
+.join_complete h3{
+    font-weight: 600;
+    padding-top: 38px;
+    font-size: large;
+}
+.join_complete h4{
+    font-weight: 500;
+    font-size: 11pt;
+}
+
+.join_complete .btn {
+    margin: 40px;
+    width:40%;
+    height:40px;
+    background: linear-gradient(212.38deg, rgba(29, 146, 13, 0.836) 0%, rgba(23, 139, 233, 0.71) 100%);
+    background-position: left;
+    background-size: 200%;
+    border-radius: 8px;
+    color:white;
+    font-weight: bold;
+    border:none;
+    cursor:pointer;
+    transition: 0.4s;
+    display:inline;
+}

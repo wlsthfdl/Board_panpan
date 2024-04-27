@@ -4,15 +4,15 @@ show user;
 -- ** 회원 테이블 ** --
 CREATE TABLE TBL_MEMBER (
 	id          VARCHAR2(40) NOT NULL, -- 회원ID
-	nickname    VARCHAR2(20) NOT NULL, -- 닉네임
+	nickname    VARCHAR2(100) NOT NULL, -- 닉네임
 	name        VARCHAR2(20) NOT NULL, -- 이름 
-	pwd         VARCHAR2(40) NOT NULL, -- 비밀번호
-	email       VARCHAR2(40) NOT NULL, -- 이메일
-	birthday    DATE         NULL,     -- 생년월일
+	pwd         VARCHAR2(100) NOT NULL, -- 비밀번호
+	email       VARCHAR2(400) NOT NULL, -- 이메일
+	birthday    DATE         NOT NULL,     -- 생년월일
 	registerday DATE  default sysdate  NOT NULL, -- 가입일
-	mobile      VARCHAR2(20) NOT NULL, -- 휴대폰
+	mobile      VARCHAR2(100) NOT NULL, -- 휴대폰
 	status      NUMBER(1) default 1 NOT NULL, -- 탈퇴여부
-	role        NUMBER(1) NOT NULL,  -- 사용자권한(관리자 or 일반회원)
+	role        NUMBER(1) default 1 NOT NULL,  -- 사용자권한(관리자 or 일반회원)
     constraint MEMBER_PK primary key(id),
     constraint MEMBER_UK_1  unique(nickname),
     constraint MEMBER_UK_2  unique(email),

@@ -5,5 +5,10 @@
 
 <mapper namespace="board">
 
+	<insert id="insertMember" parameterType="com.spring.board_fubao.model.MemberVO">
+		insert into TBL_MEMBER (id, nickname, name, pwd, email, birthday, registerday, mobile,
+				status, role)
+		values (#{id}, #{nickname}, #{name}, #{pwd}, #{email}, #{birthday}, default, #{mobile}, default, default)
+	</insert>
 
 </mapper>

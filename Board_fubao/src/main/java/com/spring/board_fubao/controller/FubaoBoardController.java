@@ -1,18 +1,25 @@
 package com.spring.board_fubao.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-
+import com.spring.board_fubao.model.MemberVO;
+import com.spring.board_fubao.service.InterBoardService;
 
 @Component
-
 @Controller
 public class FubaoBoardController {
 
 
+    @Autowired         
+    private InterBoardService service;
+   
+    
+	/*메인 페이지*/
 	@RequestMapping(value="/index.fu")
 	public ModelAndView index(ModelAndView mav) {
 		
@@ -20,18 +27,36 @@ public class FubaoBoardController {
 		
 		return mav;
 	}
+
 	
+	/*회원 가입*/
 	@RequestMapping(value="/join.fu")
-	public ModelAndView login(ModelAndView mav) {
+	public ModelAndView join(ModelAndView mav) {
 		
 		mav.setViewName("member/join.tiles1");
 		
 		return mav;
 	}
  
+	/*회원가입 정보 insert*/
+	@RequestMapping(value="/join.fu", method= {RequestMethod.POST})
+	public ModelAndView register(MemberVO membervo, ModelAndView mav) {
+		int n = service.insertMember(membervo);
+		System.out.println(n);
+		if(n==1) {
+			mav.setViewName("member/join_seccess.tiles1");
+		}
+		else {
+			mav.setViewName("board/home.tiles1");
+		}
+		return mav;
+	}
+ 
+	
+	
 
 	@RequestMapping(value="/login.fu")
-	public ModelAndView join(ModelAndView mav) {
+	public ModelAndView login(ModelAndView mav) {
 		
 		mav.setViewName("member/login.tiles1");
 		
