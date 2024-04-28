@@ -7,7 +7,6 @@ public class MemberVO {
 	private String nickname;
 	private String name;
 	private String pwd;
-	private String email;
 	private String birthday;
 	private String registerday;
 	private String mobile;
@@ -38,12 +37,6 @@ public class MemberVO {
 	}
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
 	}
 	public String getBirthday() {
 		return birthday;

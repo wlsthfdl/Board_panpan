@@ -20,13 +20,13 @@
             <div id="gnb-menu">
                     <ul class="header_member">
                         <li>
-                       		<a onclick="location.href='<%= ctxPath%>/join.fu'"  title="Button fade orange" class="button btnFade btnOrange">
+                       		<a onclick="location.href='<%= ctxPath%>/join.fu'"  title="Button fade orange" class="button btnFade btnOrange" style="cursor:pointer;">
 	                          	  Join
 	                        </a>
                         </li>
                         <span class="txt_bar"></span>
                         <li>
-                        	<a onclick="location.href='<%= ctxPath%>/login.fu'"  title="Button fade orange" class="button btnFade btnOrange">
+                        	<a onclick="location.href='<%= ctxPath%>/login.fu'"  title="Button fade orange" class="button btnFade btnOrange" style="cursor:pointer;">
 	                          	  Login
 	                        </a>
                         </li>

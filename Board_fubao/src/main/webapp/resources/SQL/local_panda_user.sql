@@ -7,7 +7,6 @@ CREATE TABLE TBL_MEMBER (
 	nickname    VARCHAR2(100) NOT NULL, -- 닉네임
 	name        VARCHAR2(20) NOT NULL, -- 이름 
 	pwd         VARCHAR2(100) NOT NULL, -- 비밀번호
-	email       VARCHAR2(400) NOT NULL, -- 이메일
 	birthday    DATE         NOT NULL,     -- 생년월일
 	registerday DATE  default sysdate  NOT NULL, -- 가입일
 	mobile      VARCHAR2(100) NOT NULL, -- 휴대폰
@@ -15,7 +14,6 @@ CREATE TABLE TBL_MEMBER (
 	role        NUMBER(1) default 1 NOT NULL,  -- 사용자권한(관리자 or 일반회원)
     constraint MEMBER_PK primary key(id),
     constraint MEMBER_UK_1  unique(nickname),
-    constraint MEMBER_UK_2  unique(email),
     constraint MEMEBER_CK_1 check( status in(0,1) ),
     constraint MEMEBER_CK_2 check( role in(0,1) )    
 );

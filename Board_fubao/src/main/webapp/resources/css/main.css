@@ -531,8 +531,8 @@ body #gnb-menu{
 
 #do_join{
     position: relative;
-    width:430px;
-    height:810px;
+    width:432px;
+    height:860px;
     background-color:#FFFFFF;
     text-align:center;
     top:50%;
@@ -554,6 +554,31 @@ body #gnb-menu{
 }
 
 #do_join .error{
+	display:block; 
+	text-align:left; 
+	padding-left:20px; 
+	color:red; 
+	font-size:9pt;
+}
+
+
+#do_join .error_2{
+	display:block; 
+	text-align:left; 
+	padding-left:20px; 
+	color:red; 
+	font-size:9pt;
+}
+#do_join .error_3{
+	display:block; 
+	text-align:left; 
+	padding-left:20px; 
+	color:red; 
+	font-size:9pt;
+}
+
+
+#do_join .duplicate{
 	display:block; 
 	text-align:left; 
 	padding-left:20px; 
@@ -594,7 +619,7 @@ body #gnb-menu{
 
 #do_join .e_bnt{
 	display: inline-block;
-	width: 84px;
+	width: 78px;
 	font-size: 8pt;
 	color: #FFF;
     border-radius: 5px;
@@ -647,7 +672,7 @@ body #gnb-menu{
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-    background: #fff;
+    background: #FFFFFF;
     border-radius: 10px;
     box-shadow: 1px 4px 22px -8px #0004;
     display: flex;
@@ -655,14 +680,14 @@ body #gnb-menu{
 }
 
 .login_box .login_left{
-width: 41%;
-height: 100%;
-padding: 25px 25px;
+	width: 41%;
+	height: 100%;
+	padding: 25px 25px;
 
 }
 .login_box .login_right{
-width: 59%;
-height: 100%  
+	width: 59%;
+	height: 100%  
 }
 .login_left .top_link a {
     color: #452A5A;
@@ -697,7 +722,9 @@ margin-bottom: 40px;
     font-size: 14px;
 }
 .login_left{
-background: linear-gradient(-45deg, #dcd7e0, #fff);
+	/*background: linear-gradient(-35deg, #dcd7e0, #fff);*/
+	background: linear-gradient(-15deg,#f5fdff, #fff);
+
 }
 
 .login_submit {
@@ -874,3 +901,4 @@ font-weight: 400;
     transition: 0.4s;
     display:inline;
 }
+
