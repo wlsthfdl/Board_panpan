@@ -3,9 +3,13 @@ package com.spring.board_fubao.service;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.board_fubao.common.AES256;
 import com.spring.board_fubao.common.FileManager;
@@ -73,6 +77,13 @@ public class BoardService implements InterBoardService{
 	public int nickname_check(String nickname) {
 		int n = dao.nickname_check(nickname);	//n은 0 또는 1
 		return n;
+	}
+
+	// 로그인처리
+	@Override
+	public ModelAndView login_end(ModelAndView mav, HttpServletRequest request, Map<String, String> paraMap) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

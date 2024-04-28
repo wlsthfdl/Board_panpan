@@ -766,13 +766,16 @@ font-weight: 400;
 }
 
 .login_right .right-inductor{
-    position: absolute;
     width: 70px;
-    height: 7px;
     background: #fff0;
     left: 50%;
     bottom: 70px;
-    transform: translate(-50%, 0%);
+}
+
+.login_right .right-inductor img{
+	position: absolute;
+	top: 30%;
+	
 }
 
 

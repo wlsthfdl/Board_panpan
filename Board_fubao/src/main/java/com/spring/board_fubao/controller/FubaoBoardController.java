@@ -1,5 +1,8 @@
 package com.spring.board_fubao.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.spring.board_fubao.common.Sha256;
 import com.spring.board_fubao.model.MemberVO;
 import com.spring.board_fubao.service.InterBoardService;
 
@@ -90,7 +94,8 @@ public class FubaoBoardController {
 	@RequestMapping(value="/join_complete.fu", method = {RequestMethod.POST})
 	public ModelAndView join_complete(MemberVO membervo, ModelAndView mav) {
 		service.encryptPassword(membervo);
-
+		//비밀번호 암호화
+		
 		int n = service.insertMember(membervo);
 		if(n==1) {
 			mav.setViewName("member/join_complete.tiles1");
@@ -103,8 +108,7 @@ public class FubaoBoardController {
 	}
  
 	
-	
-
+	// 로그인 폼페이지 요청 
 	@RequestMapping(value="/login.fu")
 	public ModelAndView login(ModelAndView mav) {
 		
@@ -112,6 +116,25 @@ public class FubaoBoardController {
 		
 		return mav;
 	}
+	
+	
+	//로그인 처리
+	@RequestMapping(value="/login_end.fu")
+	public ModelAndView login_end(ModelAndView mav, HttpServletRequest request) {
+		
+		String id = request.getParameter("id");
+	    String pwd = request.getParameter("pwd");
+
+	    Map<String, String> paraMap = new HashMap<String, String>();
+	    paraMap.put("id", id);
+	    paraMap.put("pwd", Sha256.encrypt(pwd));
+
+	    mav = service.login_end(mav, request, paraMap);		    		 
+    
+	    return mav;
+	}
+	
+	
 	
 	@RequestMapping(value="/list.fu")
 	public ModelAndView board_list(ModelAndView mav) {

@@ -1,5 +1,11 @@
 package com.spring.board_fubao.service;
 
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.web.servlet.ModelAndView;
+
 import com.spring.board_fubao.model.MemberVO;
 
 public interface InterBoardService {
@@ -15,5 +21,8 @@ public interface InterBoardService {
 
 	//비밀번호 암호화
 	void encryptPassword(MemberVO membervo);
+
+	//로그인 처리
+	ModelAndView login_end(ModelAndView mav, HttpServletRequest request, Map<String, String> paraMap);
 
 }

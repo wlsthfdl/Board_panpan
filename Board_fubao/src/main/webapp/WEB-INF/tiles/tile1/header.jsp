@@ -35,7 +35,7 @@
 
             <!-- 헤더 메인 이미지 -->
             <div id="front_img">
-                <a href="#"><img src="<%= ctxPath %>/resources/image/main.png"/></a>
+                <a onclick="location.href='<%= ctxPath%>/index.fu'"><img src="<%= ctxPath %>/resources/image/main.png"/></a>
             </div>
 
             <!-- 스페셜 메뉴-->
