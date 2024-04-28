@@ -64,12 +64,33 @@ public class FubaoBoardController {
       
    }
    
+   // 닉네임 중복체크 Ajax
+   @ResponseBody
+   @RequestMapping(value = "/nickname_check.fu", method = {RequestMethod.POST})
+   public String nickname_check(HttpServletRequest request, HttpServletResponse response) {
+      String nickname = request.getParameter("nickname");
+      int n = 0;
+      try {
+         n = service.nickname_check(nickname);
+      } catch (Throwable e) {
+            e.printStackTrace();
+      }
+      System.out.println(n);
+      JSONObject jsonObj = new JSONObject();
+      jsonObj.put("n", n);
+
+      
+      return jsonObj.toString();
+      
+   }
 
 	
 	
 	// 회원가입  요청 처리 (insert)
 	@RequestMapping(value="/join_complete.fu", method = {RequestMethod.POST})
 	public ModelAndView join_complete(MemberVO membervo, ModelAndView mav) {
+		service.encryptPassword(membervo);
+
 		int n = service.insertMember(membervo);
 		if(n==1) {
 			mav.setViewName("member/join_complete.tiles1");

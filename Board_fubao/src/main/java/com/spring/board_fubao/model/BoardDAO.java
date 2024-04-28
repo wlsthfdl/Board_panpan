@@ -25,5 +25,12 @@ public class BoardDAO implements InterBoardDAO{
 	public int id_check(String id) {
 		int n = sqlsession.selectOne("board.id_check", id);
 		return n;	
+	}
+
+	//닉네임 중복체크 Ajax
+	@Override
+	public int nickname_check(String nickname) {
+		int n = sqlsession.selectOne("board.nickname_check", nickname);
+		return n;	
 	}  
 }

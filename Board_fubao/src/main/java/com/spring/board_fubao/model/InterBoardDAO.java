@@ -8,4 +8,7 @@ public interface InterBoardDAO {
 	//ID 중복체크 Ajax
 	int id_check(String id);
 
+	//닉네임 중복체크 Ajax
+	int nickname_check(String nickname);
+
 }

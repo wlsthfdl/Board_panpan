@@ -24,8 +24,6 @@ public class BoardService implements InterBoardService{
     @Autowired     
     private FileManager fileManager;
 	  
-    
-/*
 	// 암호화
 	private String encryptSHA256(String data) {
         try {
@@ -46,7 +44,7 @@ public class BoardService implements InterBoardService{
         }
     }
 	
-	*/
+	
    
     // 회원가입 요청처리 insert
     @Override
@@ -59,6 +57,13 @@ public class BoardService implements InterBoardService{
 	@Override
 	public int id_check(String id) {
 		int n = dao.id_check(id);	//n은 0 또는 1
+		return n;
+	}
+	
+    // 닉네임 중복체크 Ajax
+	@Override
+	public int nickname_check(String nickname) {
+		int n = dao.nickname_check(nickname);	//n은 0 또는 1
 		return n;
 	}
     

@@ -6,13 +6,17 @@
 <mapper namespace="board">
 
 	<insert id="insertMember" parameterType="com.spring.board_fubao.model.MemberVO">
-		insert into TBL_MEMBER (id, nickname, name, pwd, email, birthday, registerday, mobile,
+		insert into TBL_MEMBER (id, nickname, name, pwd, birthday, registerday, mobile,
 				status, role)
-		values (#{id}, #{nickname}, #{name}, #{pwd}, #{email}, #{birthday}, default, #{mobile}, default, default)
+		values (#{id}, #{nickname}, #{name}, #{pwd}, #{birthday}, default, #{mobile}, default, default)
 	</insert>
 		
 	<select id="id_check" parameterType="String" resultType="int">
 	 	select count(*) from TBL_MEMBER where id=#{id}
+	</select>
+	
+	<select id="nickname_check" parameterType="String" resultType="int">
+	 	select count(*) from TBL_MEMBER where nickname=#{nickname}
 	</select>
 
 
