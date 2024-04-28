@@ -43,7 +43,15 @@ public class BoardService implements InterBoardService{
             return null;
         }
     }
-	
+
+	//비밀번호 암호화
+	@Override
+	public void encryptPassword(MemberVO membervo) {
+		String password = membervo.getPwd();
+        // 비밀번호 암호화
+        String encryptedPassword = encryptSHA256(password);
+        membervo.setPwd(encryptedPassword);
+	}
 	
    
     // 회원가입 요청처리 insert
@@ -66,5 +74,8 @@ public class BoardService implements InterBoardService{
 		int n = dao.nickname_check(nickname);	//n은 0 또는 1
 		return n;
 	}
+
+
+
     
 }
