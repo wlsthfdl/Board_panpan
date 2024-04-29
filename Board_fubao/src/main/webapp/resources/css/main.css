@@ -39,6 +39,8 @@ body #gnb-menu{
     display: inline-block;
 }
 
+#gnb-menu ul li p{
+}
 
 .txt_bar {
     display: inline-block;
