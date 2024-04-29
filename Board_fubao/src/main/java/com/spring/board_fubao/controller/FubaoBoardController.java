@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -119,7 +120,7 @@ public class FubaoBoardController {
 	
 	
 	//로그인 처리
-	@RequestMapping(value="/login_end.fu")
+	@RequestMapping(value="/login_end.fu", method= {RequestMethod.POST})
 	public ModelAndView login_end(ModelAndView mav, HttpServletRequest request) {
 		
 		String id = request.getParameter("id");
@@ -134,7 +135,24 @@ public class FubaoBoardController {
 	    return mav;
 	}
 	
-	
+	//로그아웃 처리
+	@RequestMapping(value="/logout.fu")
+	public ModelAndView logout(ModelAndView mav, HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+	    if (session != null) {
+	        session.invalidate();
+	    }
+
+		String message = "로그아웃 되었습니다.";
+		String loc = request.getContextPath()+"/index.fu";
+		
+		mav.addObject("message", message);
+		mav.addObject("loc", loc);
+		
+		mav.setViewName("msg"); 
+		
+		return mav;
+	}
 	
 	@RequestMapping(value="/list.fu")
 	public ModelAndView board_list(ModelAndView mav) {

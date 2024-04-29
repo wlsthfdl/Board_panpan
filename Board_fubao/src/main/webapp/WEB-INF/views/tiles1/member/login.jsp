@@ -14,8 +14,8 @@
 	$(document).ready(function(){
 		$("span.pw_info").hide();
 		
-		$("input#pwd").keydown(function(){
-			if($("input#pwd").keyCode == 13) { // 엔터를 했을 경우
+		$("input#pwd").keydown(function(e){
+			if(e.keyCode == 13) { // 엔터를 했을 경우
 				go_login();
 			}
 		});

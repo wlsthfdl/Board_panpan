@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -82,8 +83,43 @@ public class BoardService implements InterBoardService{
 	// 로그인처리
 	@Override
 	public ModelAndView login_end(ModelAndView mav, HttpServletRequest request, Map<String, String> paraMap) {
-		// TODO Auto-generated method stub
-		return null;
+		MemberVO login_user = dao.get_login_member(paraMap);
+
+		if(login_user == null) {	//로그인 실패시
+			String message = "아이디 또는 암호가 일치하지 않습니다.";
+			String loc = "javascript:history.back()";
+			
+			mav.addObject("message", message);
+			mav.addObject("loc", loc);					
+			
+			mav.setViewName("msg");
+		}else { //아이디와 암호 존재하는 경우
+			if(login_user.getStatus() != 1) {	//탈퇴 회원일 경우
+				String message = "탈퇴한 회원입니다.";
+				String loc = "javascript:history.back()";
+				
+				mav.addObject("message", message);
+				mav.addObject("loc", loc);
+				
+				mav.setViewName("msg");
+				return mav;
+			}else {		//탈퇴한 회원이 아닐 경우
+				HttpSession session = request.getSession();
+				
+				session.setAttribute("login_user", login_user);
+
+				String goBackURL = (String) session.getAttribute("goBackURL");
+				
+				if(goBackURL != null) {
+					mav.setViewName("redirect:"+goBackURL);
+					session.removeAttribute("goBackURL"); // 세션에서 제거
+				}
+				else {
+					mav.setViewName("redirect:/index.fu");
+				}
+			}
+		}
+		return mav;
 	}
 
 

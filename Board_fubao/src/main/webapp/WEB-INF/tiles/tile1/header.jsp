@@ -16,20 +16,31 @@
     <div id="gallery-body">
         <!-- Header -->
         <div id="gallery-gnb">
-            <!-- 회원가입/로그인 버튼-->
             <div id="gnb-menu">
                     <ul class="header_member">
-                        <li>
-                       		<a onclick="location.href='<%= ctxPath%>/join.fu'"  title="Button fade orange" class="button btnFade btnOrange" style="cursor:pointer;">
-	                          	  Join
-	                        </a>
-                        </li>
-                        <span class="txt_bar"></span>
-                        <li>
-                        	<a onclick="location.href='<%= ctxPath%>/login.fu'"  title="Button fade orange" class="button btnFade btnOrange" style="cursor:pointer;">
-	                          	  Login
-	                        </a>
-                        </li>
+            			<!-- 회원가입/로그인 버튼-->
+                        <c:if test="${empty sessionScope.login_user}">
+	                        <li>
+	                       		<a onclick="location.href='<%= ctxPath%>/join.fu'"  title="Button fade orange" class="button btnFade btnOrange" style="cursor:pointer;">
+		                          	  Join
+		                        </a>
+	                        </li>
+	                        <span class="txt_bar"></span>
+	                         <li>
+	                        	<a onclick="location.href='<%= ctxPath%>/login.fu'"  title="Button fade orange" class="button btnFade btnOrange" style="cursor:pointer;">
+		                          	  Login
+		                        </a>
+	                        </li>
+                        </c:if>
+                        <!-- 로그인 유저 id/로그아웃 버튼-->
+                        <c:if test="${not empty sessionScope.login_user}">
+	                         <li>
+	                        	<a onclick="location.href='<%= ctxPath%>/logout.fu'"  title="Button fade orange" class="button btnFade btnOrange" style="cursor:pointer; width:64px;">
+		                          	  Logout
+		                        </a>
+	                        </li>
+                        </c:if>
+                       
                     </ul>
             </div>
 

@@ -1,9 +1,12 @@
 package com.spring.board_fubao.model;
 
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
+
 
 @Repository
 public class BoardDAO implements InterBoardDAO{
@@ -32,5 +35,12 @@ public class BoardDAO implements InterBoardDAO{
 	public int nickname_check(String nickname) {
 		int n = sqlsession.selectOne("board.nickname_check", nickname);
 		return n;	
+	}
+
+	//로그인처리
+	@Override
+	public MemberVO get_login_member(Map<String, String> paraMap) {
+		MemberVO login_user = sqlsession.selectOne("board.get_login_member", paraMap);		
+		return login_user;
 	}  
 }
