@@ -33,13 +33,16 @@ public class FubaoBoardController {
 	@RequestMapping(value="/index.fu")
 	public ModelAndView index(ModelAndView mav) {
 		
-		mav.setViewName("board/home.tiles1");
+		mav.setViewName("board/home.tiles2");
 		
 		return mav;
 	}
 
+
 	
 	
+	
+	//회원가입 페이지 띄우기
 	@RequestMapping(value="/join.fu")
 	public ModelAndView join(ModelAndView mav) {
 		
@@ -102,7 +105,7 @@ public class FubaoBoardController {
 			mav.setViewName("member/join_complete.tiles1");
 		}
 		else {
-			mav.setViewName("board/home.tiles1");
+			mav.setViewName("board/home.tiles2");
 
 		}
 		return mav;
@@ -157,7 +160,7 @@ public class FubaoBoardController {
 	@RequestMapping(value="/list.fu")
 	public ModelAndView board_list(ModelAndView mav) {
 		
-		mav.setViewName("board/list.tiles1");
+		mav.setViewName("board/list.tiles2");
 		
 		return mav;
 	}
@@ -175,7 +178,7 @@ public class FubaoBoardController {
 	@RequestMapping(value="/board_write.fu")
 	public ModelAndView board_write(ModelAndView mav) {
 		
-		mav.setViewName("board/write.tiles1");
+		mav.setViewName("board/write.tiles2");
 		
 		return mav;
 	}

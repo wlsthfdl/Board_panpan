@@ -118,15 +118,15 @@ body #gnb-menu{
     display: inline-block;
     width: 19%;
     height: 300px;
-    margin: 6px 0 0 15px;
+    margin: 6px 0 0 6px;
 }
 
 
 #content_area{
     background-color: #f7ffee;
     width: 1080px;
-    margin: auto;
     height: 1382px;
+    margin: 0 auto;
 }
 
 #user_info{
@@ -273,9 +273,9 @@ body #gnb-menu{
     font-family: '맑은 고딕','Malgun Gothic','Apple SD Gothic Neo',sans-serif;
 	float:right;
     background-color: white;
-    margin: 6px 12px 0 0;
     width: 78%;
     height: auto;
+    margin:6px 6px 0 0;
 }
 
 #main_area .title_area h3{
@@ -797,7 +797,7 @@ font-weight: 400;
 
 .writing_header h2{
     display: inline-block;
-    margin: 18px 8px;
+    margin: 22px 13px;
     font-size: 16pt;
     font-weight: 900;
     height: 29.6px;
