@@ -133,9 +133,9 @@ body #gnb-menu{
     display: block;
     padding: 7px;
     border: dotted 1px #8bb772;
-    border-radius: 5%;
-    background-color: #fffafa;
-    height: 303px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    height: 326px;
 }
 
 #user_info .my_info{
@@ -158,7 +158,7 @@ body #gnb-menu{
 
 
 #user_info .my_profile ul{
-    padding: 0;
+	padding: 0;
 }
 
 #user_info .my_profile .nickname{
@@ -166,6 +166,9 @@ body #gnb-menu{
     padding-top: 10px;
 }
 
+#user_info .my_profile .nickname span{
+	color: green;
+	}
 
 #user_info .my_profile li{
     list-style-type: none;
@@ -173,7 +176,7 @@ body #gnb-menu{
 
 #user_info .my_profile .date{
     display: block;
-    margin: 7px 18px 0 0;
+    margin: 15px 2px 0 0;
     padding-bottom: 6px;
     text-align: right;
     font-family : 'NanumSquare', sans-serif;
@@ -184,7 +187,7 @@ body #gnb-menu{
 .side_write_btn{
     display: block;
     border-radius: 7px;
-    margin-top: 17px;
+    margin: 15px 0 0 3px;
     text-align: center;
     background-color: #76B263;
     height: 40px;
@@ -232,7 +235,7 @@ body #gnb-menu{
 #category{
     font-family : 'NanumSquare', sans-serif;
     margin: 26px 0 20px 0;
-    background-color: #fffafa;
+    background-color: #ffffff;
     display: block;
     height: auto;
 }
@@ -269,9 +272,9 @@ body #gnb-menu{
 #main_area{
     font-family: '맑은 고딕','Malgun Gothic','Apple SD Gothic Neo',sans-serif;
 	float:right;
-    background-color: #fffafa;
+    background-color: white;
     margin: 6px 12px 0 0;
-    width: 77%;
+    width: 78%;
     height: auto;
 }
 
@@ -784,7 +787,7 @@ font-weight: 400;
 /*게시글쓰기*/
 .board_viewbox{
     width: 835px;
-    height: 813px;
+    height: 913px;
 }
 
 .writing_header{
@@ -847,7 +850,7 @@ font-weight: 400;
     margin: 7px 9px;
     padding: 11px;
     height: 41px;
-    background-color: #dddddd73;
+    background-color: #fff;
     font-size: 11pt;
     font-family: 'Roboto';
     resize: none;
@@ -860,6 +863,10 @@ font-weight: 400;
     padding: 6px 0;
 }
 
+#smart_editor{
+	margin: 20px auto;
+	width:98%;
+}
 
 /*회원가입 완료*/
 .join_complete {
@@ -906,4 +913,6 @@ font-weight: 400;
     transition: 0.4s;
     display:inline;
 }
+
+
 

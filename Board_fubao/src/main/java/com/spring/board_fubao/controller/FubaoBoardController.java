@@ -162,11 +162,20 @@ public class FubaoBoardController {
 		return mav;
 	}
 
-
+/*
 	@RequestMapping(value="/view.fu")
 	public ModelAndView board_view(ModelAndView mav) {
 		
 		mav.setViewName("board/view.tiles1");
+		
+		return mav;
+	}
+*/
+
+	@RequestMapping(value="/board_write.fu")
+	public ModelAndView board_write(ModelAndView mav) {
+		
+		mav.setViewName("board/write.tiles1");
 		
 		return mav;
 	}

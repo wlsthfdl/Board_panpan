@@ -8,6 +8,15 @@
     String ctxPath = request.getContextPath();
 
 %>   
+<script type="text/javascript">
+	
+	$(document).ready(function() {
+		
+	});
+
+
+
+</script>
 
 	
     <div id="content_area">
@@ -18,9 +27,20 @@
                 <div class="my_info">나의 활동</div>
                 <div class="my_profile">
                     <ul>
-                    <li><img src="<%= ctxPath %>/resources/image/panda (1).png" width="45" height="45" class="ico-list"></li>
-                    <li class="nickname">러부지는러브지</li>
-                    <li><span class="date">가입일자</span></li>
+                    <li><img src="<%= ctxPath %>/resources/image/panda (1).png" width="45" height="45" class="ico-list" style="margin-top:15px;"></li>
+                    <c:if test="${empty sessionScope.login_user}">
+                    	<li class="nickname">로그인 해주세요.</li>
+                    	<li><span class="date">&nbsp;</span></li>
+                    </c:if>
+                    <c:if test="${not empty sessionScope.login_user}">
+                    	<li class="nickname"><span>${(sessionScope.login_user).nickname}</span>님</li>
+                    	<li>
+	                    	<span class="date"> 가입일자:
+	                    	<fmt:parseDate value="${(sessionScope.login_user).registerday}" var="registered" pattern="yyyy-MM-dd HH:mm" />
+							<fmt:formatDate value="${registered}" pattern="yyyy-MM-dd" />
+							</span>
+						</li>
+					</c:if>
                     </ul>
                 </div>
                 <div class="info_box">
@@ -28,7 +48,7 @@
                     <li class="b_comment"><a href="" style="text-decoration: none; color: black;">내가 쓴 댓글</a></li>
                 </div>
                 <div class="side_write_btn">
-                    <div><a href="#" class="" onclick="">카페 글쓰기</a></div>
+                    <div><a class="" onclick="location.href='<%= ctxPath%>/board_write.fu'">게시글쓰기</a></div>
                 </div>
             </div>
 
