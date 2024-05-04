@@ -5,6 +5,12 @@
 
 <mapper namespace="board">
 
+	<!-- 카테고리 리스트 가져오기 -->
+	<select id="get_category" resultType="com.spring.board_fubao.model.CategoryVO">
+		select *
+		from TBL_CATEGORY
+	</select>
+
 	<!-- 회원가입 insert -->
 	<insert id="insertMember" parameterType="com.spring.board_fubao.model.MemberVO">
 		insert into TBL_MEMBER (id, nickname, name, pwd, birthday, registerday, mobile,

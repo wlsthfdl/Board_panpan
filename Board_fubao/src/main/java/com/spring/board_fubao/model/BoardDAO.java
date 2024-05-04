@@ -1,5 +1,6 @@
 package com.spring.board_fubao.model;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -15,6 +16,13 @@ public class BoardDAO implements InterBoardDAO{
 	private SqlSessionTemplate sqlsession;
 
 	//============================================//
+
+	//카테고리 리스트
+	@Override
+	public List<CategoryVO> get_category() {
+		List<CategoryVO> cate_list = sqlsession.selectList("board.get_category");
+		return cate_list;
+	}  
 	
 	//회원가입 정보 insert
 	@Override
@@ -42,5 +50,6 @@ public class BoardDAO implements InterBoardDAO{
 	public MemberVO get_login_member(Map<String, String> paraMap) {
 		MemberVO login_user = sqlsession.selectOne("board.get_login_member", paraMap);		
 		return login_user;
-	}  
+	}
+
 }

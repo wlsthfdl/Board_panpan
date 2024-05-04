@@ -1,6 +1,7 @@
 package com.spring.board_fubao.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.board_fubao.common.Sha256;
+import com.spring.board_fubao.model.CategoryVO;
 import com.spring.board_fubao.model.MemberVO;
 import com.spring.board_fubao.service.InterBoardService;
 
@@ -31,15 +33,16 @@ public class FubaoBoardController {
     
 	/*메인 페이지*/
 	@RequestMapping(value="/index.fu")
-	public ModelAndView index(ModelAndView mav) {
-		
+	public ModelAndView index(ModelAndView mav, HttpServletRequest request) {
+		List<CategoryVO> cate_list = service.get_category();
+
+		System.out.println(cate_list);
+		mav.addObject("cate_list", cate_list);
 		mav.setViewName("board/home.tiles2");
 		
 		return mav;
 	}
 
-
-	
 	
 	
 	//회원가입 페이지 띄우기
@@ -157,14 +160,19 @@ public class FubaoBoardController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/list.fu")
-	public ModelAndView board_list(ModelAndView mav) {
+	
+	//카테고리별로 게시판 불러오기
+	/*
+	@RequestMapping(value="/board_list.fu")
+	public ModelAndView board_list(ModelAndView mav, HttpServletRequest request) {
 		
-		mav.setViewName("board/list.tiles2");
 		
-		return mav;
+		
 	}
-
+	*/
+	
+	
+	
 /*
 	@RequestMapping(value="/view.fu")
 	public ModelAndView board_view(ModelAndView mav) {

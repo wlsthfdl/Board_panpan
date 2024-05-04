@@ -49,23 +49,23 @@
            </div>
        </div>
 
-       <!-- 카테고리 -->
-       <div id="category">
-           <h3><span>GATE</span></h3>
-               <li><img src="<%= ctxPath %>/resources/image/list.png" width="16" height="16" class="ico-list">가입인사</li>
-               <li><img src="<%= ctxPath %>/resources/image/list.png" width="16" height="16" class="ico-list">공지사항</li>
-           <h3><span>BAO News</span></h3>
-               <li><img src="<%= ctxPath %>/resources/image/list.png" width="16" height="16" class="ico-list">바오패밀리 소식</li>
-               <li><img src="<%= ctxPath %>/resources/image/list.png" width="16" height="16" class="ico-list">사육사와의 소통</li>
-           <h3><span>Hey! Panda World</span></h3>
-               <li><img src="<%= ctxPath %>/resources/image/list.png" width="16" height="16" class="ico-list">판다월드 관람/체험후기</li>
-           <h3><span>BAO Talk</span></h3>
-               <li><img src="<%= ctxPath %>/resources/image/list.png" width="16" height="16" class="ico-list">자유게시판</li>
-               <li><img src="<%= ctxPath %>/resources/image/list.png" width="16" height="16" class="ico-list">꿀팁게시판</li>
-               <li><img src="<%= ctxPath %>/resources/image/list.png" width="16" height="16" class="ico-list">질문게시판</li>
-           <h3><span>동물자랑단</span></h3>
-               <li style="padding-bottom: 19px;"><img src="<%= ctxPath %>/resources/image/list.png" width="16" height="16" class="ico-list">팬아트</li>
-       </div>
+      <!-- 카테고리 -->
+      <div id="category">
+          <h3><span>GATE</span></h3>
+              <li><img src="<%= ctxPath %>/resources/image/list.png" width="16" height="16" class="ico-list"><a href="<%=ctxPath%>/board_list.fu?category_idx=1">가입인사</a></li>
+              <li><img src="<%= ctxPath %>/resources/image/list.png" width="16" height="16" class="ico-list">공지사항</li>
+          <h3><span>BAO News</span></h3>
+              <li><img src="<%= ctxPath %>/resources/image/list.png" width="16" height="16" class="ico-list">바오패밀리 소식</li>
+              <li><img src="<%= ctxPath %>/resources/image/list.png" width="16" height="16" class="ico-list">사육사와의 소통</li>
+          <h3><span>Hey! Panda World</span></h3>
+              <li><img src="<%= ctxPath %>/resources/image/list.png" width="16" height="16" class="ico-list">판다월드 관람/체험후기</li>
+          <h3><span>BAO Talk</span></h3>
+              <li><img src="<%= ctxPath %>/resources/image/list.png" width="16" height="16" class="ico-list">자유게시판</li>
+              <li><img src="<%= ctxPath %>/resources/image/list.png" width="16" height="16" class="ico-list">꿀팁게시판</li>
+              <li><img src="<%= ctxPath %>/resources/image/list.png" width="16" height="16" class="ico-list">질문게시판</li>
+          <h3><span>동물자랑단</span></h3>
+              <li style="padding-bottom: 19px;"><img src="<%= ctxPath %>/resources/image/list.png" width="16" height="16" class="ico-list">팬아트</li>
+      </div>
    </div>
    <!-- end of left side -->
 

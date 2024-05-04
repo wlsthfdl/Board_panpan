@@ -3,6 +3,7 @@ package com.spring.board_fubao.service;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.board_fubao.common.AES256;
 import com.spring.board_fubao.common.FileManager;
+import com.spring.board_fubao.model.CategoryVO;
 import com.spring.board_fubao.model.InterBoardDAO;
 import com.spring.board_fubao.model.MemberVO;
 
@@ -29,6 +31,15 @@ public class BoardService implements InterBoardService{
     @Autowired     
     private FileManager fileManager;
 	  
+    
+
+    //카테고리 리스트
+	@Override
+	public List<CategoryVO> get_category() {
+		List<CategoryVO> cate_list = dao.get_category();
+		return cate_list;
+	}
+    
 	// 암호화
 	private String encryptSHA256(String data) {
         try {
@@ -121,7 +132,6 @@ public class BoardService implements InterBoardService{
 		}
 		return mav;
 	}
-
 
 
     

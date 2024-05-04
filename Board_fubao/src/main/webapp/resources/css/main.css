@@ -267,6 +267,13 @@ body #gnb-menu{
     padding-right: 5px;
 }
 
+#category li a{
+	text-decoration: none;
+	color: #3b3b3b;
+	
+}
+
+
 /*메인페이지*/
 
 #main_area{

@@ -1,9 +1,13 @@
 package com.spring.board_fubao.model;
 
+import java.util.List;
 import java.util.Map;
 
 public interface InterBoardDAO {
 
+	//카테고리 리스트
+	List<CategoryVO> get_category();
+	
 	//회원가입 정보 insert
 	int insertMember(MemberVO membervo);
 
@@ -15,5 +19,6 @@ public interface InterBoardDAO {
 
 	//로그인 처리
 	MemberVO get_login_member(Map<String, String> paraMap);
+
 
 }
