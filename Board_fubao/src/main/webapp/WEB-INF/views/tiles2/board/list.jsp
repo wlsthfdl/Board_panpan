@@ -11,8 +11,8 @@
 
 
         <!-- main area -->
-        <div id="main_area">
-            <div class="list_box">
+       <div id="main_area">
+           	<div class="list_box">
                 <div class="list_tit">
                     <h3>인기글</h3>
                 </div>
@@ -21,33 +21,21 @@
                         <thead>
                             <tr>
                                 <th style="width: 9%;"></th>
-                                <th style="width: 56%;">제목</th>
+                                <th style="width: 54%;">제목</th>
                                 <th style="width: 17%;">작성자</th>
                                 <th style="width: 11%;">작성일</th>
-                                <th style="width: 7%;">조회</th>
+                                <th style="width: 9%;">조회</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>1234567</td>
-                                <td>신흥강자 루이 이게길어지면어떻게될까이게길어지면어떻게될까이게길어지면어떻게될까이게길어지면어떻게될까이게길어지면어떻게될까</td>
-                                <td>푸이모 페이윈 이게길어지면어떻게될까</td>
-                                <td>12:35</td>
-                                <td>913</td>
-                            </tr>
-                            <tr>
-                                <td>1234567</td>
-                                <td>할부지 깨물려다 실패</td>
-                                <td>낑바오</td>
-                                <td>24.03.31</td>
-                                <td>325</td>
-                            </tr>
-                            <tr>
-                                <td>1234567</td>
-                                <td>할부지 깨물려다 실패</td>
-                                <td>낑바오</td>
-                                <td>24.03.31</td>
-                                <td>325</td>
+                                <td>글번호</td>
+                                <td>글제목
+                                	<span class="num">[13]</span>
+                                </td>
+                                <td>작성자</td>
+                                <td>작성일자</td>
+                                <td>조회수</td>
                             </tr>
                         </tbody>
                     </table>

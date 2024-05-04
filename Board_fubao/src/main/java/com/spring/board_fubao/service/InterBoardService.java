@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.servlet.ModelAndView;
 
+import com.spring.board_fubao.model.BoardVO;
 import com.spring.board_fubao.model.CategoryVO;
 import com.spring.board_fubao.model.MemberVO;
 
@@ -29,5 +30,8 @@ public interface InterBoardService {
 
 	//로그인 처리
 	ModelAndView login_end(ModelAndView mav, HttpServletRequest request, Map<String, String> paraMap);
+
+	//게시글쓰기 처리
+	int add(BoardVO boardvo);
 
 }

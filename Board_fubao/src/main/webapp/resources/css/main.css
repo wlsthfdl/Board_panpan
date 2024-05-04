@@ -434,11 +434,16 @@ body #gnb-menu{
 }
 
 .list_box .list_tit h3{
-    font-size: 17pt;
-    margin: 10px;
+	padding: 14px 0 0 10px;
+   font-size: 17pt;
     font-weight: bold;
 }
 
+.list_box .num{
+    font-weight: 900;
+    color: #e95e0e;
+    padding-left:4px;
+}
 
 .list_box .list_content table{
     border-collapse: collapse;
@@ -447,6 +452,7 @@ body #gnb-menu{
     table-layout: fixed;
     margin-top: 22px;
     width: 835px;
+    
 }
 
 .list_box .list_content thead{ 
@@ -464,9 +470,11 @@ body #gnb-menu{
 .list_box .list_content tbody tr td{
     font-size: 10pt;
     padding: 7px 11px; 
+    /*
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    */
     border-bottom: 1px solid rgb(233, 233, 233);
     height: 10px;
 }
@@ -871,9 +879,10 @@ font-weight: 400;
 }
 
 #smart_editor{
-	margin: 20px auto;
+	margin: 15px auto;
 	width:98%;
 }
+
 
 /*회원가입 완료*/
 .join_complete {
