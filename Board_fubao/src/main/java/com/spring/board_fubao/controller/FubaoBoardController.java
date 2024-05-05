@@ -210,23 +210,16 @@ public class FubaoBoardController {
 	
 
 
-   // ==== #168. 스마트에디터. 드래그앤드롭을 사용한 다중사진 파일업로드 ====
-   @RequestMapping(value="/multiplePhotoUpload.fu", method= {RequestMethod.POST} )
+
+   // ==== #스마트에디터. 드래그앤드롭을 사용한 다중사진 파일업로드 ====
+   @RequestMapping(value="/image/multiplePhotoUpload.fu", method= {RequestMethod.POST} )
 	public void multiplePhotoUpload(HttpServletRequest request, HttpServletResponse response) {
-		
-		/*
-		   1. 사용자가 보낸 파일을 WAS(톰캣)의 특정 폴더에 저장해주어야 한다.
-		   >>>> 파일이 업로드 되어질 특정 경로(폴더)지정해주기
-		        우리는 WAS 의 webapp/resources/photo_upload 라는 폴더로 지정해준다.
-		*/
-		
-		// WAS 의 webapp 의 절대경로를 알아와야 한다.
+		// 절대경로
 		HttpSession session = request.getSession();
 		String root = session.getServletContext().getRealPath("/");
 		String path = root + "resources"+File.separator+"photo_upload";
-		// path 가 첨부파일들을 저장할 WAS(톰캣)의 폴더가 된다.
 		
-	//	System.out.println("~~~~ 확인용 path => " + path);
+		//	System.out.println("~~~~ 확인용 path => " + path);
 		// ~~~~ 확인용  webapp 의 절대경로 => C:\NCS\workspace(spring)\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\Board\resources\photo_upload 
 		
 		File dir = new File(path);
@@ -236,21 +229,6 @@ public class FubaoBoardController {
 		
 		try {
 			String filename = request.getHeader("file-name"); // 파일명(문자열)을 받는다 - 일반 원본파일명
-			// 네이버 스마트에디터를 사용한 파일업로드시 싱글파일업로드와는 다르게 멀티파일업로드는 파일명이 header 속에 담겨져 넘어오게 되어있다. 
-			
-			/*
-			    [참고]
-			    HttpServletRequest의 getHeader() 메소드를 통해 클라이언트 사용자의 정보를 알아올 수 있다. 
-	
-				request.getHeader("referer");           // 접속 경로(이전 URL)
-				request.getHeader("user-agent");        // 클라이언트 사용자의 시스템 정보
-				request.getHeader("User-Agent");        // 클라이언트 브라우저 정보 
-				request.getHeader("X-Forwarded-For");   // 클라이언트 ip 주소 
-				request.getHeader("host");              // Host 네임  예: 로컬 환경일 경우 ==> localhost:9090    
-			*/
-			
-		//	System.out.println(">>> 확인용 filename ==> " + filename);
-			// >>> 확인용 filename ==> berkelekle%EB%8B%A8%EA%B0%80%EB%9D%BC%ED%8F%AC%EC%9D%B8%ED%8A%B803.jpg 
 			
 			InputStream is = request.getInputStream(); // is는 네이버 스마트 에디터를 사용하여 사진첨부하기 된 이미지 파일임.
 			
@@ -262,10 +240,6 @@ public class FubaoBoardController {
 		       width = 600;
 		    }
 		    
-		 // System.out.println(">>>> 확인용 width ==> " + width);
-		 // >>>> 확인용 width ==> 600
-		 // >>>> 확인용 width ==> 121
-			
 			String ctxPath = request.getContextPath(); //  /board
 			
 			String strURL = "";
@@ -277,11 +251,11 @@ public class FubaoBoardController {
 			PrintWriter out = response.getWriter();
 			out.print(strURL);
 			
-		} catch(Exception e) {
-			e.printStackTrace();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+			
 		}
-		
-	}
 
    
 	
