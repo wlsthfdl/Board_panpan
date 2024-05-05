@@ -198,7 +198,6 @@ public class FubaoBoardController {
 	
 
 	//카테고리별로 게시판 불러오기
-
 	@RequestMapping(value="/board_list.fu")
 	public ModelAndView board_list(ModelAndView mav, HttpServletRequest request) {
 		
@@ -257,6 +256,13 @@ public class FubaoBoardController {
 			
 		}
 
-   
+   // 게시글 한 개 보기 페이지 요청
+   @RequestMapping(value="/board_view.fu")
+   public ModelAndView board_view(ModelAndView mav, HttpServletRequest request) {
+
+		mav.setViewName("board/view.tiles2");
+		
+		return mav;
+   }
 	
 }
