@@ -4,6 +4,7 @@ public class BoardVO {
 
 	private int b_idx;				//글 번호
 	private String id_fk;			//아이디
+	private String nickname;		//닉네임
 	private int category_idx_fk;	//카테고리번호
 	private String b_title;			//글 제목
 	private String b_content;		//글 내용
@@ -26,6 +27,12 @@ public class BoardVO {
 	}
 	public void setId_fk(String id_fk) {
 		this.id_fk = id_fk;
+	}
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 	public int getCategory_idx_fk() {
 		return category_idx_fk;

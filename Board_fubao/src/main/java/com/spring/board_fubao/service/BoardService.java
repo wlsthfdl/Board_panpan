@@ -33,13 +33,6 @@ public class BoardService implements InterBoardService{
     private FileManager fileManager;
 	  
     
-
-    //카테고리 리스트
-	@Override
-	public List<CategoryVO> get_category() {
-		List<CategoryVO> cate_list = dao.get_category();
-		return cate_list;
-	}
     
 	// 암호화
 	private String encryptSHA256(String data) {
@@ -134,10 +127,18 @@ public class BoardService implements InterBoardService{
 		return mav;
 	}
 
+	//글쓰기 완료
 	@Override
-	public int add(BoardVO boardvo) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int write_end(BoardVO boardvo) {
+		int n = dao.write_end(boardvo);
+		return n;
+	}
+
+	//카테고리 별 목록보기
+	@Override
+	public List<CategoryVO> get_category(int category_idx) {
+		List<CategoryVO> cate_list = dao.get_category(category_idx);	//n은 0 또는 1
+		return cate_list;
 	}
 
 

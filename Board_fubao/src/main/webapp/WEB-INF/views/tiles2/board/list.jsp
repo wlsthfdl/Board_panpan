@@ -12,9 +12,10 @@
 
         <!-- main area -->
        <div id="main_area">
+       	<c:forEach var="catevo" items="${requestScope.cate_list}">
            	<div class="list_box">
                 <div class="list_tit">
-                    <h3>인기글</h3>
+                    <h3>${catevo.category_name}</h3>
                 </div>
                 <div class="list_content">
                     <table>
@@ -59,6 +60,7 @@
                     </div>
                 </div>
             </div>
+          </c:forEach>
             <!--list_box 끝-->
         </div>
         <!--main_area 끝-->

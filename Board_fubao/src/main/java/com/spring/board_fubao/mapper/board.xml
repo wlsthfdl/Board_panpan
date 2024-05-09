@@ -6,9 +6,10 @@
 <mapper namespace="board">
 
 	<!-- 카테고리 리스트 가져오기 -->
-	<select id="get_category" resultType="com.spring.board_fubao.model.CategoryVO">
+	<select id="get_category" resultType="com.spring.board_fubao.model.CategoryVO" parameterType="int">
 		select *
 		from TBL_CATEGORY
+		where category_idx = #{category_idx}
 	</select>
 
 	<!-- 회원가입 insert -->
@@ -35,5 +36,11 @@
 		where id = #{id} and pwd = #{pwd}
 	</select>
 
+	<insert id="write_end" parameterType="com.spring.board_fubao.model.BoardVO">
+		insert into tbl_board (b_idx, id_fk, nickname, category_idx_fk, b_title,
+		b_content, b_date, b_like, b_hit, b_status, c_cnt)
+		values (b_idx.nextval, #{id_fk}, #{nickname}, #{category_idx_fk}, #{b_title},
+		#{b_content}, default, 0, default, default, default)
+	</insert>
 
 </mapper>

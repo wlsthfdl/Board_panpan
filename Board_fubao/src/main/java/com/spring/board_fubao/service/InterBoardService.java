@@ -14,7 +14,7 @@ import com.spring.board_fubao.model.MemberVO;
 public interface InterBoardService {
 
 	//카테고리 리스트 가져오기
-	List<CategoryVO> get_category();
+	List<CategoryVO> get_category(int category_idx);
 
 	//회원가입 정보 insert
 	int insertMember(MemberVO membervo);
@@ -32,6 +32,6 @@ public interface InterBoardService {
 	ModelAndView login_end(ModelAndView mav, HttpServletRequest request, Map<String, String> paraMap);
 
 	//게시글쓰기 처리
-	int add(BoardVO boardvo);
+	int write_end(BoardVO boardvo);
 
 }

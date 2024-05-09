@@ -30,7 +30,7 @@
                 <div class="viewbox">
                     <div class="article_view">
                         <div class="article_title">
-                            <a class="link_board">가입인사 ></a>
+                            <a class="link_board">가입인사 </a>
                             <h3>가입인사 안녕하세요</h3>
                         </div>
                         <div class="writer_info">
@@ -58,15 +58,13 @@
                             </div>
                         </div>
                         <div class="comment_area">
-                            <div class="comment_nick">왕밤코</div>
-                            <div class="comment_text">반갑습니다 임모!</div>
-                            <div class="comment_info_date">2024.05.04 15:50</div>
+                        	<div style="margin-left: 4px;">
+	                            <div class="comment_nick">왕밤코</div>
+	                            <div class="comment_text">반갑습니다 임모!</div>
+	                            <div class="comment_info_date">2024.05.04 15:50</div>
+                            </div>
                         </div>
-                        <div class="comment_area">
-                            <div class="comment_nick">왕밤코</div>
-                            <div class="comment_text">반갑습니다 임모!</div>
-                            <div class="comment_info_date">2024.05.04 15:50</div>
-                        </div>
+                        
                         <div class="comment_writer">
                             <div class="comment_inbox">
                                 <em class="comment_inbox_nick">두눈을감자</em>

@@ -6,7 +6,7 @@ import java.util.Map;
 public interface InterBoardDAO {
 
 	//카테고리 리스트
-	List<CategoryVO> get_category();
+	List<CategoryVO> get_category(int category_idx);
 	
 	//회원가입 정보 insert
 	int insertMember(MemberVO membervo);
@@ -19,6 +19,9 @@ public interface InterBoardDAO {
 
 	//로그인 처리
 	MemberVO get_login_member(Map<String, String> paraMap);
+
+	//게시글 쓰기
+	int write_end(BoardVO boardvo);
 
 
 }

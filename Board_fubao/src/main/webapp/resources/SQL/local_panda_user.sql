@@ -21,7 +21,8 @@ CREATE TABLE TBL_MEMBER (
 -- ** 게시글 테이블 ** --
 CREATE TABLE TBL_BOARD (
 	b_idx     NUMBER          NOT NULL, -- 글번호
-	id_fk       VARCHAR2(40)  NOT NULL, -- 회원ID
+	id_fk     VARCHAR2(40)    NOT NULL, -- 회원ID
+    NICKNAME  VARCHAR2(100)   NOT NULL,
 	category_idx_fk  NUMBER   NOT NULL, -- 카테고리번호
 	b_title   VARCHAR2(200)   NOT NULL, -- 글제목
 	b_content VARCHAR2(4000)  NOT NULL, -- 글내용

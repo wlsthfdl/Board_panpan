@@ -19,8 +19,8 @@ public class BoardDAO implements InterBoardDAO{
 
 	//카테고리 리스트
 	@Override
-	public List<CategoryVO> get_category() {
-		List<CategoryVO> cate_list = sqlsession.selectList("board.get_category");
+	public List<CategoryVO> get_category(int category_idx) {
+		List<CategoryVO> cate_list = sqlsession.selectList("board.get_category", category_idx);
 		return cate_list;
 	}  
 	
@@ -50,6 +50,13 @@ public class BoardDAO implements InterBoardDAO{
 	public MemberVO get_login_member(Map<String, String> paraMap) {
 		MemberVO login_user = sqlsession.selectOne("board.get_login_member", paraMap);		
 		return login_user;
+	}
+
+	//게시글쓰기
+	@Override
+	public int write_end(BoardVO boardvo) {
+		int n = sqlsession.insert("board.write_end", boardvo);
+		return n;
 	}
 
 }

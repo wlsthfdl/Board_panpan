@@ -42,10 +42,6 @@ public class FubaoBoardController {
 	/*메인 페이지*/
 	@RequestMapping(value="/index.fu")
 	public ModelAndView index(ModelAndView mav, HttpServletRequest request) {
-		List<CategoryVO> cate_list = service.get_category();
-
-		System.out.println(cate_list);
-		mav.addObject("cate_list", cate_list);
 		mav.setViewName("board/home.tiles2");
 		
 		return mav;
@@ -183,10 +179,10 @@ public class FubaoBoardController {
 	@RequestMapping(value="/write_end.fu", method={RequestMethod.POST})
 	public ModelAndView write_end(ModelAndView mav, BoardVO boardvo) {
 		
-		int n = service.add(boardvo); 
+		int n = service.write_end(boardvo); 
 		
 		if(n==1) {  
-			mav.setViewName("redirect:/board_write.fu");
+			mav.setViewName("redirect:/board_view.fu");
 		}
 		else { 
 			mav.setViewName("board/home.tiles2");
@@ -196,18 +192,6 @@ public class FubaoBoardController {
 		
 	}
 	
-
-	//카테고리별로 게시판 불러오기
-	@RequestMapping(value="/board_list.fu")
-	public ModelAndView board_list(ModelAndView mav, HttpServletRequest request) {
-		
-		mav.setViewName("board/list.tiles2");
-		
-		return mav;
-		
-	}
-	
-
 
 
    // ==== #스마트에디터. 드래그앤드롭을 사용한 다중사진 파일업로드 ====
@@ -238,7 +222,11 @@ public class FubaoBoardController {
 		    if(width > 600) {
 		       width = 600;
 		    }
-		    
+
+			System.out.println(">>>> 확인용 width ==> " + width);
+			 // >>>> 확인용 width ==> 600
+			 // >>>> 확인용 width ==> 121
+				
 			String ctxPath = request.getContextPath(); //  /board
 			
 			String strURL = "";
@@ -256,6 +244,27 @@ public class FubaoBoardController {
 			
 		}
 
+
+	//게시판 목록 별 불러오기
+	@RequestMapping(value="/board_list.fu")
+	public ModelAndView board_list(ModelAndView mav, HttpServletRequest request) {
+		int category_idx = Integer.parseInt(request.getParameter("category_idx"));
+		
+		List<CategoryVO> cate_list = service.get_category(category_idx);
+		System.out.println(cate_list);
+		
+		mav.addObject("cate_list",cate_list);
+		mav.addObject("category_idx",category_idx);
+		mav.setViewName("board/list.tiles2");
+		
+		return mav;
+		
+	}
+	
+
+   
+   
+   
    // 게시글 한 개 보기 페이지 요청
    @RequestMapping(value="/board_view.fu")
    public ModelAndView board_view(ModelAndView mav, HttpServletRequest request) {

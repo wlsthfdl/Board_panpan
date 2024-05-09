@@ -70,7 +70,7 @@
 			
 
 			// 폼(form)을 전송(submit)
-			const frm = document.addFrm;
+			const frm = document.write_frm;
 			frm.method = "post";
 			frm.action = "<%= ctxPath%>/write_end.fu";
 			frm.submit();
@@ -87,8 +87,8 @@
         <div id="main_area">
            <div class="board_viewbox" style="margin:0 auto; height: 1190px;">
            	<form name="write_frm" enctype="multipart/form-data">
-           		<input type="hidden" name="writer_id" value="${sessionScope.login_user.userid}" readonly />
-				<input type="hidden" name="writer_nickname" value="${sessionScope.login_user.name}" readonly />
+           		<input type="hidden" name="id_fk" value="${sessionScope.login_user.id}" />
+				<input type="hidden" name="nickname" value="${sessionScope.login_user.nickname}"  />
                 <div class="writing_header">
                     <h2>게시판 글쓰기</h2>
                     <div class="tool_area"><button type="button" id="btn_write">등록</button></div>
