@@ -31,7 +31,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
 	
 </head>
-<body>
+<body style="background-color: #f7ffee;">
 	<div id="mycontainer">
 		<div id="myheader">
 			<tiles:insertAttribute name="header" />
