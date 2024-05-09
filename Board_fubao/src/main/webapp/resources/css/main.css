@@ -2,12 +2,16 @@
 @import url('https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@2.0/nanumsquare.css');
 <a href="https://kr.freepik.com/icon/heart_1076984">Freepik 제작 아이콘</a>
 <a href="https://kr.freepik.com/icon/heart_1077035">Freepik 제작 아이콘</a>
+
+
+
 body{
     background-color: #e7ffe3;
 }
 
 
 /*header*/
+
 
 body #gallery-body {
     width: 1080px;
@@ -967,7 +971,7 @@ font-weight: 400;
 
 .profile_area{
     width: 272px;
-    height: 42px;
+    height: 41px;
     margin-left: 4px;
 }
 
@@ -977,19 +981,21 @@ font-weight: 400;
     display: block;
     border: 0;
     background-color: transparent;
+    font-size: 10pt;
 }
 
 .profile_area span{
     font-size: 9pt;
+    vertical-align: top;
 }
 
 .writer_info{
     border-bottom: gainsboro 1px solid;
-    padding-bottom: 20px;
+    padding-bottom: 15px;
 }
 
 .article_content{
-    margin:10px 0;
+    margin:10px 4px;
 }
 
 
@@ -1033,7 +1039,7 @@ font-weight: 400;
     font-weight: 600;
 }
 .comment_text{
-    font-size: 10pt;
+    font-size: 11pt;
 }
 
 .comment_info_date{
@@ -1069,7 +1075,7 @@ font-weight: 400;
     height: 43px;
     padding-right: 1px;
     border: 0;
-    font-size: 12px;
+    font-size: 11pt;
     resize: none;
     box-sizing: border-box;
     background: transparent;
@@ -1091,7 +1097,7 @@ font-weight: 400;
 }
 
 .view_button{
-    height: 34px;
+    height: 39px;
     padding: 0 14px 5px 0;
 }
 
