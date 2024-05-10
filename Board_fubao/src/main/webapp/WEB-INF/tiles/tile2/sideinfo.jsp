@@ -39,7 +39,7 @@
                <li class="b_comment"><a href="" style="text-decoration: none; color: black;">내가 쓴 댓글</a></li>
            </div>
            <div class="side_write_btn">
-               <div><a class="" onclick="location.href='<%= ctxPath%>/board_write.fu'">게시글쓰기</a></div>
+               <div><a href="<%= ctxPath%>/board_write.fu" style="text-decoration: none; color: white;">게시글쓰기</a></div>
            </div>
        </div>
 
