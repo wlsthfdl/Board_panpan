@@ -1,5 +1,6 @@
 package com.spring.board_fubao.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,5 +34,8 @@ public interface InterBoardService {
 
 	//게시글쓰기 처리
 	int write_end(BoardVO boardvo);
+
+	//페이징 처리 안 한 게시글 목록 가져오기
+	List<BoardVO> get_boardList(HashMap<String, String> paraMap);
 
 }

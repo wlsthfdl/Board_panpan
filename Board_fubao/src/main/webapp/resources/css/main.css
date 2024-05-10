@@ -9,7 +9,7 @@
 
 body #gallery-body {
     width: 1080px;
-    height: 405px;
+    height: 400px;
     margin: 0 auto;
 }
 
@@ -122,9 +122,9 @@ body #gnb-menu{
 
 
 #content_area{
-    background-color: #f7ffee;
+    background-color: #ffffff;
     width: 1080px;
-    height: 1382px;
+    height: 1450px;
     margin: 0 auto;
 }
 
@@ -195,12 +195,11 @@ body #gnb-menu{
 
 .side_write_btn a{
     display: block;
-    text-decoration: none;
-    color: white;
     font-weight: 600;
     font-size: 10pt;
     height: 40px;
     width: 183px;
+    color: white;
 }
 
 .side_write_btn div{
@@ -212,6 +211,8 @@ body #gnb-menu{
     background-color:  rgb(199, 199, 199);
     /* transition 효과*/
     transition: 0.3s;
+        
+
 }
 
 
@@ -427,7 +428,7 @@ body #gnb-menu{
 /*목록*/
 
 .list_box {
-    background-color: #f7ffee;
+    /*background-color: #f7ffee;*/
     width: 845px;
     height: 1068.8px;
 }

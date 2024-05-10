@@ -29,15 +29,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>글번호</td>
-                                <td>글제목
-                                	<span class="num">[13]</span>
-                                </td>
-                                <td>작성자</td>
-                                <td>작성일자</td>
-                                <td>조회수</td>
-                            </tr>
+                        	<c:if test="${empty requestScope.board_list}">
+								<td colspan="5">게시글 데이터가 없습니다</td>
+							</c:if>
+						   <c:if test="${not empty requestScope.board_list}">
+							   <c:forEach var="boardvo" items="${requestScope.board_list}">
+		                           <tr>
+		                               <td>${boardvo.b_idx}</td>
+		                               <td>${boardvo.b_title}
+		                               	<span class="num">[<span>${boardvo.c_cnt}</span>]</span>
+		                               </td>
+		                               <td>${boardvo.nickname}</td>
+		                               <td>${boardvo.b_date}</td>
+		                               <td>${boardvo.b_hit}</td>
+		                           </tr>
+		                       </c:forEach>
+                            </c:if>
                         </tbody>
                     </table>
                 </div>

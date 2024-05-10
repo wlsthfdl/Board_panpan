@@ -3,6 +3,7 @@ package com.spring.board_fubao.service;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -141,6 +142,12 @@ public class BoardService implements InterBoardService{
 		return cate_list;
 	}
 
+	//페이징 처리 안한 글목록
+	@Override
+	public List<BoardVO> get_boardList(HashMap<String, String> paraMap) {
+		List<BoardVO> board_list = dao.get_boardList(paraMap);
+		return board_list;
+	}
 
     
 }

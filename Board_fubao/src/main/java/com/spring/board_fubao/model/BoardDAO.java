@@ -1,5 +1,6 @@
 package com.spring.board_fubao.model;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,12 +18,6 @@ public class BoardDAO implements InterBoardDAO{
 
 	//============================================//
 
-	//카테고리 리스트
-	@Override
-	public List<CategoryVO> get_category(int category_idx) {
-		List<CategoryVO> cate_list = sqlsession.selectList("board.get_category", category_idx);
-		return cate_list;
-	}  
 	
 	//회원가입 정보 insert
 	@Override
@@ -57,6 +52,20 @@ public class BoardDAO implements InterBoardDAO{
 	public int write_end(BoardVO boardvo) {
 		int n = sqlsession.insert("board.write_end", boardvo);
 		return n;
+	}
+
+	//카테고리 리스트
+	@Override
+	public List<CategoryVO> get_category(int category_idx) {
+		List<CategoryVO> cate_list = sqlsession.selectList("board.get_category", category_idx);
+		return cate_list;
+	} 
+	
+	//페이징처리 안한 게시글목록
+	@Override
+	public List<BoardVO> get_boardList(HashMap<String, String> paraMap) {
+		List<BoardVO> board_list = sqlsession.selectList("board.get_boardList", paraMap);
+		return board_list;
 	}
 
 }

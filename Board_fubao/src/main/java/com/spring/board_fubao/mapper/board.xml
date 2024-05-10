@@ -5,13 +5,6 @@
 
 <mapper namespace="board">
 
-	<!-- 카테고리 리스트 가져오기 -->
-	<select id="get_category" resultType="com.spring.board_fubao.model.CategoryVO" parameterType="int">
-		select *
-		from TBL_CATEGORY
-		where category_idx = #{category_idx}
-	</select>
-
 	<!-- 회원가입 insert -->
 	<insert id="insertMember" parameterType="com.spring.board_fubao.model.MemberVO">
 		insert into TBL_MEMBER (id, nickname, name, pwd, birthday, registerday, mobile,
@@ -36,6 +29,7 @@
 		where id = #{id} and pwd = #{pwd}
 	</select>
 
+	<!-- 게시글쓰기 -->
 	<insert id="write_end" parameterType="com.spring.board_fubao.model.BoardVO">
 		insert into tbl_board (b_idx, id_fk, nickname, category_idx_fk, b_title,
 		b_content, b_date, b_like, b_hit, b_status, c_cnt)
@@ -43,4 +37,32 @@
 		#{b_content}, default, 0, default, default, default)
 	</insert>
 
+	<!-- 카테고리별 게시글 목록 가져오기 -->
+	<select id="get_category" resultType="com.spring.board_fubao.model.CategoryVO" parameterType="int">
+		select *
+		from TBL_CATEGORY
+		where category_idx = #{category_idx}
+	</select>
+	
+	<!-- 게시글목록 조회 -->
+	<select id="get_boardList" resultType="com.spring.board_fubao.model.BoardVO" parameterType="HashMap">
+		<if test="b_date == currentDateAsString">
+        select b_idx, id_fk, nickname, category_idx_fk, b_title,
+               b_content, to_char(b_date, 'hh24:mi:ss') AS b_date, b_like, b_hit, b_status, c_cnt
+        from tbl_board
+        where category_idx_fk = #{category_idx}
+          and b_date = #{currentDateAsString}
+	    </if>
+	    <if test="b_date != currentDateAsString">
+	        select b_idx, id_fk, nickname, category_idx_fk, b_title,
+	               b_content, to_char(b_date, 'yyyy-mm-dd') AS b_date, b_like, b_hit, b_status, c_cnt
+	        from tbl_board
+	        where category_idx_fk = #{category_idx}
+	          and b_date != #{currentDateAsString}
+	    </if>
+	</select>
+	
+	
+	
+	
 </mapper>

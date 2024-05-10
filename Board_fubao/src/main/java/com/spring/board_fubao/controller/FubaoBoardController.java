@@ -3,6 +3,8 @@ package com.spring.board_fubao.controller;
 import java.io.File;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -249,12 +251,22 @@ public class FubaoBoardController {
 	@RequestMapping(value="/board_list.fu")
 	public ModelAndView board_list(ModelAndView mav, HttpServletRequest request) {
 		int category_idx = Integer.parseInt(request.getParameter("category_idx"));
-		
+		//카테고리
 		List<CategoryVO> cate_list = service.get_category(category_idx);
-		System.out.println(cate_list);
+		
+		Date date = new Date();
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+        String sysdate = formatter.format(date);
+
+		HashMap<String, Object> paraMap = new HashMap<>();
+		paraMap.put("sysdate", sysdate);
+		paraMap.put("category_idx",request.getParameter("category_idx"));
+		
+		List<BoardVO> board_list = service.get_boardList(paraMap);
 		
 		mav.addObject("cate_list",cate_list);
-		mav.addObject("category_idx",category_idx);
+		mav.addObject("board_list",board_list);
 		mav.setViewName("board/list.tiles2");
 		
 		return mav;
