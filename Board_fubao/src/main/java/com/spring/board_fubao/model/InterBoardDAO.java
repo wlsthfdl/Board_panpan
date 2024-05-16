@@ -25,7 +25,7 @@ public interface InterBoardDAO {
 	List<CategoryVO> get_category(int category_idx);
 	
 	//페이징처리 안한 게시글목록
-	List<BoardVO> get_boardList(HashMap<String, String> paraMap);
+	List<BoardVO> get_boardList(HashMap<String, Object> paraMap);
 
 
 }

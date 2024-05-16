@@ -46,20 +46,17 @@
 	
 	<!-- 게시글목록 조회 -->
 	<select id="get_boardList" resultType="com.spring.board_fubao.model.BoardVO" parameterType="HashMap">
-		<if test="b_date == currentDateAsString">
-        select b_idx, id_fk, nickname, category_idx_fk, b_title,
-               b_content, to_char(b_date, 'hh24:mi:ss') AS b_date, b_like, b_hit, b_status, c_cnt
-        from tbl_board
-        where category_idx_fk = #{category_idx}
-          and b_date = #{currentDateAsString}
-	    </if>
-	    <if test="b_date != currentDateAsString">
-	        select b_idx, id_fk, nickname, category_idx_fk, b_title,
-	               b_content, to_char(b_date, 'yyyy-mm-dd') AS b_date, b_like, b_hit, b_status, c_cnt
-	        from tbl_board
-	        where category_idx_fk = #{category_idx}
-	          and b_date != #{currentDateAsString}
-	    </if>
+	    SELECT b_idx, id_fk, nickname, category_idx_fk, b_title,
+	           b_content,
+	           CASE
+	               WHEN to_char(b_date, 'yyyy-MM-dd') = to_char(#{sysdate}, 'yyyy-MM-dd') 
+	               THEN to_char(b_date, 'hh24:mi')
+	               ELSE to_char(b_date, 'yyyy-MM-dd')
+	           END AS b_date,
+	           b_like, b_hit, b_status, c_cnt
+	    FROM tbl_board
+	    WHERE category_idx_fk = #{category_idx}
+	    ORDER BY b_idx DESC
 	</select>
 	
 	

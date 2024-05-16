@@ -63,7 +63,7 @@ public class BoardDAO implements InterBoardDAO{
 	
 	//페이징처리 안한 게시글목록
 	@Override
-	public List<BoardVO> get_boardList(HashMap<String, String> paraMap) {
+	public List<BoardVO> get_boardList(HashMap<String, Object> paraMap) {
 		List<BoardVO> board_list = sqlsession.selectList("board.get_boardList", paraMap);
 		return board_list;
 	}

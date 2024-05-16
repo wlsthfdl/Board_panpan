@@ -36,6 +36,6 @@ public interface InterBoardService {
 	int write_end(BoardVO boardvo);
 
 	//페이징 처리 안 한 게시글 목록 가져오기
-	List<BoardVO> get_boardList(HashMap<String, String> paraMap);
+	List<BoardVO> get_boardList(HashMap<String, Object> paraMap);
 
 }

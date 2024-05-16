@@ -254,14 +254,11 @@ public class FubaoBoardController {
 		//카테고리
 		List<CategoryVO> cate_list = service.get_category(category_idx);
 		
-		Date date = new Date();
-
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
-        String sysdate = formatter.format(date);
-
-		HashMap<String, Object> paraMap = new HashMap<>();
+		Date sysdate = new Date();
+        HashMap<String, Object> paraMap = new HashMap<>();
 		paraMap.put("sysdate", sysdate);
 		paraMap.put("category_idx",request.getParameter("category_idx"));
+
 		
 		List<BoardVO> board_list = service.get_boardList(paraMap);
 		

@@ -144,7 +144,7 @@ public class BoardService implements InterBoardService{
 
 	//페이징 처리 안한 글목록
 	@Override
-	public List<BoardVO> get_boardList(HashMap<String, String> paraMap) {
+	public List<BoardVO> get_boardList(HashMap<String, Object> paraMap) {
 		List<BoardVO> board_list = dao.get_boardList(paraMap);
 		return board_list;
 	}
