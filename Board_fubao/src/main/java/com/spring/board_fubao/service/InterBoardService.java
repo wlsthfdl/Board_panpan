@@ -38,4 +38,11 @@ public interface InterBoardService {
 	//페이징 처리 안 한 게시글 목록 가져오기
 	List<BoardVO> get_boardList(HashMap<String, Object> paraMap);
 
+	//게시글조회 (조회수 증가)
+	BoardVO getView(Map<String, String> paraMap);
+
+	//게시글 조회 (조회수 증가 없음)
+	BoardVO getViewNoCnt(Map<String, String> paraMap);
+
+	
 }

@@ -55,11 +55,36 @@
 	           END AS b_date,
 	           b_like, b_hit, b_status, c_cnt
 	    FROM tbl_board
-	    WHERE category_idx_fk = #{category_idx}
+	    WHERE category_idx_fk = #{category_idx} and b_status = 1
 	    ORDER BY b_idx DESC
 	</select>
 	
 	
+	<!-- 글1개 조회하기-->
+	<select id="getView" parameterType="HashMap" resultType="com.spring.board_fubao.model.BoardVO">
+		select previousseq, previoussubject
+		     , b_idx, id_fk, nickname, b_title, b_content, b_hit, b_date, b_like, c_cnt
+		     , nextseq, nextsubject 
+		from 
+		(
+		select lag(b_idx,1) over(order by b_idx desc) AS previousseq
+		     , lag(b_title,1) over(order by b_idx desc) AS previoussubject
+		     , b_idx, id_fk, nickname, b_title, b_content, b_hit
+		     , to_char(b_date, 'yyyy-mm-dd hh24:mi:ss') as b_date 
+		     , b_like , c_cnt
+		     , lead(b_idx,1) over(order by b_idx desc) AS nextseq
+		     , lead(b_title,1) over(order by b_idx desc) AS nextsubject 
+		from tbl_board
+		where b_status = 1
+		) V 
+		where V.b_idx = #{b_idx}
+	</select>
+	
+	<!-- 글조회수 1증가 하기 -->
+	<update id="setAddReadCnt" parameterType="int">
+		update tbl_board set b_hit = b_hit + 1
+		where b_idx = #{b_idx}
+	</update>
 	
 	
 </mapper>

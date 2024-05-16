@@ -27,36 +27,41 @@
                         <button type="button" class="base_bnt">목록</button>
                     </div>
                 </div>
+                
+                <c:if test="${not empty requestScope.boardvo}">
                 <div class="viewbox">
+                
                     <div class="article_view">
                         <div class="article_title">
-                            <a class="link_board">가입인사 </a>
-                            <h3>가입인사 안녕하세요</h3>
+                            <a class="link_board">가입인사</a>
+                            <h3>${requestScope.boardvo.b_title}</h3>
                         </div>
                         <div class="writer_info">
                             <div class="profile_area">
-                                <button type="button">닉네임</button>
-                                <span>2023.05.06 15:40</span>
-                                <span>조회 40</span>
+                                <button type="button">${requestScope.boardvo.nickname}</button>
+                                <span>${requestScope.boardvo.b_date}</span>
+                                <span>조회 ${requestScope.boardvo.b_hit}</span>
                             </div>
                         </div>
                         <div class="article_content">
-                            	글내용
+                            	${requestScope.boardvo.b_content}
                         </div>
                     </div>
+                    
                     <div class="article_comment">
                          <div class="comment_info">
                             <div class="comment_count">
                                 <img src="<%= ctxPath %>/resources/image/comment.png"  width="22">
                               		  댓글
-                                <span>22</span>
+                                <span>${requestScope.boardvo.c_cnt}</span>
                             </div>
                             <div class="article_like">
                                 <img src="<%= ctxPath %>/resources/image/heart_after.png" width="22">
                                 	좋아요
-                                <span>24</span>
+                                <span>${requestScope.boardvo.b_like}</span>
                             </div>
                         </div>
+                        
                         <div class="comment_area">
                         	<div style="margin-left: 4px;">
 	                            <div class="comment_nick">왕밤코</div>
@@ -74,8 +79,13 @@
                                 </div>
                             </div>
                         </div>
+                        
                     </div>
+                    <!-- article_comment 끝 -->
+                    
                 </div>
+                <!-- viewbox 끝 -->
+                </c:if>
            </div>
      		<!-- board_viewbox 끝 -->
         </div>

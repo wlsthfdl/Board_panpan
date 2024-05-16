@@ -14,6 +14,12 @@ public class BoardVO {
 	private int b_status;			//글 삭제여부
 	private int c_cnt;				//댓글 개수
 	
+
+	private String previousseq;      // 이전글번호
+	private String previoussubject;  // 이전글제목
+	private String nextseq;          // 다음글번호
+	private String nextsubject;      // 다음글제목	
+	
 	
 	
 	public int getB_idx() {
@@ -82,5 +88,31 @@ public class BoardVO {
 	public void setC_cnt(int c_cnt) {
 		this.c_cnt = c_cnt;
 	}
+	public String getPreviousseq() {
+		return previousseq;
+	}
+	public void setPreviousseq(String previousseq) {
+		this.previousseq = previousseq;
+	}
+	public String getPrevioussubject() {
+		return previoussubject;
+	}
+	public void setPrevioussubject(String previoussubject) {
+		this.previoussubject = previoussubject;
+	}
+	public String getNextseq() {
+		return nextseq;
+	}
+	public void setNextseq(String nextseq) {
+		this.nextseq = nextseq;
+	}
+	public String getNextsubject() {
+		return nextsubject;
+	}
+	public void setNextsubject(String nextsubject) {
+		this.nextsubject = nextsubject;
+	}
+	
+	
 	
 }

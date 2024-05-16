@@ -27,5 +27,10 @@ public interface InterBoardDAO {
 	//페이징처리 안한 게시글목록
 	List<BoardVO> get_boardList(HashMap<String, Object> paraMap);
 
+	//게시글 한개 보기
+	BoardVO getView(Map<String, String> paraMap);
+	//게시글 조회수 증가
+	void setAddReadCnt(int b_idx);
+
 
 }

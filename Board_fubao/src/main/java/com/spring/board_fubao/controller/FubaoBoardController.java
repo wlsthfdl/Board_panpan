@@ -251,6 +251,11 @@ public class FubaoBoardController {
 	@RequestMapping(value="/board_list.fu")
 	public ModelAndView board_list(ModelAndView mav, HttpServletRequest request) {
 		int category_idx = Integer.parseInt(request.getParameter("category_idx"));
+
+		//조회수 증가를 위한 것. F5를 눌렀을 때는 조회수 증가를 막아야함
+        HttpSession session = request.getSession();
+        session.setAttribute("readCountPermission", "yes");
+		
 		//카테고리
 		List<CategoryVO> cate_list = service.get_category(category_idx);
 		
@@ -277,8 +282,46 @@ public class FubaoBoardController {
    // 게시글 한 개 보기 페이지 요청
    @RequestMapping(value="/board_view.fu")
    public ModelAndView board_view(ModelAndView mav, HttpServletRequest request) {
-
-		mav.setViewName("board/view.tiles2");
+	   String b_idx = request.getParameter("b_idx");
+	   String goBackURL = request.getParameter("goBackURL");
+	   
+	   if(goBackURL != null && goBackURL.contains(" ")) {
+		   goBackURL = goBackURL.replaceAll(" ", "&");
+	   }
+	  
+	   Integer.parseInt(b_idx);
+	   mav.addObject("goBackURL", goBackURL);
+	   mav.addObject("b_idx",b_idx);	//이전글 다음글 보기
+	   
+	   HttpSession session = request.getSession();
+	   MemberVO login_user = (MemberVO) session.getAttribute("login_user");
+	   //로그인시 세션에 저장되어있는 유저
+	   
+	   String login_userId = null;	//로그아웃 상태에서도 글 조회를 할 수 있다. 조회수 증가.
+	   if(login_user != null) {
+		   login_userId = login_user.getId();
+	   }
+	   
+	   Map<String, String> paraMap = new HashMap<>();
+	   paraMap.put("b_idx", b_idx);
+	   paraMap.put("login_userId",login_userId);
+	   
+	   
+	   BoardVO boardvo = null;
+	   
+	   if("yes".equals(session.getAttribute("readCountPermission")) ) {
+		//글 조회수 증가와 함께 조회해오기
+		   boardvo = service.getView(paraMap);
+		   
+		   session.removeAttribute("readCountPermission");
+	   }else {
+		 // F5로 새로고침 한 경우
+		   
+		   boardvo = service.getViewNoCnt(paraMap);
+		   
+	   }
+	   mav.addObject("boardvo", boardvo);
+	   mav.setViewName("board/view.tiles2");
 		
 		return mav;
    }

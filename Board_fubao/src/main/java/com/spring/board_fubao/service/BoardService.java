@@ -149,5 +149,29 @@ public class BoardService implements InterBoardService{
 		return board_list;
 	}
 
+	//게시글 조회 (조회수 증가)
+	@Override
+	public BoardVO getView(Map<String, String> paraMap) {
+		BoardVO boardvo = dao.getView(paraMap);
+		
+		String login_userId = paraMap.get("login_userId");
+
+		if(login_userId != null && boardvo != null &&
+			!login_userId.equals(boardvo.getId_fk())) {
+			
+			dao.setAddReadCnt(boardvo.getB_idx());
+			boardvo = dao.getView(paraMap);
+		}
+		
+		return boardvo;
+	}
+	
+	//게시글 조회(조회수 증가 없음)
+	@Override
+	public BoardVO getViewNoCnt(Map<String, String> paraMap) {
+		BoardVO boardvo = dao.getView(paraMap);
+		return boardvo;
+	}
+
     
 }

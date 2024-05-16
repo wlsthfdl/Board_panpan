@@ -9,6 +9,20 @@
 
 %>   
 
+<script type="text/javascript">
+
+  function goView(b_idx) {
+	  
+    const goBackURL = "${requestScope.goBackURL}";
+	
+	
+	location.href = "<%= ctxPath%>/board_view.fu?b_idx="+b_idx;
+	
+  }
+  
+</script>
+
+
 
         <!-- main area -->
        <div id="main_area">
@@ -36,7 +50,7 @@
 							   <c:forEach var="boardvo" items="${requestScope.board_list}">
 		                           <tr>
 		                               <td>${boardvo.b_idx}</td>
-		                               <td>${boardvo.b_title}
+		                               <td><span onclick="goView('${boardvo.b_idx}')">${boardvo.b_title}</span>
 		                               	<span class="num">[<span>${boardvo.c_cnt}</span>]</span>
 		                               </td>
 		                               <td>${boardvo.nickname}</td>

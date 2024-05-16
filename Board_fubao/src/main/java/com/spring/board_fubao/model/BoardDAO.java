@@ -68,4 +68,17 @@ public class BoardDAO implements InterBoardDAO{
 		return board_list;
 	}
 
+	// 글 한 개 보기
+	@Override
+	public BoardVO getView(Map<String, String> paraMap) {
+		BoardVO boardvo = sqlsession.selectOne("board.getView", paraMap);
+		return boardvo;
+	}
+	// 글 조회수 1증가
+	@Override
+	public void setAddReadCnt(int b_idx) {
+		sqlsession.update("board.setAddReadCnt", b_idx);
+
+	}
+
 }
