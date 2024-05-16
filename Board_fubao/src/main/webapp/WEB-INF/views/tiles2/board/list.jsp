@@ -30,7 +30,7 @@
                         </thead>
                         <tbody>
                         	<c:if test="${empty requestScope.board_list}">
-								<td colspan="5">게시글 데이터가 없습니다</td>
+								<td colspan="5" style="text-align: center;">게시글이 없습니다</td>
 							</c:if>
 						   <c:if test="${not empty requestScope.board_list}">
 							   <c:forEach var="boardvo" items="${requestScope.board_list}">

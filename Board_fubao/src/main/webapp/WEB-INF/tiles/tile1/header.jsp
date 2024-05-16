@@ -55,19 +55,19 @@
             <div id="special_menu">
                 <ul>
                     <li>
-                        <a href="">인기글</a>
+                        <a href="<%=ctxPath%>/board_list.fu?category_idx=10">인기글</a>
                     </li>
                     <li>
-                        <a href="">BAO FAMILY 소식</a>
+                        <a href="<%=ctxPath%>/board_list.fu?category_idx=3">BAO FAMILY 소식</a>
                     </li>
                     <li>
-                        <a href="">사육사와의 소통</a>
+                        <a href="<%=ctxPath%>/board_list.fu?category_idx=4">사육사와의 소통</a>
                     </li>
                     <li>
-                        <a href="">자유게시판</a>
+                        <a href="<%=ctxPath%>/board_list.fu?category_idx=6">자유게시판</a>
                     </li>
                     <li>
-                        <a href="">꿀팁게시판</a>
+                        <a href="<%=ctxPath%>/board_list.fu?category_idx=7">꿀팁게시판</a>
                     </li>
                 </ul>
             </div>
