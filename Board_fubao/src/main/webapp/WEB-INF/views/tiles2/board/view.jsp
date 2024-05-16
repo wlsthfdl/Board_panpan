@@ -3,6 +3,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
  
 <%
     String ctxPath = request.getContextPath();
@@ -23,8 +24,15 @@
         <div id="main_area">
            <div class="board_viewbox" style="height: auto; padding-bottom: 29px;">
                 <div class="view_button">
+               		 <c:set var="v_gobackURL" value='${ fn:replace(requestScope.gobackURL, "&", " ") }' />
+				    
                     <div class="right_area">
-                        <button type="button" class="base_bnt">목록</button>
+                 <!-- 
+                 
+    					<button type="button" class="base_bnt_2" onclick="javascript:location.href='view_2.fu?b_idx=${requestScope.boardvo.previousseq}&gobackURL=${v_gobackURL}'" >이전글</button>
+				    	<button type="button" class="base_bnt_2" onclick="javascript:location.href='view_2.fu?b_idx=${requestScope.boardvo.previousseq}&gobackURL=${v_gobackURL}'">다음글</button>
+				 -->   
+				        <button type="button" class="base_bnt" onclick="<%= ctxPath %>/">목록</button>
                     </div>
                 </div>
                 
@@ -33,7 +41,7 @@
                 
                     <div class="article_view">
                         <div class="article_title">
-                            <a class="link_board">가입인사</a>
+                            <a class="link_board">${requestScope.category_name}</a>
                             <h3>${requestScope.boardvo.b_title}</h3>
                         </div>
                         <div class="writer_info">
@@ -71,13 +79,20 @@
                         </div>
                         
                         <div class="comment_writer">
-                            <div class="comment_inbox">
-                                <em class="comment_inbox_nick">두눈을감자</em>
-                                <textarea class="comment_inbox_text" placeholder="댓글을 남겨보세요."></textarea>
-                                <div class="comment_attach">
-                                    <button type="button" class="comment_bnt">등록</button>
-                                </div>
-                            </div>
+                            <c:if test="${sessionScope.login_user != null}">
+	                            <div class="comment_inbox">
+	                                <em class="comment_inbox_nick">${sessionScope.login_user.nickname}</em>
+	                                <textarea class="comment_inbox_text" placeholder="댓글을 남겨보세요."></textarea>
+	                                <div class="comment_attach">
+	                                    <button type="button" class="comment_bnt">등록</button>
+	                                </div>
+	                            </div>
+                            </c:if>
+                            <c:if test="${sessionScope.login_user == null}">
+                            	<div class="comment_inbox" style="height: 58px;">
+	                                <a href="<%= ctxPath %>/login.fu">지금 가입하고 댓글에 참여해보세요! > </a>
+	                            </div>
+                            </c:if>
                         </div>
                         
                     </div>
@@ -86,6 +101,10 @@
                 </div>
                 <!-- viewbox 끝 -->
                 </c:if>
+                
+				<c:if test="${empty requestScope.boardvo}">
+			    	<div style="padding: 50px 0; font-size: 16pt;">존재하지 않습니다</div>
+			    </c:if>
            </div>
      		<!-- board_viewbox 끝 -->
         </div>

@@ -11,12 +11,10 @@
 
 <script type="text/javascript">
 
-  function goView(b_idx) {
+  function goView(b_idx, category_idx_fk) {
 	  
     const goBackURL = "${requestScope.goBackURL}";
-	
-	
-	location.href = "<%= ctxPath%>/board_view.fu?b_idx="+b_idx;
+	location.href = "<%= ctxPath%>/board_view.fu?b_idx="+b_idx+"&category_idx_fk="+category_idx_fk+"&goBackURL="+goBackURL;
 	
   }
   
@@ -50,7 +48,7 @@
 							   <c:forEach var="boardvo" items="${requestScope.board_list}">
 		                           <tr>
 		                               <td>${boardvo.b_idx}</td>
-		                               <td><span onclick="goView('${boardvo.b_idx}')">${boardvo.b_title}</span>
+		                               <td><span onclick="goView('${boardvo.b_idx}','${boardvo.category_idx_fk}')" style="cursor: pointer;">${boardvo.b_title}</span>
 		                               	<span class="num">[<span>${boardvo.c_cnt}</span>]</span>
 		                               </td>
 		                               <td>${boardvo.nickname}</td>

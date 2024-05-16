@@ -175,9 +175,8 @@ body #gnb-menu{
 
 #user_info .my_profile .date{
     display: block;
-    margin: 15px 2px 0 0;
+    margin: 13px 2px 0 0;
     padding-bottom: 6px;
-    text-align: right;
     font-family : 'NanumSquare', sans-serif;
     font-weight: bold;
     font-size: 9pt;
@@ -1052,6 +1051,18 @@ font-weight: 400;
     height: 128px;
 }
 
+.comment_inbox a{
+	text-decoration:none;
+	cursor: pointer;
+	color: #808080;
+	font-size: 10pt;
+}
+.comment_inbox a:hover{
+	text-decoration:none;
+	color:green;
+	font-weight: 600;
+}
+
 .comment_inbox .comment_inbox_nick{
     display: block;
     font-size: 10pt;
@@ -1098,14 +1109,28 @@ font-weight: 400;
 
 .right_area{
     float:right;
-    width: 50px;
+    width: 175px;
     margin: 10px 5px;
 }
 
+
+
 .base_bnt{
     font-family: "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", 돋움, dotum, sans-serif;
-    font-size: 10pt;
+    font-size: 9pt;
     width: 47px;
+    height:  32px;
+    color: #145a33;    
+    font-weight: 600;
+    background-color: #03C75A1F;
+    border: none;
+    border-radius: 6px;
+}
+
+.base_bnt_2{
+    font-family: "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", 돋움, dotum, sans-serif;
+    font-size: 9pt;
+    width: 57px;
     height:  32px;
     color: #145a33;    
     font-weight: 600;

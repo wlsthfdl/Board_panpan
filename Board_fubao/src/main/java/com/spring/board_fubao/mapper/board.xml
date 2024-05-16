@@ -63,7 +63,7 @@
 	<!-- 글1개 조회하기-->
 	<select id="getView" parameterType="HashMap" resultType="com.spring.board_fubao.model.BoardVO">
 		select previousseq, previoussubject
-		     , b_idx, id_fk, nickname, b_title, b_content, b_hit, b_date, b_like, c_cnt
+		     , b_idx, id_fk, nickname, category_idx_fk, b_title, b_content, b_hit, b_date, b_like, c_cnt
 		     , nextseq, nextsubject 
 		from 
 		(
@@ -71,7 +71,7 @@
 		     , lag(b_title,1) over(order by b_idx desc) AS previoussubject
 		     , b_idx, id_fk, nickname, b_title, b_content, b_hit
 		     , to_char(b_date, 'yyyy-mm-dd hh24:mi:ss') as b_date 
-		     , b_like , c_cnt
+		     , b_like , c_cnt , category_idx_fk
 		     , lead(b_idx,1) over(order by b_idx desc) AS nextseq
 		     , lead(b_title,1) over(order by b_idx desc) AS nextsubject 
 		from tbl_board
