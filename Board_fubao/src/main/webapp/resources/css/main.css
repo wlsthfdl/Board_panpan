@@ -1103,17 +1103,32 @@ font-weight: 400;
 }
 
 .view_button{
-    height: 39px;
-    padding: 0 14px 5px 0;
+    height: 32px;
+    padding-right: 6px;
 }
 
 .right_area{
-    float:right;
+	display: grid; 
+	grid-template-columns: repeat(3, auto); 
+	gap: 10px; 
+	justify-content: end;"
     width: 175px;
-    margin: 10px 5px;
+    margin: 5px;
 }
 
 
+.base_bnt_2{
+    font-family: "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", 돋움, dotum, sans-serif;
+    font-size: 9pt;
+    width: 57px;
+    height:  32px;
+    color: #145a33;    
+    font-weight: 600;
+    background-color: #03C75A1F;
+    border: none;
+    border-radius: 6px;
+   
+}
 
 .base_bnt{
     font-family: "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", 돋움, dotum, sans-serif;
@@ -1127,14 +1142,3 @@ font-weight: 400;
     border-radius: 6px;
 }
 
-.base_bnt_2{
-    font-family: "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", 돋움, dotum, sans-serif;
-    font-size: 9pt;
-    width: 57px;
-    height:  32px;
-    color: #145a33;    
-    font-weight: 600;
-    background-color: #03C75A1F;
-    border: none;
-    border-radius: 6px;
-}

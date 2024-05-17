@@ -75,7 +75,7 @@
 		     , lead(b_idx,1) over(order by b_idx desc) AS nextseq
 		     , lead(b_title,1) over(order by b_idx desc) AS nextsubject 
 		from tbl_board
-		where b_status = 1
+		where b_status = 1 and category_idx_fk = #{category_idx}
 		) V 
 		where V.b_idx = #{b_idx}
 	</select>

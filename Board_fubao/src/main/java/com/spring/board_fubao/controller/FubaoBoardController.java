@@ -3,11 +3,14 @@ package com.spring.board_fubao.controller;
 import java.io.File;
 import java.io.InputStream;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.spring.board_fubao.common.MyUtil;
 import com.spring.board_fubao.common.FileManager;
 import com.spring.board_fubao.common.Sha256;
 import com.spring.board_fubao.model.BoardVO;
@@ -261,17 +265,22 @@ public class FubaoBoardController {
 	        HttpSession session = request.getSession();
 	        session.setAttribute("readCountPermission", "yes");
 			
+	        
 			//카테고리
 			List<CategoryVO> cate_list = service.get_category(category_idx);
-			
+
+			//게시날짜가 오늘이면 시간으로 보여주고, 지난 날짜면 날짜를 보여준다.
 			Date sysdate = new Date();
 	        HashMap<String, Object> paraMap = new HashMap<>();
 			paraMap.put("sysdate", sysdate);
 			paraMap.put("category_idx",request.getParameter("category_idx"));
-	
+
+            String goBackURL = MyUtil.getCurrentURL(request);            
 			
 			List<BoardVO> board_list = service.get_boardList(paraMap);
 			
+	        
+            mav.addObject("goBackURL",goBackURL.replaceAll("&", " "));			
 			mav.addObject("cate_list",cate_list);
 			mav.addObject("board_list",board_list);
 			mav.setViewName("board/list.tiles2");
@@ -289,19 +298,24 @@ public class FubaoBoardController {
    public ModelAndView board_view(ModelAndView mav, HttpServletRequest request, CategoryVO catevo) {
 	   String b_idx = request.getParameter("b_idx");
 	   String goBackURL = request.getParameter("goBackURL");
-	   String category_idx_fk = request.getParameter("category_idx_fk");
+	   String category_idx = request.getParameter("category_idx_fk");
 	   
+	   //카테고리 번호
+	   List<CategoryVO> cate_list = service.get_category(Integer.parseInt(category_idx));
 	   
-	   if(goBackURL.contains(" ")) {
+	   if(goBackURL != null && goBackURL.contains(" ")) {
 		   goBackURL = goBackURL.replaceAll(" ", "&");
 	   }
-
+	   
+	   mav.addObject("goBackURL",goBackURL);
+	   
 	   try {
 		   Integer.parseInt(b_idx);
-		   mav.addObject("goBackURL", goBackURL);
 		   mav.addObject("b_idx",b_idx);	//이전글 다음글 보기
-		   
+
 		   HttpSession session = request.getSession();
+
+		   
 		   MemberVO login_user = (MemberVO) session.getAttribute("login_user");
 		   //로그인시 세션에 저장되어있는 유저
 		   
@@ -313,7 +327,7 @@ public class FubaoBoardController {
 		   Map<String, String> paraMap = new HashMap<>();
 		   paraMap.put("b_idx", b_idx);
 		   paraMap.put("login_userId",login_userId);
-		   
+		   paraMap.put("category_idx", category_idx);
 		   
 		   BoardVO boardvo = null;
 
@@ -334,10 +348,43 @@ public class FubaoBoardController {
 	   } catch (NumberFormatException e) {
 		   //무응답
 	   }
-	   
+	   mav.addObject("cate_list", cate_list);
 	   mav.setViewName("board/view.tiles2");
 		
 		return mav;
+   }
+   
+   
+
+   // '다음글' '이전글'을 클릭하면 조회수를 올려주기 위해 이름만 view_2로 해준담에 다시 view로 넘겨준다.
+   @RequestMapping(value="/board_view_2.fu")
+   public ModelAndView board_view_2(ModelAndView mav, HttpServletRequest request) {
+	   String b_idx = request.getParameter("b_idx");
+	   String goBackURL = request.getParameter("goBackURL");
+	   String category_idx = request.getParameter("category_idx_fk");
+
+
+	   HttpSession session = request.getSession();
+	   session.setAttribute("readCountPermission", "yes");
+	   
+	   //  redirect:/ 를 할때 한글데이터는 한글이 ? 처럼 깨지므로 아래와 같이 한글깨짐을 방지해주어야 한다.
+	   try {
+		   goBackURL = URLEncoder.encode(goBackURL, "UTF-8");
+		   /*
+		   System.out.println("~~~ view_2의 URLEncoder.encode(searchWord, \"UTF-8\") : " + searchWord);
+		   System.out.println("~~~ view_2의 URLEncoder.encode(gobackURL, \"UTF-8\") : " + gobackURL);
+		   
+		   System.out.println(URLDecoder.decode(searchWord, "UTF-8"));
+		   System.out.println(URLDecoder.decode(gobackURL, "UTF-8"));
+		   */
+	   } catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+	   }
+	   
+	   mav.setViewName("redirect:/board_view.fu?b_idx="+ b_idx + "&category_idx_fk=" + category_idx + "&goBackURL=" + goBackURL);
+	   
+	   return mav;
+   
    }
 	
 }

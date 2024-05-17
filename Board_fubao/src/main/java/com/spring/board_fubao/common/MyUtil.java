@@ -14,7 +14,7 @@ public class MyUtil {
       // ~~~ 확인용 currentURL =>http://localhost:9090/MyMVC/member/memberList.up
       
       String queryString = request.getQueryString();
-      System.out.println("~~~ 확인용 queryString =>" + queryString);
+      //System.out.println("~~~ 확인용 queryString =>" + queryString);
       //~~~ 확인용 queryString => searchType=name&searchWord=유&currentShowPageNo=5&sizePerPage=3 (GET 방식일 경우)
       // ~~~ 확인용 queryString => null(POST 방식일 경우)
       

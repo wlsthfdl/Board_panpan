@@ -14,7 +14,7 @@
 
   $(document).ready(function(){
 
-	    
+//	    const goBackURL = "${requestScope.goBackURL}";
 	    
   });
 	    
@@ -23,17 +23,16 @@
         <!-- main area -->
         <div id="main_area">
            <div class="board_viewbox" style="height: auto; padding-bottom: 29px;">
+              <c:forEach var="catevo" items="${requestScope.cate_list}">
                 <div class="view_button">
-               		 <c:set var="v_gobackURL" value='${ fn:replace(requestScope.gobackURL, "&", " ") }' />
-				    
+               		 <c:set var="v_goBackURL" value='${ fn:replace(requestScope.goBackURL, "&", " ") }' />
                     <div class="right_area">
-                 <!-- 
-                 
-    					<button type="button" class="base_bnt_2" onclick="javascript:location.href='view_2.fu?b_idx=${requestScope.boardvo.previousseq}&gobackURL=${v_gobackURL}'" >이전글</button>
-				    	<button type="button" class="base_bnt_2" onclick="javascript:location.href='view_2.fu?b_idx=${requestScope.boardvo.previousseq}&gobackURL=${v_gobackURL}'">다음글</button>
-				 -->   
-				        <button type="button" class="base_bnt" onclick="<%= ctxPath %>/">목록</button>
+    					<button type="button" class="base_bnt_2" ${empty requestScope.boardvo.previousseq ? 'hidden' : ''} onclick="javascript:location.href='<%= ctxPath %>/board_view_2.fu?b_idx=${requestScope.boardvo.previousseq}&category_idx_fk=${catevo.category_idx}&goBackURL=${v_goBackURL}'" >이전글</button>	    	
+				    	<button type="button" class="base_bnt_2" ${empty requestScope.boardvo.nextseq ? 'hidden' : ''} onclick="javascript:location.href='<%= ctxPath %>/board_view_2.fu?b_idx=${requestScope.boardvo.nextseq}&category_idx_fk=${catevo.category_idx}&goBackURL=${v_goBackURL}'">다음글</button>
+						<button type="button" class="base_bnt" onclick= "javascript:location.href='<%= ctxPath %>/board_list.fu?category_idx=${catevo.category_idx}'">목록</button>
                     </div>
+                    
+                    
                 </div>
                 
                 <c:if test="${not empty requestScope.boardvo}">
@@ -41,7 +40,7 @@
                 
                     <div class="article_view">
                         <div class="article_title">
-                            <a class="link_board">${requestScope.category_name}</a>
+                            <a class="link_board" href="<%= ctxPath %>/board_list.fu?category_idx=${catevo.category_idx}">${catevo.category_name}</a>        
                             <h3>${requestScope.boardvo.b_title}</h3>
                         </div>
                         <div class="writer_info">
@@ -105,6 +104,7 @@
 				<c:if test="${empty requestScope.boardvo}">
 			    	<div style="padding: 50px 0; font-size: 16pt;">존재하지 않습니다</div>
 			    </c:if>
+			  </c:forEach>
            </div>
      		<!-- board_viewbox 끝 -->
         </div>
