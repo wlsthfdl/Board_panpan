@@ -86,6 +86,7 @@
                     <input type="text" id="id" name="id" placeholder="ID" style="margin-bottom: 0;">
                     <span class="pw_info" style="padding-left: 10px; color:#43A44A;">ID는 이메일 형식으로 입력해주세요.</span>
                     <input type="password" id="pwd" name="pwd" placeholder="PASSWORD">
+                    <div class="go_join"><img src="<%= ctxPath %>/resources/image/r_arrow.png" width="9"/><a href="<%= ctxPath %>/join.fu">JOIN</a></div>
                     <button type="button" class="login_submit" onclick="go_login();">LET'S GO</button>
                 </form>
                 </div>

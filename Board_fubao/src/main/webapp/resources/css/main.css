@@ -1,7 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,600,700);
 @import url('https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@2.0/nanumsquare.css');
 
-
+<a href="https://kr.freepik.com/icon/people_5889508#fromView=search&page=1&position=6&uuid=1cca0ed1-b9a1-41d1-af95-0452def76c99">POD Gladiator 제작 아이콘</a>
 
 
 /*header*/
@@ -17,6 +17,7 @@ body #gallery-body {
 
 body #gallery-gnb{
     width: 1080px;
+    margin: 0 auto;
 }
 
 body #gnb-menu{
@@ -756,6 +757,24 @@ margin-bottom: 40px;
     background: linear-gradient(212.38deg, rgba(29, 146, 13, 0.836) 0%, rgba(23, 139, 233, 0.71) 100%);
     color: #fff;
     font-weight: bold;
+}
+
+.go_join{
+	padding-left: 6px;
+}
+
+.go_join a{
+	padding-left:6px;
+	cursor: pointer;
+	font-size:10pt;
+	font-weight: 600;
+	vertical-align: bottom;
+	color: #008040;
+
+}
+
+.go_join a:hover{
+	color: #c0c0c0;	
 }
 
 .login_right {
