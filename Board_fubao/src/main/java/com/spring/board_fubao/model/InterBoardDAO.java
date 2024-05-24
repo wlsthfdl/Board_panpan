@@ -32,5 +32,8 @@ public interface InterBoardDAO {
 	//게시글 조회수 증가
 	void setAddReadCnt(int b_idx);
 
+	//모든 카테고리 조회
+	List<CategoryVO> get_all_category(int role);
+
 
 }

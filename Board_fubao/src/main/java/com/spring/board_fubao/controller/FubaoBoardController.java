@@ -174,18 +174,26 @@ public class FubaoBoardController {
 	
 	// '게시글쓰기'클릭시 불러올 페이지 요청
 	@RequestMapping(value="/board_write.fu")
-	public ModelAndView board_write(ModelAndView mav) {
-		
-		mav.setViewName("board/write.tiles2");
-		
-		return mav;
+	public ModelAndView board_write(ModelAndView mav, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		MemberVO login_user = (MemberVO) session.getAttribute("login_user");
+		int role = login_user.getRole();
+		System.out.println(role);
+	   //카테고리 조회해오기
+	   List<CategoryVO> cate_list_all = service.get_all_category(role);
+	   
+	   System.out.println(cate_list_all);
+	   mav.addObject("cate_list_all", cate_list_all);
+	   mav.setViewName("board/write.tiles2");
+	   
+	   return mav;
 	}
 
 	// 게시글쓰기 처리
 	@RequestMapping(value="/write_end.fu", method={RequestMethod.POST})
 	public ModelAndView write_end(ModelAndView mav, BoardVO boardvo, HttpServletRequest request, HttpServletResponse response) {
 		String category_idx = request.getParameter("category_idx_fk");
-		
+
 		int n = service.write_end(boardvo); 
 		
 		if(n==1) {  
@@ -370,13 +378,7 @@ public class FubaoBoardController {
 	   //  redirect:/ 를 할때 한글데이터는 한글이 ? 처럼 깨지므로 아래와 같이 한글깨짐을 방지해주어야 한다.
 	   try {
 		   goBackURL = URLEncoder.encode(goBackURL, "UTF-8");
-		   /*
-		   System.out.println("~~~ view_2의 URLEncoder.encode(searchWord, \"UTF-8\") : " + searchWord);
-		   System.out.println("~~~ view_2의 URLEncoder.encode(gobackURL, \"UTF-8\") : " + gobackURL);
-		   
-		   System.out.println(URLDecoder.decode(searchWord, "UTF-8"));
-		   System.out.println(URLDecoder.decode(gobackURL, "UTF-8"));
-		   */
+		  
 	   } catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 	   }
@@ -387,4 +389,34 @@ public class FubaoBoardController {
    
    }
 	
+   
+   //본인 글 수정하기
+   @RequestMapping(value="/board_edit.fu")
+   public ModelAndView board_edit(ModelAndView mav, HttpServletRequest request, CategoryVO catevo) {
+	   String b_idx = request.getParameter("b_idx");
+	   String category_idx = request.getParameter("category_idx");
+	   
+	   Map<String, String> paraMap = new HashMap<>();
+	   paraMap.put("b_idx", b_idx);
+	   paraMap.put("category_idx", category_idx);
+	   
+	   BoardVO boardvo = service.getViewNoCnt(paraMap);
+	   
+	   //전체 카테고리 조회해오기
+	   HttpSession session = request.getSession();
+	   MemberVO login_user = (MemberVO) session.getAttribute("login_user");
+	   int role = login_user.getRole();
+	   List<CategoryVO> cate_list_all = service.get_all_category(role);
+	   
+	   //카테고리 이름 조회해오기 위한 것
+	   List<CategoryVO> cate_list = service.get_category(Integer.parseInt(category_idx));
+
+	   mav.addObject("cate_list", cate_list);
+	   mav.addObject("cate_list_all",cate_list_all);
+	   mav.addObject("boardvo", boardvo);
+	   mav.setViewName("board/edit.tiles2");
+	   
+	   return mav;
+   }
+   
 }

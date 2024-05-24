@@ -35,7 +35,12 @@
                         <!-- 로그인 유저 id/로그아웃 버튼-->
                         <c:if test="${not empty sessionScope.login_user}">
 		                     <li style="vertical-align: middle; color:green; "> 
-		                         <p style="padding-right : 15px;">일반회원&nbsp;&nbsp;<span style="font-weight: bold">${(sessionScope.login_user).id}</span>님</p>
+		                         <c:if test="${sessionScope.login_user.role == 1}">
+			                         <p style="padding-right : 15px;">일반회원&nbsp;&nbsp;<span style="font-weight: bold">${(sessionScope.login_user).id}</span>님</p>
+			                     </c:if>
+			                     <c:if test="${sessionScope.login_user.role == 0}">
+			                         <p style="padding-right : 15px;">관리자&nbsp;&nbsp;<span style="font-weight: bold">${(sessionScope.login_user).id}</span>님</p>
+			                     </c:if>
 		                     </li>
 	                         <li>
 	                        	<a onclick="location.href='<%= ctxPath%>/logout.fu'"  title="Button fade orange" class="button btnFade btnOrange" style="cursor:pointer; width:64px;">

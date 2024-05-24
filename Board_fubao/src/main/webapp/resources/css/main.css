@@ -714,10 +714,10 @@ body #gnb-menu{
     font-weight: 400;
 }
 .login_left .top_link{
-height: 20px
+	height: 20px
 }
 .login_left .contact{
-display: flex;
+	display: flex;
     align-items: center;
     justify-content: center;
     align-self: center;
@@ -726,8 +726,9 @@ display: flex;
     margin: auto;
 }
 .login_left h3{
-text-align: center;
-margin-bottom: 40px;
+	text-align: center;
+	margin-bottom: 40px;
+	color: #017a1a;
 }
 .login_left input {
     border: none;
@@ -983,6 +984,7 @@ font-weight: 400;
 }
 
 .profile_area{
+	display: inline-block;
     width: 272px;
     height: 41px;
     margin-left: 4px;
@@ -1121,18 +1123,20 @@ font-weight: 400;
     border-radius: 6px;
 }
 
-.view_button{
-    height: 32px;
-    padding-right: 6px;
+.view_button{	
+	height: 32px;
+	padding-right: 15px;
 }
 
 .right_area{
+	float:right;
 	display: grid; 
 	grid-template-columns: repeat(3, auto); 
 	gap: 10px; 
-	justify-content: end;"
+	justify-content: end;
     width: 175px;
     margin: 5px;
+    
 }
 
 
@@ -1161,3 +1165,20 @@ font-weight: 400;
     border-radius: 6px;
 }
 
+.edit_delete{
+	float:right;
+	display: grid; 
+	grid-template-columns: repeat(3, auto); 
+	justify-content: end; 
+    width: 175px;
+    margin: 3px;
+}
+
+.ed_bnt{
+	border: 0;
+	border-radius:4px;
+  	font-size: 9pt;
+  	padding: 2px 5px;
+  	color: #6f6f6f;
+  	background-color: #f4f4f4;
+}

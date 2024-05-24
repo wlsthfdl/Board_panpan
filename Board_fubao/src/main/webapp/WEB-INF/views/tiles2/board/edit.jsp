@@ -91,47 +91,31 @@
 				<input type="hidden" name="nickname" value="${sessionScope.login_user.nickname}"  />
                 <div class="writing_header">
                     <h2>게시판 글쓰기</h2>
-                    <div class="tool_area"><button type="button" id="btn_write">등록</button></div>
+                    <div class="tool_area"><button type="button" id="btn_write">수정</button></div>
                 </div>
                 <div class="writing_content">
                     <div class="editer_wrap">
-                     <!--   <select name="category_idx_fk" class="select_cate">
-                            <option value="">게시판을 선택해 주세요</option>
-                            <option value="1">가입인사</option>
-                           	<c:if test="${sessionScope.login_user.role == 0}">
-                            <option value="2">공지사항</option>
-                            </c:if>
-                            <option value="3">BAO Family 소식</option>
-                            <option value="4">사육사와의 소통</option>
-                            <option value="5">판다월드 관람/체험 후기</option>
-                            <option value="6">자유게시판</option>
-                            <option value="7">꿀팁게시판</option>
-                            <option value="8">질문게시판</option>
-                            <option value="9">팬아트</option>
-                            
-                            
-                            <c:if test="${sessionScope.login_user.role == 0}">
-                            	<option value="">공지사항</option>
-                            </c:if>
-                        </select>
-                          -->
-                          <select name="category_idx_fk" class="select_cate">
-                          <option value="">게시판을 선택해 주세요</option>	
+                        <select name="category_idx_fk" class="select_cate">
 	                          <c:if test="${sessionScope.login_user.role == 0}">
-		                           <option value="2">공지사항</option>
+								 <c:forEach var="categoryvo" items="${requestScope.cate_list}">
+                       			 	<option value="" >${categoryvo.category_name}</option>
+                       			 </c:forEach>
+                       			   <option value="2">공지사항</option>
 		                           <option value="3">BAO Family 소식</option>
 	                           </c:if>
 	                          <c:if test="${sessionScope.login_user.role == 1}">
-		                          <c:forEach var="catevo" items="${requestScope.cate_list_all}">
-		                            <option value="${catevo.category_idx}">${catevo.category_name}</option>
-		                          </c:forEach>
+	                             <c:forEach var="categoryvo" items="${requestScope.cate_list}">
+                       			 	<option value="" >${categoryvo.category_name}</option>
+                       			 </c:forEach>
+                       			 <c:forEach var="catevo" items="${requestScope.cate_list_all}">
+		                         	<option value="${catevo.category_idx}">${catevo.category_name}</option>
+	                          	 </c:forEach>
 	                          </c:if>
-                          </select>
-                          
-                        <input id="subject" name="b_title" placeholder="제목을 입력해 주세요." class="board_title">
+                        </select>
+                        <input id="subject" name="b_title" class="board_title" value="${requestScope.boardvo.b_title}">
                     </div>
                     <div id="smart_editor" class="smart_editor">
-						<textarea style="width:98%; height: 650px;" name="b_content" id="content"></textarea>						
+						<textarea style="width:98%; height: 650px;" name="b_content" id="content">${requestScope.boardvo.b_content}</textarea>						
                     </div>
                 </div>
              </form>

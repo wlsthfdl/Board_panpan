@@ -12,12 +12,14 @@
 
 <script type="text/javascript">
 
-  $(document).ready(function(){
-
-//	    const goBackURL = "${requestScope.goBackURL}";
+	$(document).ready(function(){
+		  
+	//	    const goBackURL = "${requestScope.goBackURL}";
+		    
+	});
 	    
-  });
-	    
+  
+	
 </script>
 
         <!-- main area -->
@@ -27,8 +29,10 @@
                 <div class="view_button">
                		 <c:set var="v_goBackURL" value='${ fn:replace(requestScope.goBackURL, "&", " ") }' />
                     <div class="right_area">
-    					<button type="button" class="base_bnt_2" ${empty requestScope.boardvo.previousseq ? 'hidden' : ''} onclick="javascript:location.href='<%= ctxPath %>/board_view_2.fu?b_idx=${requestScope.boardvo.previousseq}&category_idx_fk=${catevo.category_idx}&goBackURL=${v_goBackURL}'" >이전글</button>	    	
-				    	<button type="button" class="base_bnt_2" ${empty requestScope.boardvo.nextseq ? 'hidden' : ''} onclick="javascript:location.href='<%= ctxPath %>/board_view_2.fu?b_idx=${requestScope.boardvo.nextseq}&category_idx_fk=${catevo.category_idx}&goBackURL=${v_goBackURL}'">다음글</button>
+    					<button type="button" class="base_bnt_2" ${empty requestScope.boardvo.previousseq ? 'hidden' : ''} 
+    							onclick="javascript:location.href='<%= ctxPath %>/board_view_2.fu?b_idx=${requestScope.boardvo.previousseq}&category_idx_fk=${catevo.category_idx}&goBackURL=${v_goBackURL}'" >이전글</button>	    	
+				    	<button type="button" class="base_bnt_2" ${empty requestScope.boardvo.nextseq ? 'hidden' : ''} 
+				    			onclick="javascript:location.href='<%= ctxPath %>/board_view_2.fu?b_idx=${requestScope.boardvo.nextseq}&category_idx_fk=${catevo.category_idx}&goBackURL=${v_goBackURL}'">다음글</button>
 						<button type="button" class="base_bnt" onclick= "javascript:location.href='<%= ctxPath %>/board_list.fu?category_idx=${catevo.category_idx}'">목록</button>
                     </div>
                     
@@ -41,7 +45,16 @@
                     <div class="article_view">
                         <div class="article_title">
                             <a class="link_board" href="<%= ctxPath %>/board_list.fu?category_idx=${catevo.category_idx}">${catevo.category_name}</a>        
+                            
+                            <c:if test="${sessionScope.login_user.id eq requestScope.boardvo.id_fk}">
+                            <div class="edit_delete">
+                                <button class="ed_bnt" style="margin-right: 9px;" type="button" onclick="javascript:location.href='<%= ctxPath %>/board_edit.fu?b_idx=${requestScope.boardvo.b_idx}&category_idx=${catevo.category_idx}'">수정</button>
+                                <button class="ed_bnt" type="button">삭제</button>
+                            </div>
+                            </c:if>
+                            
                             <h3>${requestScope.boardvo.b_title}</h3>
+                            
                         </div>
                         <div class="writer_info">
                             <div class="profile_area">

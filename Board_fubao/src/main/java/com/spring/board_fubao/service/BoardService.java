@@ -173,5 +173,11 @@ public class BoardService implements InterBoardService{
 		return boardvo;
 	}
 
+	@Override
+	public List<CategoryVO> get_all_category(int role) {
+		List<CategoryVO> cate_list_all = dao.get_all_category(role);
+		return cate_list_all;
+	}
+
     
 }

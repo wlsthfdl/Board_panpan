@@ -390,8 +390,8 @@
 
 <!-- 회원가입 form 시작 -->
 <form class="sign_frm" name="sign_frm">
-	<div style="background-color: #f7ffee; width: 1080px; margin: 0 auto;">
-	    <div id="content_area" style="height: 935px;">
+	<div style="width: 1080px; margin: 0 auto;">
+	    <div style=" background-color: f7ffee; height: 935px;">
 				<div id="do_join">                                                
 			       <h2 style="padding-top: 31px; font-size: 1.17em;">JOIN</h2>
 			       <div class="textForm">

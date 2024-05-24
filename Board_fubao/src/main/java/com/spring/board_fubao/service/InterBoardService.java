@@ -44,5 +44,8 @@ public interface InterBoardService {
 	//게시글 조회 (조회수 증가 없음)
 	BoardVO getViewNoCnt(Map<String, String> paraMap);
 
+	//모든 카테고리 조회
+	List<CategoryVO> get_all_category(int role);
+
 	
 }

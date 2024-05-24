@@ -81,4 +81,11 @@ public class BoardDAO implements InterBoardDAO{
 
 	}
 
+	//모든 카테고리 조회
+	@Override
+	public List<CategoryVO> get_all_category(int role) {
+		List<CategoryVO> cate_list_all = sqlsession.selectList("board.get_all_category");
+		return cate_list_all;
+	}
+
 }

@@ -86,5 +86,13 @@
 		where b_idx = #{b_idx}
 	</update>
 	
+	<!-- 카테고리 list 조회 -->
+	<select id="get_all_category" resultType="com.spring.board_fubao.model.CategoryVO" parameterType="int">
+		select *
+		from TBL_CATEGORY
+		where category_idx != 2
+	</select>
+	
+	
 	
 </mapper>
