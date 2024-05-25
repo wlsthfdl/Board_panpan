@@ -1132,11 +1132,10 @@ font-weight: 400;
 	float:right;
 	display: grid; 
 	grid-template-columns: repeat(3, auto); 
-	gap: 10px; 
+	gap: 5px; 
 	justify-content: end;
     width: 175px;
-    margin: 5px;
-    
+    margin-top: 4px;
 }
 
 

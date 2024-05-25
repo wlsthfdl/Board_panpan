@@ -13,18 +13,28 @@
 <script type="text/javascript">
 
 	$(document).ready(function(){
-		  
-	//	    const goBackURL = "${requestScope.goBackURL}";
-		    
+		
 	});
 	    
-  
+  	function go_del() {
+  		var result = confirm("정말 삭제하시겠습니까?");
+		if(!result) return false;
+		else{
+			const frm = document.del_frm;
+		    frm.action = "<%= ctxPath%>/board_delete.fu";
+			frm.method="post";
+			frm.submit();
+		}
+	};
 	
 </script>
 
         <!-- main area -->
         <div id="main_area">
            <div class="board_viewbox" style="height: auto; padding-bottom: 29px;">
+              <form name="del_frm" enctype="multipart/form-data">
+              <input type="hidden" name="b_idx" value="${requestScope.boardvo.b_idx}" />
+              <input type="hidden" name="category_idx" value="${requestScope.boardvo.category_idx_fk}" />
               <c:forEach var="catevo" items="${requestScope.cate_list}">
                 <div class="view_button">
                		 <c:set var="v_goBackURL" value='${ fn:replace(requestScope.goBackURL, "&", " ") }' />
@@ -41,15 +51,16 @@
                 
                 <c:if test="${not empty requestScope.boardvo}">
                 <div class="viewbox">
-                
+                	
                     <div class="article_view">
                         <div class="article_title">
                             <a class="link_board" href="<%= ctxPath %>/board_list.fu?category_idx=${catevo.category_idx}">${catevo.category_name}</a>        
                             
                             <c:if test="${sessionScope.login_user.id eq requestScope.boardvo.id_fk}">
                             <div class="edit_delete">
-                                <button class="ed_bnt" style="margin-right: 9px;" type="button" onclick="javascript:location.href='<%= ctxPath %>/board_edit.fu?b_idx=${requestScope.boardvo.b_idx}&category_idx=${catevo.category_idx}'">수정</button>
-                                <button class="ed_bnt" type="button">삭제</button>
+                                <button class="ed_bnt" style="margin-right: 9px;" type="button" 
+                                		onclick="javascript:location.href='<%= ctxPath %>/board_edit.fu?b_idx=${requestScope.boardvo.b_idx}&category_idx=${catevo.category_idx}'">수정</button>
+                                <button class="ed_bnt" type="button" id="del_btn" onclick="go_del()">삭제</button>
                             </div>
                             </c:if>
                             
@@ -118,6 +129,7 @@
 			    	<div style="padding: 50px 0; font-size: 16pt;">존재하지 않습니다</div>
 			    </c:if>
 			  </c:forEach>
+			 </form>
            </div>
      		<!-- board_viewbox 끝 -->
         </div>

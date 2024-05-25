@@ -116,16 +116,10 @@
                         </select>
                           -->
                           <select name="category_idx_fk" class="select_cate">
-                          <option value="">게시판을 선택해 주세요</option>	
-	                          <c:if test="${sessionScope.login_user.role == 0}">
-		                           <option value="2">공지사항</option>
-		                           <option value="3">BAO Family 소식</option>
-	                           </c:if>
-	                          <c:if test="${sessionScope.login_user.role == 1}">
-		                          <c:forEach var="catevo" items="${requestScope.cate_list_all}">
-		                            <option value="${catevo.category_idx}">${catevo.category_name}</option>
-		                          </c:forEach>
-	                          </c:if>
+                          <option value="">게시판을 선택해 주세요</option>
+	                          <c:forEach var="catevo" items="${requestScope.cate_list_all}">
+	                            <option value="${catevo.category_idx}">${catevo.category_name}</option>
+	                          </c:forEach>
                           </select>
                           
                         <input id="subject" name="b_title" placeholder="제목을 입력해 주세요." class="board_title">

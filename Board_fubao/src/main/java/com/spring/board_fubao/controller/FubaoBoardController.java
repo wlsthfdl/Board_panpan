@@ -411,11 +411,51 @@ public class FubaoBoardController {
 	   //카테고리 이름 조회해오기 위한 것
 	   List<CategoryVO> cate_list = service.get_category(Integer.parseInt(category_idx));
 
-	   mav.addObject("cate_list", cate_list);
-	   mav.addObject("cate_list_all",cate_list_all);
+	   mav.addObject("cate_list", cate_list);		//board category_idx_fk에 맞는 category_name을 찾아오기 위함
+	   mav.addObject("cate_list_all",cate_list_all);		//모든 카테고리 내용을 보여주기 위함
 	   mav.addObject("boardvo", boardvo);
 	   mav.setViewName("board/edit.tiles2");
 	   
+	   return mav;
+   }
+   
+   //게시글 수정
+   @RequestMapping(value="/edit_end.fu", method = {RequestMethod.POST} )
+   public ModelAndView edit_end(ModelAndView mav, BoardVO boardvo, HttpServletRequest request) {
+	
+	   int n = service.edit(boardvo);
+
+	   if(n==0) {
+		   mav.addObject("message","글 수정 실패.");	
+		   mav.addObject("loc","javascipt:history.back()");	
+	   }else {
+		   mav.addObject("message","수정 되었습니다.");	
+		   mav.addObject("loc", request.getContextPath()+"/board_view.fu?b_idx=" + boardvo.getB_idx() + "&category_idx_fk=" + boardvo.getCategory_idx_fk());	
+	   }
+	   mav.setViewName("msg");
+
+	   return mav;
+   }
+
+   //게시글 삭제 
+   @RequestMapping(value="/board_delete.fu", method = {RequestMethod.POST} )
+   public ModelAndView board_delete(ModelAndView mav, HttpServletRequest request) {
+	   
+	   String b_idx = request.getParameter("b_idx");
+	   System.out.println(b_idx);
+	   int n = service.del(b_idx);
+	   
+	   String category_idx = request.getParameter("category_idx");
+	   
+	   if(n==0) {
+		   mav.addObject("message","글 삭제 실패");	
+		   mav.addObject("loc","javascipt:history.back()");	
+	   }else {
+		   mav.addObject("message","삭제 되었습니다.");	
+		   mav.addObject("loc", request.getContextPath()+"/board_list.fu?category_idx=" + category_idx);	
+	   }
+	   mav.setViewName("msg");
+
 	   return mav;
    }
    

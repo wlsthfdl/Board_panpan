@@ -88,11 +88,30 @@
 	
 	<!-- 카테고리 list 조회 -->
 	<select id="get_all_category" resultType="com.spring.board_fubao.model.CategoryVO" parameterType="int">
-		select *
-		from TBL_CATEGORY
-		where category_idx != 2
+		<if test='role == 1'>
+			select *
+			from TBL_CATEGORY
+			where category_idx not in(2,3,4,10)
+		</if>
+		<if test='role == 0'>
+			select *
+			from TBL_CATEGORY
+			where category_idx in(2,3,4)
+		</if>
 	</select>
 	
+	<!-- 글 수정하기 -->
+	<update id="edit" parameterType="com.spring.board_fubao.model.BoardVO">
+		update tbl_board set b_title = #{b_title}, b_content = #{b_content}, 
+							 category_idx_fk = #{category_idx_fk}
+	    where b_idx = #{b_idx}
+	</update>
+	
+	<!-- 글 삭제하기 -->
+	<delete id="del" parameterType="String">
+		delete from tbl_board
+		where b_idx = #{b_idx}
+	</delete>
 	
 	
 </mapper>

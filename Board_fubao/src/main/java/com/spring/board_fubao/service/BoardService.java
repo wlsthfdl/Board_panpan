@@ -173,10 +173,27 @@ public class BoardService implements InterBoardService{
 		return boardvo;
 	}
 
+	
+	//모든 카테고리 조회 (파라미터없음)
 	@Override
 	public List<CategoryVO> get_all_category(int role) {
 		List<CategoryVO> cate_list_all = dao.get_all_category(role);
 		return cate_list_all;
+	}
+
+	
+	//글 수정하기
+	@Override
+	public int edit(BoardVO boardvo) {
+		int n = dao.edit(boardvo);
+		return n;
+	}
+
+	//글 삭제하기
+	@Override
+	public int del(String b_idx) {
+		int n = dao.del(b_idx);
+		return n;
 	}
 
     

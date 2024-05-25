@@ -47,5 +47,11 @@ public interface InterBoardService {
 	//모든 카테고리 조회
 	List<CategoryVO> get_all_category(int role);
 
+	//글 수정
+	int edit(BoardVO boardvo);
+
+	//글 삭제
+	int del(String b_idx);
+
 	
 }

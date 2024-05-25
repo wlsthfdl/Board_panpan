@@ -35,5 +35,11 @@ public interface InterBoardDAO {
 	//모든 카테고리 조회
 	List<CategoryVO> get_all_category(int role);
 
+	//글 수정하기
+	int edit(BoardVO boardvo);
+
+	//글 삭제하기
+	int del(String b_idx);
+
 
 }

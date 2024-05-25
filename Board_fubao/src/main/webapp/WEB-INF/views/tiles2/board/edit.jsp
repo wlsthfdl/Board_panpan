@@ -70,9 +70,9 @@
 			
 
 			// 폼(form)을 전송(submit)
-			const frm = document.write_frm;
+			const frm = document.edit_frm;
 			frm.method = "post";
-			frm.action = "<%= ctxPath%>/write_end.fu";
+			frm.action = "<%= ctxPath%>/edit_end.fu";
 			frm.submit();
 		  });	
 		  //글쓰기 버튼 끝-----------------------------------
@@ -86,9 +86,10 @@
         <!-- main area -->
         <div id="main_area">
            <div class="board_viewbox" style="margin:0 auto; height: 1190px;">
-           	<form name="write_frm" enctype="multipart/form-data">
+           	<form name="edit_frm" enctype="multipart/form-data">
            		<input type="hidden" name="id_fk" value="${sessionScope.login_user.id}" />
 				<input type="hidden" name="nickname" value="${sessionScope.login_user.nickname}"  />
+				<input type="hidden" name="b_idx" value="${requestScope.boardvo.b_idx}"/>
                 <div class="writing_header">
                     <h2>게시판 글쓰기</h2>
                     <div class="tool_area"><button type="button" id="btn_write">수정</button></div>
@@ -96,21 +97,11 @@
                 <div class="writing_content">
                     <div class="editer_wrap">
                         <select name="category_idx_fk" class="select_cate">
-	                          <c:if test="${sessionScope.login_user.role == 0}">
-								 <c:forEach var="categoryvo" items="${requestScope.cate_list}">
-                       			 	<option value="" >${categoryvo.category_name}</option>
-                       			 </c:forEach>
-                       			   <option value="2">공지사항</option>
-		                           <option value="3">BAO Family 소식</option>
-	                           </c:if>
-	                          <c:if test="${sessionScope.login_user.role == 1}">
-	                             <c:forEach var="categoryvo" items="${requestScope.cate_list}">
-                       			 	<option value="" >${categoryvo.category_name}</option>
-                       			 </c:forEach>
-                       			 <c:forEach var="catevo" items="${requestScope.cate_list_all}">
-		                         	<option value="${catevo.category_idx}">${catevo.category_name}</option>
-	                          	 </c:forEach>
-	                          </c:if>
+	                          <c:forEach var="categoryvo" items="${requestScope.cate_list}">
+	                       			 <c:forEach var="catevo" items="${requestScope.cate_list_all}">
+			                         	<option value="${catevo.category_idx}" <c:if test="${categoryvo.category_idx == catevo.category_idx}">selected="selected"</c:if>>${catevo.category_name}</option>
+		                          	 </c:forEach>
+                       		</c:forEach>
                         </select>
                         <input id="subject" name="b_title" class="board_title" value="${requestScope.boardvo.b_title}">
                     </div>
