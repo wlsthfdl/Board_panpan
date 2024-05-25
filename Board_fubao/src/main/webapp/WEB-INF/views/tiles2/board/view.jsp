@@ -35,6 +35,8 @@
               <form name="del_frm" enctype="multipart/form-data">
               <input type="hidden" name="b_idx" value="${requestScope.boardvo.b_idx}" />
               <input type="hidden" name="category_idx" value="${requestScope.boardvo.category_idx_fk}" />
+              </form>
+              
               <c:forEach var="catevo" items="${requestScope.cate_list}">
                 <div class="view_button">
                		 <c:set var="v_goBackURL" value='${ fn:replace(requestScope.goBackURL, "&", " ") }' />
@@ -92,6 +94,9 @@
                                 <span>${requestScope.boardvo.b_like}</span>
                             </div>
                         </div>
+                        <!-- 댓글쓰기 폼 -->
+                        <form name="c_frm" id="c_frm">
+                        <input type="hidden" name="b_idx_fk" id="b_idx_fk" value="${requestScope.boardvo.b_idx}" />
                         
                         <div class="comment_area">
                         	<div style="margin-left: 4px;">
@@ -117,6 +122,7 @@
 	                            </div>
                             </c:if>
                         </div>
+                        </form>
                         
                     </div>
                     <!-- article_comment 끝 -->
@@ -129,7 +135,6 @@
 			    	<div style="padding: 50px 0; font-size: 16pt;">존재하지 않습니다</div>
 			    </c:if>
 			  </c:forEach>
-			 </form>
            </div>
      		<!-- board_viewbox 끝 -->
         </div>
