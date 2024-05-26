@@ -1,5 +1,7 @@
 package com.spring.board_fubao.model;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class CommentVO {
 	
 	private int c_idx;			//댓글 번호
@@ -9,6 +11,13 @@ public class CommentVO {
 	private String c_content;	//댓글 내용
 	private String c_date;		//댓글 작성 날짜
 	private int c_status;		//댓글 삭제여부
+	
+	
+	private MultipartFile attach;
+
+	private String file_name;
+	private String org_file_name;
+	private String file_size;
 	
 	
 	public int getC_idx() {
@@ -53,7 +62,31 @@ public class CommentVO {
 	public void setC_status(int c_status) {
 		this.c_status = c_status;
 	}
-	
+
+	public MultipartFile getAttach() {
+		return attach;
+	}
+	public void setAttach(MultipartFile attach) {
+		this.attach = attach;
+	}
+	public String getFile_name() {
+		return file_name;
+	}
+	public void setFile_name(String file_name) {
+		this.file_name = file_name;
+	}
+	public String getOrg_file_name() {
+		return org_file_name;
+	}
+	public void setOrg_file_name(String org_file_name) {
+		this.org_file_name = org_file_name;
+	}
+	public String getFile_size() {
+		return file_size;
+	}
+	public void setFile_size(String file_size) {
+		this.file_size = file_size;
+	}
 	
 	
 }

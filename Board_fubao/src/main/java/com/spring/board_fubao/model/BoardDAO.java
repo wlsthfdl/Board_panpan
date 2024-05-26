@@ -74,6 +74,7 @@ public class BoardDAO implements InterBoardDAO{
 		BoardVO boardvo = sqlsession.selectOne("board.getView", paraMap);
 		return boardvo;
 	}
+	
 	// 글 조회수 1증가
 	@Override
 	public void setAddReadCnt(int b_idx) {
@@ -100,6 +101,27 @@ public class BoardDAO implements InterBoardDAO{
 	public int del(String b_idx) {
 		int n = sqlsession.delete("board.del", b_idx);
 		return n;
+	}
+
+	//댓글쓰기
+	@Override
+	public int add_comment(CommentVO commentvo) {
+		int n = sqlsession.insert("board.add_comment", commentvo);
+		return n;
+	}
+
+	//댓글쓰면 tbl_board의 c_cnt 1증가
+	@Override
+	public int update_c_cnt(int b_idx_fk) {
+		int n = sqlsession.update("board.update_c_cnt", b_idx_fk);
+		return n;
+	}
+
+	//게시글에 달린 댓글 리스트 조회
+	@Override
+	public List<CommentVO> get_commentList(String b_idx_fk) {
+		List<CommentVO> c_list = sqlsession.selectList("board.get_commentList", b_idx_fk);
+		return c_list;
 	}
 
 }

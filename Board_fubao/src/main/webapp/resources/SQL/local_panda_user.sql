@@ -45,7 +45,10 @@ CREATE TABLE TBL_COMMENT (
 	nickname  VARCHAR2(20)   NOT NULL,     -- 닉네임
 	c_content VARCHAR2(1000) NOT NULL,     -- 댓글내용
 	c_date    DATE    default sysdate   NOT NULL,     -- 작성일자
-	c_status  NUMBER(1) default 1  NOT NULL      -- 글삭제여부: 댓글은 원글이 삭제되면 자동적으로 삭제되어야 한다.
+	c_status  NUMBER(1) default 1  NOT NULL,      -- 글삭제여부: 댓글은 원글이 삭제되면 자동적으로 삭제되어야 한다.
+    file_name varchar2(500)  null,
+    org_file_name varchar2(255) null,
+    file_size   number      null
     ,constraint COMMENT_PK primary key(c_idx)
     ,constraint COMMENT_FK_1 foreign key(id_fk) references TBL_MEMBER(id)
     ,constraint COMMENT_FK_2 foreign key(b_idx_fk) references TBL_BOARD(b_idx) on delete cascade

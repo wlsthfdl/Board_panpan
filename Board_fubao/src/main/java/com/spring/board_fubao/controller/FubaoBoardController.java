@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.board_fubao.common.MyUtil;
+import com.spring.board_fubao.model.CommentVO;
 import com.spring.board_fubao.common.FileManager;
 import com.spring.board_fubao.common.Sha256;
 import com.spring.board_fubao.model.BoardVO;
@@ -457,6 +459,55 @@ public class FubaoBoardController {
 	   mav.setViewName("msg");
 
 	   return mav;
+   }
+   
+  
+   // 댓글쓰기 ajax (첨부파일 없음)
+   @ResponseBody
+   @RequestMapping(value="/add_comment.fu", method = {RequestMethod.POST}, produces="text/plain;charset=UTF-8" )
+   public String add_comment(CommentVO commentvo) {
+	   //댓글쓰기에 첨부파일이 없는 경우
+	   int n = 0;
+	   try {
+		   n = service.add_comment(commentvo);
+
+		   // 댓글쓰기(insert) 및 원게시물(tbl_board 테이블)에 댓글의 개수 증가(update 1씩 증가)하기 
+		   
+	   } catch (Throwable e) {
+		   e.printStackTrace();
+	   }
+	   
+	   JSONObject jsonObj = new JSONObject();
+	   jsonObj.put("n", n);
+	   jsonObj.put("nickname", commentvo.getNickname());
+	   
+	   
+	   return jsonObj.toString();
+   }
+   
+   
+   
+   // 게시글에 달린 댓글 조회해오기
+   @ResponseBody		//바로 웹브라우저에 찍어준다.
+   @RequestMapping(value="/read_comment.fu", method = {RequestMethod.GET}, produces="text/plain;charset=UTF-8" )
+   public String read_comment(HttpServletRequest request) {
+	   String b_idx_fk = request.getParameter("b_idx_fk");
+	   List<CommentVO> c_list = service.get_commentList(b_idx_fk);
+	   
+	   JSONArray jsonArr = new JSONArray();
+	   
+	   if(c_list != null) {
+		   for(CommentVO cmtvo : c_list) {
+			   JSONObject jsonObj = new JSONObject();
+			   jsonObj.put("nickname", cmtvo.getNickname());
+			   jsonObj.put("c_content", cmtvo.getC_content());
+			   jsonObj.put("c_date", cmtvo.getC_date());
+			   
+			   jsonArr.put(jsonObj);
+		   }
+	   }
+	   
+	   return jsonArr.toString();
    }
    
 }

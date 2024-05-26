@@ -125,7 +125,7 @@ body #gnb-menu{
 #content_area{
     background-color: #ffffff;
     width: 1080px;
-    height: 1450px;
+    min-height: 1450px;
     margin: 0 auto;
 }
 
@@ -447,10 +447,11 @@ body #gnb-menu{
 
 .list_content{
     width: 835px;
-    height: 670px;
+    height: 780px;
 }
 
 .list_box .list_content table{
+	width: 835px;
     border-collapse: collapse;
     background-color: #fffefe;
     border-top: 1px solid rgb(133, 133, 133);
@@ -825,7 +826,7 @@ font-weight: 400;
 /*게시글쓰기*/
 .board_viewbox{
     width: 835px;
-    height: 913px;
+    height: auto;
 }
 
 .writing_header{
@@ -1063,7 +1064,7 @@ font-weight: 400;
 
 .comment_info_date{
     font-size: 9pt;
-    margin-top: 7px;
+    margin-top: 3px;
 }
 
 .comment_writer{
@@ -1114,10 +1115,25 @@ font-weight: 400;
     outline: 0;
 }
 
-.comment_bnt{
-    float:right;
-    font-family: "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", 돋움, dotum, sans-serif;
-    font-size: 10pt;
+
+#previewImg{
+	border: none;
+	object-fit: cover;
+}
+
+.comment_attach input[type="file"] {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+}
+
+
+.comment_bnt{	
+	float: right;
+	font-size: 10pt;
     width: 45px;
     height:  30px;
     color: #145a33;
@@ -1125,6 +1141,7 @@ font-weight: 400;
     background-color: #03C75A1F;
     border: none;
     border-radius: 6px;
+    margin-bottom: 10px;
 }
 
 .view_button{	

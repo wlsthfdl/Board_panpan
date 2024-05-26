@@ -14,8 +14,106 @@
 
 	$(document).ready(function(){
 		
-	});
+		read_comment();
+		
+	    //이미지 파일 선택시 이미지 띄워주기
+		$(document).on("change", "input#c_attach", function(e){
+  			
+			$(".comment_inbox").css({"height":"140px"});
+			
+			$("#previewImg").css({"width":"60px", "height":"45px"});
+			
+			const input_file = $(e.target).get(0);
+			
+	        const fileReader = new FileReader();
+	         
+	        fileReader.readAsDataURL(input_file.files[0]); // FileReader.readAsDataURL() --> 파일을 읽고, result속성에 파일을 나타내는 URL을 저장 시켜준다.
+	      
+	        fileReader.onload = function() { // FileReader.onload --> 파일 읽기 완료 성공시에만 작동하도록 하는 것임. 
+	             console.log(fileReader.result);
+	             document.getElementById("previewImg").src = fileReader.result;
+	         };
+	             
+	     }); 
 	    
+	});
+	
+	function add_comment() {
+
+		  const c_content = $(".comment_inbox_text").val().trim(); 
+		  
+		  if($("input#c_attach").val() == "" && c_content == "") {
+			  alert("내용을 입력하세요.");
+			  return false;
+		  }
+		  
+		  if($("input#c_attach").val() == "") {
+			  // 첨부파일이 없는 댓글쓰기인 경우 
+			  add_comment_noAttach();
+		  }
+		  else {
+			  // 첨부파일이 있는 댓글쓰기인 경우 
+			  add_comment_withAttach(); 
+		  }
+	};
+	    
+	//파일 첨부 없는 댓글 쓰기
+	function add_comment_noAttach() {
+		const queryString = $("form[name='c_frm']").serialize();
+
+		$.ajax({
+			url: "<%= request.getContextPath()%>/add_comment.fu",
+			data: queryString, 
+			type: "post",
+			dateType: "json",
+			success:function(json){
+	  			 //console.log("~~ 확인용 : " + JSON.stringify(json));
+	  			 
+	  			 read_comment();
+	  			 
+	  			 $("#c_content").val("");
+	  		 },
+	  		 error: function(request, status, error){
+				alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+		     }
+		});
+	}; //end of function add_comment_noAttach()-------------------
+	
+	// 댓글 내용 읽어오기 
+	function read_comment() {
+		
+		$.ajax({
+			url:"<%= request.getContextPath()%>/read_comment.fu",
+			data:{"b_idx_fk":"${requestScope.boardvo.b_idx}"},
+			dataType:"json",
+			  success:function(json){
+				  //console.log("~~ 확인용 : " + JSON.stringify(json));
+				  
+				  let html = "";
+				  if(json.length > 0) {
+					 $.each(json, function(index, item){
+						 html += "<div class='comment_area'>" +
+									 "<div style='margin-left: 4px;'>" +
+							           "<div class='comment_nick'><img src='<%= ctxPath%>/resources/image/comment_nick (5).png' width=20/> "+ item.nickname +"</div>" +
+							           "<div class='comment_text'>" + item.c_content + "</div>" +
+				                       "<div class='comment_info_date'>" + item.c_date + "</div>" +
+			                       	 "</div>" +
+			                       "</div>";
+	 				 }); 
+				  }   				  
+				  $("#view_comment").html(html);
+				  
+			  },
+			  error: function(request, status, error){
+					alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+			  }
+		});
+		
+	};
+	
+	
+	
+	// 본인글일 때 게시글 삭제
   	function go_del() {
   		var result = confirm("정말 삭제하시겠습니까?");
 		if(!result) return false;
@@ -97,22 +195,38 @@
                         <!-- 댓글쓰기 폼 -->
                         <form name="c_frm" id="c_frm">
                         <input type="hidden" name="b_idx_fk" id="b_idx_fk" value="${requestScope.boardvo.b_idx}" />
+                        <input type="hidden" name="id_fk" id="id_fk" value="${sessionScope.login_user.id}" />
+                        <input type="hidden" name="nickname" id="nickname" value="${sessionScope.login_user.nickname}" />
                         
-                        <div class="comment_area">
+                        
+                        <!-- 댓글 보여주기 -->
+                        <div id="view_comment">
+                        <!-- 
                         	<div style="margin-left: 4px;">
 	                            <div class="comment_nick">왕밤코</div>
 	                            <div class="comment_text">반갑습니다 임모!</div>
 	                            <div class="comment_info_date">2024.05.04 15:50</div>
-                            </div>
+                            </div> 
+                             -->
                         </div>
                         
                         <div class="comment_writer">
                             <c:if test="${sessionScope.login_user != null}">
 	                            <div class="comment_inbox">
 	                                <em class="comment_inbox_nick">${sessionScope.login_user.nickname}</em>
-	                                <textarea class="comment_inbox_text" placeholder="댓글을 남겨보세요."></textarea>
+	                                <textarea class="comment_inbox_text" name="c_content" id="c_content" placeholder="댓글을 남겨보세요."></textarea>
 	                                <div class="comment_attach">
-	                                    <button type="button" class="comment_bnt">등록</button>
+	                                	<!-- 이미지 파일 첨부 input -->
+		                                <label for="c_attach" id="c_lable">
+		                                	<img src="<%= ctxPath %>/resources/image/camera.png" width="20"/>
+		                                	<input type="file" id="c_attach" accept="image/*"/>
+		                                </label>
+		                                <!-- 이미지 첨부파일 미리보기 -->
+	                                	<span class="prodInputName" style=" margin-left: 10px; ">
+		                                    <img id="previewImg" />
+		                                </span>
+		               					<!-- 등록버튼 -->
+	                                    <button type="button" class="comment_bnt" onclick="add_comment()">등록</button>
 	                                </div>
 	                            </div>
                             </c:if>

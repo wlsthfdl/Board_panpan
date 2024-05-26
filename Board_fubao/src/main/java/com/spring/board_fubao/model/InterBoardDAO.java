@@ -41,5 +41,14 @@ public interface InterBoardDAO {
 	//글 삭제하기
 	int del(String b_idx);
 
+	//댓글쓰기
+	int add_comment(CommentVO commentvo);
+
+	//댓글쓰면 tbl_board의 c_cnt 1증가
+	int update_c_cnt(int b_idx_fk);
+	
+	//게시글에 달린 댓글 리스트 조회
+	List<CommentVO> get_commentList(String b_idx_fk);
+
 
 }

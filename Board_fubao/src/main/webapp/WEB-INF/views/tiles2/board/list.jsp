@@ -42,14 +42,18 @@
                         </thead>
                         <tbody>
                         	<c:if test="${empty requestScope.board_list}">
-								<td colspan="5" style="text-align: center;">게시글이 없습니다</td>
+                        		<tr>
+									<td colspan="5" style="text-align: center;">게시글이 없습니다</td>
+								</tr>
 							</c:if>
 						   <c:if test="${not empty requestScope.board_list}">
 							   <c:forEach var="boardvo" items="${requestScope.board_list}">
 		                           <tr>
 		                               <td>${boardvo.b_idx}</td>
 		                               <td><span onclick="goView('${boardvo.b_idx}','${boardvo.category_idx_fk}')" style="cursor: pointer;">${boardvo.b_title}</span>
-		                               	<span class="num">[<span>${boardvo.c_cnt}</span>]</span>
+		                               	<c:if test="${boardvo.c_cnt!=0}">
+		                               		<span class="num">[<span>${boardvo.c_cnt}</span>]</span>
+		                               	</c:if>
 		                               </td>
 		                               <td>${boardvo.nickname}</td>
 		                               <td>${boardvo.b_date}</td>

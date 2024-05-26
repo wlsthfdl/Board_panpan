@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.board_fubao.model.BoardVO;
 import com.spring.board_fubao.model.CategoryVO;
+import com.spring.board_fubao.model.CommentVO;
 import com.spring.board_fubao.model.MemberVO;
 
 public interface InterBoardService {
@@ -52,6 +53,12 @@ public interface InterBoardService {
 
 	//글 삭제
 	int del(String b_idx);
+
+	//댓글쓰기
+	int add_comment(CommentVO commentvo);
+
+	//게시글에 달린 댓글보기
+	List<CommentVO> get_commentList(String b_idx_fk);
 
 	
 }

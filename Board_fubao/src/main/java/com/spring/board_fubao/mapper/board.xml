@@ -113,5 +113,24 @@
 		where b_idx = #{b_idx}
 	</delete>
 	
+	<!-- 댓글쓰기 -->
+	<insert id="add_comment" parameterType="com.spring.board_fubao.model.CommentVO">
+		insert into tbl_comment(c_idx, id_fk, b_idx_fk, nickname, c_content, c_date, c_status)  	   
+	    values(c_idx.nextval, #{id_fk}, #{b_idx_fk}, #{nickname}, #{c_content}, default, default)
+	</insert>
+	
+	<!-- 댓글쓰면 tbl_board의 c_cnt 1증가 -->
+	<update id="update_c_cnt" parameterType="int">
+		update tbl_board set c_cnt = c_cnt + 1
+		where b_idx = #{b_idx_fk}
+	</update>	
+	
+	<!-- 게시글에 달린 댓글 조회 -->
+	<select id="get_commentList" parameterType="String" resultType="com.spring.board_fubao.model.CommentVO">
+		select nickname, c_content, to_char(c_date, 'yyyy.mm.dd hh24:mi') AS c_date
+		from tbl_comment
+		where c_status = 1 and b_idx_fk = #{b_idx_fk}
+		order by c_idx asc
+	</select>
 	
 </mapper>
