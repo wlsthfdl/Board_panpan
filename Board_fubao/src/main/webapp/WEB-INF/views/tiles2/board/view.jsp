@@ -12,11 +12,13 @@
 
 <script type="text/javascript">
 
+	var currentPage = "";
 	$(document).ready(function(){
 		
-		read_comment();
-		
-	    //이미지 파일 선택시 이미지 띄워주기
+		//read_comment();
+		comment_pagination(1);
+	
+		//이미지 파일 선택시 이미지 띄워주기
 		$(document).on("change", "input#c_attach", function(e){
   			
 			$(".comment_inbox").css({"height":"140px"});
@@ -42,7 +44,7 @@
 
 		  const c_content = $(".comment_inbox_text").val().trim(); 
 		  
-		  if($("input#c_attach").val() == "" && c_content == "") {
+		  if(c_content == "") {
 			  alert("내용을 입력하세요.");
 			  return false;
 		  }
@@ -63,14 +65,15 @@
 
 		$.ajax({
 			url: "<%= request.getContextPath()%>/add_comment.fu",
-			data: queryString, 
+			data: queryString,
 			type: "post",
 			dateType: "json",
 			success:function(json){
 	  			 //console.log("~~ 확인용 : " + JSON.stringify(json));
-	  			 
-	  			 read_comment();
-	  			 
+				 
+		  		 comment_pagination(currentPage);
+		  		
+				 
 	  			 $("#c_content").val("");
 	  		 },
 	  		 error: function(request, status, error){
@@ -78,6 +81,7 @@
 		     }
 		});
 	}; //end of function add_comment_noAttach()-------------------
+
 	
 	// 댓글 내용 읽어오기 
 	function read_comment() {
@@ -113,6 +117,152 @@
 	
 	
 	
+	
+	//파일첨부 있는 댓글 쓰기
+	function add_comment_withAttach() {
+		const queryString = $("form[name='c_frm']").serialize();
+		
+	      $("form[name='c_frm']").ajaxForm({
+	  		 url:"<%= request.getContextPath()%>/add_comment_withAttach.fu",
+	  		 data:queryString,
+	  		 type:"post",
+	  		 enctype:"multipart/form-data",
+	  		 dataType:"json",
+	  		 success:function(json){
+	  			 console.log("~~ 확인용 : " + JSON.stringify(json));
+	  			 
+	  			 comment_pagination(currentPage);
+	  
+	  			 $("#c_content").val("");
+	  			 $("#c_attach").val("");
+	  		 },
+	  		 error: function(request, status, error){
+				alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+		     }
+	      });
+		  
+	      $("form[name='c_frm']").submit();
+	      
+	};
+	
+	
+	   // 댓글 내용을 페이징 처리 + 첨부파일 띄우기
+	   function comment_pagination(currentShowPageNo) {
+	      
+	      $.ajax({
+	          url:"<%= request.getContextPath()%>/comment_pagination.fu",
+	           data:{"b_idx_fk":"${requestScope.boardvo.b_idx}",
+	                "currentShowPageNo": currentShowPageNo},
+	           dataType:"json",
+	           success:function(json){
+	               console.log("~~ 확인용 : " + JSON.stringify(json));
+	              
+	              let html = "";
+	              if(json.length > 0) {
+	                $.each(json, function(index, item){
+	                   html += "<div class='comment_area'>" +
+	                   		"<div style='margin-left: 4px;'>" +
+	                       "<div class='comment_nick'><img src='<%= ctxPath%>/resources/image/comment_nick (5).png'	width=20/> "+ item.nickname +"</div>" +
+	                       "<div class='comment_text'>" + item.c_content + "</div>";
+	                       
+	                   		if(item.file_name != null){
+	                        	  html += "<div class='comment_img'><img class='c_image' src='<%= ctxPath%>/resources/image/comment_upload/"+ item.file_name + "' /></div>";
+	                          }
+	                          
+	                       
+	                      html += "<div class='comment_info_date'>" + item.c_date + "</div>" +
+	                           "</div>" +
+	                          "</div>"; 
+	                 }); 
+	              }  
+	              
+	              $("#view_comment").html(html);
+	              
+	              // === 페이지바 함수 호출 === //
+	              makeCommentPageBar(currentShowPageNo);
+	           },
+	           error: function(request, status, error){
+	               alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+	           }
+	      });
+	   };
+	   
+
+	   // 댓글내용 페이지바 //
+	   function makeCommentPageBar(currentShowPageNo) {
+	 	  
+	 	  $.ajax({
+	 		  url:"<%= request.getContextPath()%>/getCommentTotalPage.fu",
+	 		  data:{"b_idx_fk":"${requestScope.boardvo.b_idx}",
+	 			    "sizePerPage":"3"},
+	 		  type:"get",
+	 		  dataType:"json",
+	 		  success:function(json){
+	 			   console.log(JSON.stringify(json));
+	 			 
+	 			  if(json.totalPage > 0) {
+	 				  const totalPage = json.totalPage; 
+	 				  currentPage= totalPage;
+	 				  const blockSize = 3;
+	 				  
+	 				  let loop = 1;
+	 				  
+	 				  if(typeof currentShowPageNo == "string") {
+	 					  currentShowPageNo = Number(currentShowPageNo);
+	 				  }
+	 				 
+	 				
+		 				//  currentShowPageNo 를 얻어와서 pageNo 를 구하는 공식 //
+		 				let pageNo = Math.floor( (currentShowPageNo - 1)/blockSize ) * blockSize + 1;
+		 				let pageBarHTML = "<ul style='text-align:center; list-style: none;'>";
+		 				
+		 				// === [이전] 만들기 === //
+		 				if(pageNo != 1) {
+		 					pageBarHTML += "<li><a href='javascript:comment_pagination(\""+(pageNo-1)+"\")'><img src='<%=ctxPath%>/resources/image/pagenate/page_prev.png'/></a></li>";
+		 				}
+		 				
+		 				while( !(loop > blockSize || pageNo > totalPage || totalPage == 1) ) {
+		 					
+		 					if(pageNo == currentShowPageNo) {
+		 						pageBarHTML += "<li class='current_p'>"+pageNo+"</li>";  
+		 					}
+		 					else {
+		 						pageBarHTML += "<li><a href='javascript:comment_pagination(\""+pageNo+"\")'>"+pageNo+"</a></li>"; 
+		 					}
+		 					
+		 					
+		 					loop++;
+		 					pageNo++;
+		 					
+		 				}// end of while-----------------------
+		 				
+
+		 				
+		 				// === [다음] 만들기 === //
+		 				if( pageNo <= totalPage && totalPage != 1 ) {
+		 					pageBarHTML += "<li><a href='javascript:comment_pagination(\""+pageNo+"\")'><img src='<%=ctxPath%>/resources/image/pagenate/page_next.png'/></a></li>";
+		 				}
+		 				 
+		 				pageBarHTML += "</ul>";
+
+		 				
+		 				
+		 				$("div#pageBar").html(pageBarHTML);
+	 				
+		 				
+	 			  }// end of if(json.totalPage > 0)------------------
+	 			  
+	 		  },
+	 		  error: function(request, status, error){
+	 				alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+	 		  }
+	 	  });
+	 	  
+	   }// end of function makeCommentPageBar(currentShowPageNo) {}-------
+	   
+	
+	
+	
 	// 본인글일 때 게시글 삭제
   	function go_del() {
   		var result = confirm("정말 삭제하시겠습니까?");
@@ -126,7 +276,6 @@
 	};
 	
 </script>
-
         <!-- main area -->
         <div id="main_area">
            <div class="board_viewbox" style="height: auto; padding-bottom: 29px;">
@@ -201,7 +350,7 @@
                         
                         <!-- 댓글 보여주기 -->
                         <div id="view_comment">
-                        <!-- 
+                        <!-- ex)
                         	<div style="margin-left: 4px;">
 	                            <div class="comment_nick">왕밤코</div>
 	                            <div class="comment_text">반갑습니다 임모!</div>
@@ -210,6 +359,12 @@
                              -->
                         </div>
                         
+                        <!-- 페이지바 -->
+                        <div style="display: flex;">
+			    	    	<div id="pageBar" style="margin: auto; text-align: center;"></div>
+			    	  	</div>
+			    	  	
+			    	  	<!-- 댓글쓰는곳 -->
                         <div class="comment_writer">
                             <c:if test="${sessionScope.login_user != null}">
 	                            <div class="comment_inbox">
@@ -219,7 +374,7 @@
 	                                	<!-- 이미지 파일 첨부 input -->
 		                                <label for="c_attach" id="c_lable">
 		                                	<img src="<%= ctxPath %>/resources/image/camera.png" width="20"/>
-		                                	<input type="file" id="c_attach" accept="image/*"/>
+		                                	<input type="file" name="attach" id="c_attach" accept="image/*"/>
 		                                </label>
 		                                <!-- 이미지 첨부파일 미리보기 -->
 	                                	<span class="prodInputName" style=" margin-left: 10px; ">
@@ -230,25 +385,26 @@
 	                                </div>
 	                            </div>
                             </c:if>
+                            
                             <c:if test="${sessionScope.login_user == null}">
                             	<div class="comment_inbox" style="height: 58px;">
 	                                <a href="<%= ctxPath %>/login.fu">지금 가입하고 댓글에 참여해보세요! > </a>
 	                            </div>
                             </c:if>
+                            
                         </div>
                         </form>
-                        
                     </div>
                     <!-- article_comment 끝 -->
-                    
                 </div>
                 <!-- viewbox 끝 -->
                 </c:if>
-                
+                 
 				<c:if test="${empty requestScope.boardvo}">
 			    	<div style="padding: 50px 0; font-size: 16pt;">존재하지 않습니다</div>
 			    </c:if>
 			  </c:forEach>
+			  
            </div>
      		<!-- board_viewbox 끝 -->
         </div>

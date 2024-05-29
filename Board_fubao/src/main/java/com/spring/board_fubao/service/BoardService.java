@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -213,7 +214,22 @@ public class BoardService implements InterBoardService{
 		
 		if(n==1) {
 			result = dao.update_c_cnt(commentvo.getB_idx_fk());
-			System.out.println("~~~~확인용: result " + result);
+			//System.out.println("~~~~확인용: result " + result);
+		}
+		
+		return result;
+	}
+
+	//댓글쓰기 첨부파일 (트랜잭션 처리)
+	@Override
+	public int add_commentWithFile(CommentVO commentvo) {
+		int n = 0, result = 0;
+		
+		n = dao.add_commentWithFile(commentvo);	 	//댓글쓰기 insert
+		
+		if(n==1) {
+			result = dao.update_c_cnt(commentvo.getB_idx_fk());
+			//System.out.println("~~~~확인용: result " + result);
 		}
 		
 		return result;
@@ -227,5 +243,27 @@ public class BoardService implements InterBoardService{
 		return c_list;
 	}
 
+	//게시글에 달린 댓글보기 (첨부파일 및 페이징)
+	@Override
+	public List<CommentVO> get_commentListPaging(Map<String, String> paraMap) {
+		List<CommentVO> c_list = dao.get_commentListPaging(paraMap);
+		return c_list;
+	}
+	
+	// 원글 글번호에 해당하는 댓글의 totalPage 알아오기
+	@Override
+	public String getCommentTotalPage(Map<String, String> paraMap) {
+		int totalPage = dao.getCommentTotalPage(paraMap);
+		
+		JSONObject jsonObj = new JSONObject();
+		jsonObj.put("totalPage", totalPage);		//dao에서 int로 받아왔기 때문에 String으로 바꿔야함
+		
+		return jsonObj.toString();
+	}
+
     
+	
+	
+	
+	
 }

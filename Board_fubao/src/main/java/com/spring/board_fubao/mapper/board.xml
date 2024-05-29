@@ -113,11 +113,21 @@
 		where b_idx = #{b_idx}
 	</delete>
 	
+	
 	<!-- 댓글쓰기 -->
 	<insert id="add_comment" parameterType="com.spring.board_fubao.model.CommentVO">
 		insert into tbl_comment(c_idx, id_fk, b_idx_fk, nickname, c_content, c_date, c_status)  	   
 	    values(c_idx.nextval, #{id_fk}, #{b_idx_fk}, #{nickname}, #{c_content}, default, default)
 	</insert>
+	
+	<!-- 댓글쓰기 첨부파일 -->
+	<insert id="add_commentWithFile" parameterType="com.spring.board_fubao.model.CommentVO">
+		insert into tbl_comment(c_idx, id_fk, b_idx_fk, nickname, c_content, c_date, c_status,
+					file_name, org_file_name, file_size)  	   
+	    values(c_idx.nextval, #{id_fk}, #{b_idx_fk}, #{nickname}, #{c_content}, default, default,
+	    			#{file_name}, #{org_file_name}, #{file_size})
+	</insert>
+	
 	
 	<!-- 댓글쓰면 tbl_board의 c_cnt 1증가 -->
 	<update id="update_c_cnt" parameterType="int">
@@ -131,6 +141,27 @@
 		from tbl_comment
 		where c_status = 1 and b_idx_fk = #{b_idx_fk}
 		order by c_idx asc
+	</select>
+	
+	<!-- 페이징처리한 댓글 조회 -->
+	<select id="get_commentListPaging" parameterType="HashMap" resultType="com.spring.board_fubao.model.CommentVO">
+		select nickname, c_content, c_date, file_name, org_file_name, file_size
+		from 
+		(
+		 select row_number() over(order by c_idx) AS rno,
+		        nickname, c_content, to_char(c_date, 'yyyy-mm-dd hh24:mi:ss') AS c_date,
+		        file_name, org_file_name, file_size
+		 from tbl_comment
+		 where c_status = 1 and b_idx_fk = #{b_idx_fk}
+		) V 
+		where rno between #{startRno} and #{endRno}
+	</select>
+	
+	<!--원글 글번호에 해당하는 댓글의 totalPage 알아오기-->
+	<select id="getCommentTotalPage" parameterType="HashMap" resultType="int">
+		select ceil(count(*)/#{sizePerPage})
+		from tbl_comment
+		where c_status = 1 and b_idx_fk = #{b_idx_fk}
 	</select>
 	
 </mapper>

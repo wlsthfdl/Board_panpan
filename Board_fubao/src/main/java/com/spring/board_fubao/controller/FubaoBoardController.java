@@ -24,6 +24,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.board_fubao.common.MyUtil;
@@ -485,7 +487,7 @@ public class FubaoBoardController {
 	   return jsonObj.toString();
    }
    
-   
+
    
    // 게시글에 달린 댓글 조회해오기
    @ResponseBody		//바로 웹브라우저에 찍어준다.
@@ -509,5 +511,143 @@ public class FubaoBoardController {
 	   
 	   return jsonArr.toString();
    }
+   
+   
+   // 댓글쓰기 첨부파일 있음
+   @ResponseBody
+   @RequestMapping(value="/add_comment_withAttach.fu", method = {RequestMethod.POST}, produces="text/plain;charset=UTF-8" )
+   public String addComment_withAttach(CommentVO commentvo, MultipartHttpServletRequest mrequest) {
+	  
+	      MultipartFile attach = commentvo.getAttach();
+	      
+	      if( !attach.isEmpty() ) {
+	     
+	         HttpSession session = mrequest.getSession();
+	         
+	         String root = session.getServletContext().getRealPath("/").substring(0, 3);
+	         
+	  	     String path_whole = root + "Users"+File.separator+"user"+File.separator+"git"+File.separator+"Board_fubao"+File.separator+"Board_fubao"
+	  	    		 			+File.separator+"src"+File.separator+"main"+File.separator+"webapp"+File.separator+"resources"+File.separator+"image"+File.separator+"comment_upload";
+
+	         System.out.println("~~~~ 확인용  path_whole => " + path_whole);	      
+	       
+	         String new_fileName = "";
+	         // WAS(톰캣)의 디스크에 저장될 파일명 
+	         
+	         byte[] bytes = null;
+	         // 첨부파일의 내용물을 담는 것 
+	         
+	         long fileSize = 0;
+	         // 첨부파일의 크기 
+	         
+	         try {
+	            bytes = attach.getBytes();
+	            // 첨부파일의 내용물을 읽어오는 것
+	            
+	            String originalFilename = attach.getOriginalFilename();
+	            System.out.println("~~~~ 확인용 originalFilename => " + originalFilename);
+	            
+	            new_fileName = fileManager.doFileUpload(bytes, originalFilename, path_whole);
+	            System.out.println(">>> 확인용 newFileName => " + new_fileName);
+	     
+	            commentvo.setFile_name(new_fileName);
+	            
+	            commentvo.setOrg_file_name(originalFilename);
+	            
+	            fileSize = attach.getSize(); // 첨부파일의 크기(단위는 byte임)
+	            commentvo.setFile_size(String.valueOf(fileSize));
+	            
+	         } catch (Exception e) {
+	            e.printStackTrace();
+	         }
+	         
+	      }
+	   
+	   int n = 0;
+	   try {
+		   n = service.add_commentWithFile(commentvo);
+	   } catch (Throwable e) {
+		   e.printStackTrace();
+	   }
+	   
+	   JSONObject jsonObj = new JSONObject();
+	   jsonObj.put("n", n);
+	   jsonObj.put("nickname", commentvo.getNickname());
+	   
+	   
+	   return jsonObj.toString();
+   }
+   
+   
+   
+   // === #128. 원게시글에 딸린 댓글들을 페이징 처리해서 조회해오기 (Ajax) ===
+   @ResponseBody
+   @RequestMapping(value="/comment_pagination.fu", method = {RequestMethod.GET}, produces="text/plain;charset=UTF-8")
+   public String commentList(HttpServletRequest request) {
+	   
+	   String b_idx_fk = request.getParameter("b_idx_fk");
+	   String currentShowPageNo = request.getParameter("currentShowPageNo");
+	   
+	   
+	   if(currentShowPageNo == null) {
+		   currentShowPageNo = "1";
+	   }
+	   
+	   int sizePerPage = 3;			//페이지당 8개의 댓글만
+	   int startRno = ((Integer.parseInt(currentShowPageNo) - 1) * sizePerPage) + 1;
+	   int endRno = startRno + sizePerPage - 1;
+	   //System.out.println("startRno : "  + startRno);
+	   //System.out.println("endRno : "  + endRno);
+	   
+	   Map<String, String> paraMap = new HashMap<>();
+	   paraMap.put("b_idx_fk",b_idx_fk);
+	   paraMap.put("startRno",String.valueOf(startRno));
+	   paraMap.put("endRno",String.valueOf(endRno));
+	   
+	   List<CommentVO> commentList = service.get_commentListPaging(paraMap);
+	   
+	   JSONArray jsonArr = new JSONArray();
+	   
+	   if(commentList != null) {
+		   for( CommentVO cmtvo : commentList) {
+			   JSONObject jsonObj = new JSONObject();
+			   jsonObj.put("nickname", cmtvo.getNickname());
+			   jsonObj.put("c_content", cmtvo.getC_content());
+			   jsonObj.put("c_date", cmtvo.getC_date());
+			   jsonObj.put("c_idx", cmtvo.getC_idx());
+
+			   // === 댓글읽어오기에 첨부파일 기능을 넣은 경우 시작 ===
+			   jsonObj.put("file_name", cmtvo.getFile_name());
+			   jsonObj.put("org_file_name", cmtvo.getOrg_file_name());
+			   jsonObj.put("file_size", cmtvo.getFile_size());
+
+			   // === 댓글읽어오기에 첨부파일 기능을 넣은 경우 끝 ===
+			   jsonArr.put(jsonObj);
+		   } //end of for ----------------------------
+	   }
+	   
+	   return jsonArr.toString();
+   }
+   
+
+   	//댓글 페이징을 위한 원글의 댓글 총 개수 알아오기
+	@ResponseBody
+	@RequestMapping(value="/getCommentTotalPage.fu", method= {RequestMethod.GET})   
+	public String getCommentTotalPage(HttpServletRequest request) {
+		
+		String b_idx_fk = request.getParameter("b_idx_fk");
+		String sizePerPage = request.getParameter("sizePerPage");
+		
+		Map<String, String> paraMap = new HashMap<>();
+		paraMap.put("b_idx_fk", b_idx_fk);
+		paraMap.put("sizePerPage", sizePerPage);
+		
+		// 원글 글번호에 해당하는 댓글의 totalPage 알아오기
+		String totalPage = service.getCommentTotalPage(paraMap);
+		return totalPage;
+	}
+	
+   
+   
    
 }

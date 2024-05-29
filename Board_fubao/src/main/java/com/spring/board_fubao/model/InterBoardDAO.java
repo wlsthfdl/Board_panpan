@@ -44,11 +44,21 @@ public interface InterBoardDAO {
 	//댓글쓰기
 	int add_comment(CommentVO commentvo);
 
+	//댓글쓰기 첨부파일
+	int add_commentWithFile(CommentVO commentvo);
+	
 	//댓글쓰면 tbl_board의 c_cnt 1증가
 	int update_c_cnt(int b_idx_fk);
 	
 	//게시글에 달린 댓글 리스트 조회
 	List<CommentVO> get_commentList(String b_idx_fk);
+
+	//게시글에 달린 댓글 리스트 조회 (페이징처리)
+	List<CommentVO> get_commentListPaging(Map<String, String> paraMap);
+
+	// 원글 글번호에 해당하는 댓글의 totalPage 알아오기
+	int getCommentTotalPage(Map<String, String> paraMap);
+
 
 
 }

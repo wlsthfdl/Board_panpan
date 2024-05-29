@@ -56,9 +56,18 @@ public interface InterBoardService {
 
 	//댓글쓰기
 	int add_comment(CommentVO commentvo);
+	
+	//댓글쓰기 (첨부파일)
+	int add_commentWithFile(CommentVO commentvo);
 
 	//게시글에 달린 댓글보기
 	List<CommentVO> get_commentList(String b_idx_fk);
+
+	//게시글에 달린 댓글보기 (페이징처리)
+	List<CommentVO> get_commentListPaging(Map<String, String> paraMap);
+	
+	// 원글 글번호에 해당하는 댓글의 totalPage 알아오기
+	String getCommentTotalPage(Map<String, String> paraMap);
 
 	
 }

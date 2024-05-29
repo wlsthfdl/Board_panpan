@@ -110,6 +110,15 @@ public class BoardDAO implements InterBoardDAO{
 		return n;
 	}
 
+	
+	//댓글쓰기 첨부파일
+	@Override
+	public int add_commentWithFile(CommentVO commentvo) {
+		int n = sqlsession.insert("board.add_commentWithFile", commentvo);
+		return n;
+	}
+
+	
 	//댓글쓰면 tbl_board의 c_cnt 1증가
 	@Override
 	public int update_c_cnt(int b_idx_fk) {
@@ -123,5 +132,20 @@ public class BoardDAO implements InterBoardDAO{
 		List<CommentVO> c_list = sqlsession.selectList("board.get_commentList", b_idx_fk);
 		return c_list;
 	}
+
+	//게시글에 달린 댓글 리스트 조회 (페이징처리)
+	@Override
+	public List<CommentVO> get_commentListPaging(Map<String, String> paraMap) {
+		List<CommentVO> c_list = sqlsession.selectList("board.get_commentListPaging", paraMap);
+		return c_list;
+	}
+
+	//원글 글번호에 해당하는 댓글의 totalPage 알아오기
+	@Override
+	public int getCommentTotalPage(Map<String, String> paraMap) {
+		int totalPage = sqlsession.selectOne("board.getCommentTotalPage", paraMap);
+		return totalPage;
+	}
+
 
 }
