@@ -261,6 +261,13 @@ public class BoardService implements InterBoardService{
 		return jsonObj.toString();
 	}
 
+	//댓글작성후 최근 댓글띄우기 위해 c_cnt 가져오기
+	@Override
+	public int getC_cnt(String b_idx_fk) {
+		int c_cnt = dao.getC_cnt(b_idx_fk);
+		return c_cnt;
+	}
+
     
 	
 	

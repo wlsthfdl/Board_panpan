@@ -69,5 +69,8 @@ public interface InterBoardService {
 	// 원글 글번호에 해당하는 댓글의 totalPage 알아오기
 	String getCommentTotalPage(Map<String, String> paraMap);
 
+	//댓글작성후 최근 댓글띄우기 위해 c_cnt 가져오기
+	int getC_cnt(String b_idx_fk);
+
 	
 }

@@ -467,7 +467,7 @@ public class FubaoBoardController {
    // 댓글쓰기 ajax (첨부파일 없음)
    @ResponseBody
    @RequestMapping(value="/add_comment.fu", method = {RequestMethod.POST}, produces="text/plain;charset=UTF-8" )
-   public String add_comment(CommentVO commentvo) {
+   public String add_comment(CommentVO commentvo, HttpServletRequest request) {
 	   //댓글쓰기에 첨부파일이 없는 경우
 	   int n = 0;
 	   try {
@@ -479,12 +479,17 @@ public class FubaoBoardController {
 		   e.printStackTrace();
 	   }
 	   
+	   String b_idx_fk = request.getParameter("b_idx_fk");
+	   int c_cnt = service.getC_cnt(b_idx_fk);
+	   
+	   
 	   JSONObject jsonObj = new JSONObject();
 	   jsonObj.put("n", n);
 	   jsonObj.put("nickname", commentvo.getNickname());
-	   
+	   jsonObj.put("c_cnt", c_cnt);
 	   
 	   return jsonObj.toString();
+	   
    }
    
 
@@ -516,7 +521,7 @@ public class FubaoBoardController {
    // 댓글쓰기 첨부파일 있음
    @ResponseBody
    @RequestMapping(value="/add_comment_withAttach.fu", method = {RequestMethod.POST}, produces="text/plain;charset=UTF-8" )
-   public String addComment_withAttach(CommentVO commentvo, MultipartHttpServletRequest mrequest) {
+   public String addComment_withAttach(CommentVO commentvo, MultipartHttpServletRequest mrequest, HttpServletRequest request) {
 	  
 	      MultipartFile attach = commentvo.getAttach();
 	      
@@ -569,11 +574,14 @@ public class FubaoBoardController {
 	   } catch (Throwable e) {
 		   e.printStackTrace();
 	   }
+
+	   String b_idx_fk = request.getParameter("b_idx_fk");
+	   int c_cnt = service.getC_cnt(b_idx_fk);
 	   
 	   JSONObject jsonObj = new JSONObject();
 	   jsonObj.put("n", n);
 	   jsonObj.put("nickname", commentvo.getNickname());
-	   
+	   jsonObj.put("c_cnt", c_cnt);
 	   
 	   return jsonObj.toString();
    }
@@ -593,11 +601,9 @@ public class FubaoBoardController {
 		   currentShowPageNo = "1";
 	   }
 	   
-	   int sizePerPage = 3;			//페이지당 8개의 댓글만
+	   int sizePerPage = 8;			//페이지당 8개의 댓글만
 	   int startRno = ((Integer.parseInt(currentShowPageNo) - 1) * sizePerPage) + 1;
 	   int endRno = startRno + sizePerPage - 1;
-	   //System.out.println("startRno : "  + startRno);
-	   //System.out.println("endRno : "  + endRno);
 	   
 	   Map<String, String> paraMap = new HashMap<>();
 	   paraMap.put("b_idx_fk",b_idx_fk);

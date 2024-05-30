@@ -164,4 +164,10 @@
 		where c_status = 1 and b_idx_fk = #{b_idx_fk}
 	</select>
 	
+	<select id="getC_cnt" parameterType="String" resultType="int">
+		select count(*)
+		from tbl_comment
+		where c_status = 1 and b_idx_fk = #{b_idx_fk}
+	</select>
+	
 </mapper>

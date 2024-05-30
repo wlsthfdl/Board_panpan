@@ -12,10 +12,8 @@
 
 <script type="text/javascript">
 
-	var currentPage = "";
 	$(document).ready(function(){
-		
-		//read_comment();
+		//댓글 띄워주기
 		comment_pagination(1);
 	
 		//이미지 파일 선택시 이미지 띄워주기
@@ -32,7 +30,7 @@
 	        fileReader.readAsDataURL(input_file.files[0]); // FileReader.readAsDataURL() --> 파일을 읽고, result속성에 파일을 나타내는 URL을 저장 시켜준다.
 	      
 	        fileReader.onload = function() { // FileReader.onload --> 파일 읽기 완료 성공시에만 작동하도록 하는 것임. 
-	             console.log(fileReader.result);
+	             //console.log(fileReader.result);
 	             document.getElementById("previewImg").src = fileReader.result;
 	         };
 	             
@@ -40,8 +38,9 @@
 	    
 	});
 	
+	
+	// 댓글 '등록' 버튼을 눌렀을 때
 	function add_comment() {
-
 		  const c_content = $(".comment_inbox_text").val().trim(); 
 		  
 		  if(c_content == "") {
@@ -67,12 +66,15 @@
 			url: "<%= request.getContextPath()%>/add_comment.fu",
 			data: queryString,
 			type: "post",
-			dateType: "json",
+			dataType: "json",
 			success:function(json){
-	  			 //console.log("~~ 확인용 : " + JSON.stringify(json));
+	  			 console.log("~~ 확인용 : " + JSON.stringify(json));
 				 
-		  		 comment_pagination(currentPage);
-		  		
+	  			 /*댓글을 등록하면 c_cnt(가장 최신의 댓글)을 띄워주기 위함*/
+	  			 const c_cnt = json.c_cnt;
+	  			 const page = Math.ceil(c_cnt/8);
+	  			 
+	  			 comment_pagination(page);
 				 
 	  			 $("#c_content").val("");
 	  		 },
@@ -82,39 +84,6 @@
 		});
 	}; //end of function add_comment_noAttach()-------------------
 
-	
-	// 댓글 내용 읽어오기 
-	function read_comment() {
-		
-		$.ajax({
-			url:"<%= request.getContextPath()%>/read_comment.fu",
-			data:{"b_idx_fk":"${requestScope.boardvo.b_idx}"},
-			dataType:"json",
-			  success:function(json){
-				  //console.log("~~ 확인용 : " + JSON.stringify(json));
-				  
-				  let html = "";
-				  if(json.length > 0) {
-					 $.each(json, function(index, item){
-						 html += "<div class='comment_area'>" +
-									 "<div style='margin-left: 4px;'>" +
-							           "<div class='comment_nick'><img src='<%= ctxPath%>/resources/image/comment_nick (5).png' width=20/> "+ item.nickname +"</div>" +
-							           "<div class='comment_text'>" + item.c_content + "</div>" +
-				                       "<div class='comment_info_date'>" + item.c_date + "</div>" +
-			                       	 "</div>" +
-			                       "</div>";
-	 				 }); 
-				  }   				  
-				  $("#view_comment").html(html);
-				  
-			  },
-			  error: function(request, status, error){
-					alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
-			  }
-		});
-		
-	};
-	
 	
 	
 	
@@ -131,8 +100,12 @@
 	  		 success:function(json){
 	  			 console.log("~~ 확인용 : " + JSON.stringify(json));
 	  			 
-	  			 comment_pagination(currentPage);
-	  
+	  			 /*댓글을 등록하면 c_cnt(가장 최신의 댓글)을 띄워주기 위함*/
+	  			 const c_cnt = json.c_cnt;
+	  			 const page = Math.ceil(c_cnt/8);
+	  			 
+	  			 comment_pagination(page);
+	  			 
 	  			 $("#c_content").val("");
 	  			 $("#c_attach").val("");
 	  		 },
@@ -155,8 +128,8 @@
 	                "currentShowPageNo": currentShowPageNo},
 	           dataType:"json",
 	           success:function(json){
-	               console.log("~~ 확인용 : " + JSON.stringify(json));
-	              
+	              //console.log("~~ 확인용 : " + JSON.stringify(json));
+	        
 	              let html = "";
 	              if(json.length > 0) {
 	                $.each(json, function(index, item){
@@ -194,15 +167,14 @@
 	 	  $.ajax({
 	 		  url:"<%= request.getContextPath()%>/getCommentTotalPage.fu",
 	 		  data:{"b_idx_fk":"${requestScope.boardvo.b_idx}",
-	 			    "sizePerPage":"3"},
+	 			    "sizePerPage":"8"},
 	 		  type:"get",
 	 		  dataType:"json",
 	 		  success:function(json){
-	 			   console.log(JSON.stringify(json));
-	 			 
+	 			  //console.log(JSON.stringify(json));
+
 	 			  if(json.totalPage > 0) {
-	 				  const totalPage = json.totalPage; 
-	 				  currentPage= totalPage;
+	 				  const totalPage = json.totalPage;
 	 				  const blockSize = 3;
 	 				  
 	 				  let loop = 1;
@@ -214,6 +186,7 @@
 	 				
 		 				//  currentShowPageNo 를 얻어와서 pageNo 를 구하는 공식 //
 		 				let pageNo = Math.floor( (currentShowPageNo - 1)/blockSize ) * blockSize + 1;
+		 				
 		 				let pageBarHTML = "<ul style='text-align:center; list-style: none;'>";
 		 				
 		 				// === [이전] 만들기 === //
@@ -233,10 +206,8 @@
 		 					
 		 					loop++;
 		 					pageNo++;
-		 					
 		 				}// end of while-----------------------
 		 				
-
 		 				
 		 				// === [다음] 만들기 === //
 		 				if( pageNo <= totalPage && totalPage != 1 ) {
@@ -248,10 +219,17 @@
 		 				
 		 				
 		 				$("div#pageBar").html(pageBarHTML);
-	 				
 		 				
+		 				
+		 				/*댓글을 쓰면 방금 쓴 댓글이 있는 가장 최근 페이지로 이동
+	 					if(currentShowPageNo == totalPage){
+	 						return false;
+	 					}
+		 					comment_pagination(totalPage);
+	 					현재 페이지가 가장 최근 페이지라면 함수를 호출하지 않고 종료되어야 함*/
+	 					
 	 			  }// end of if(json.totalPage > 0)------------------
-	 			  
+	 			 
 	 		  },
 	 		  error: function(request, status, error){
 	 				alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
