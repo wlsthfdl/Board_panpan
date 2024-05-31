@@ -601,7 +601,7 @@ public class FubaoBoardController {
 		   currentShowPageNo = "1";
 	   }
 	   
-	   int sizePerPage = 8;			//페이지당 8개의 댓글만
+	   int sizePerPage = 10;			//페이지당 8개의 댓글만
 	   int startRno = ((Integer.parseInt(currentShowPageNo) - 1) * sizePerPage) + 1;
 	   int endRno = startRno + sizePerPage - 1;
 	   
@@ -636,7 +636,7 @@ public class FubaoBoardController {
    }
    
 
-   	//댓글 페이징을 위한 원글의 댓글 총 개수 알아오기
+   	//댓글 페이징 위한 원글의 댓글 총 개수 알아오기
 	@ResponseBody
 	@RequestMapping(value="/getCommentTotalPage.fu", method= {RequestMethod.GET})   
 	public String getCommentTotalPage(HttpServletRequest request) {

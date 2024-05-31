@@ -56,6 +56,9 @@
 			  // 첨부파일이 있는 댓글쓰기인 경우 
 			  add_comment_withAttach(); 
 		  }
+		  
+		  var offset = $('.comment_area').offset(); 
+		  $('html').animate({scrollTop : offset.top}, 400);
 	};
 	    
 	//파일 첨부 없는 댓글 쓰기
@@ -72,7 +75,7 @@
 				 
 	  			 /*댓글을 등록하면 c_cnt(가장 최신의 댓글)을 띄워주기 위함*/
 	  			 const c_cnt = json.c_cnt;
-	  			 const page = Math.ceil(c_cnt/8);
+	  			 const page = Math.ceil(c_cnt/10);
 	  			 
 	  			 comment_pagination(page);
 				 
@@ -102,7 +105,7 @@
 	  			 
 	  			 /*댓글을 등록하면 c_cnt(가장 최신의 댓글)을 띄워주기 위함*/
 	  			 const c_cnt = json.c_cnt;
-	  			 const page = Math.ceil(c_cnt/8);
+	  			 const page = Math.ceil(c_cnt/10);
 	  			 
 	  			 comment_pagination(page);
 	  			 
@@ -167,7 +170,7 @@
 	 	  $.ajax({
 	 		  url:"<%= request.getContextPath()%>/getCommentTotalPage.fu",
 	 		  data:{"b_idx_fk":"${requestScope.boardvo.b_idx}",
-	 			    "sizePerPage":"8"},
+	 			    "sizePerPage":"10"},
 	 		  type:"get",
 	 		  dataType:"json",
 	 		  success:function(json){
@@ -216,18 +219,8 @@
 		 				 
 		 				pageBarHTML += "</ul>";
 
-		 				
-		 				
 		 				$("div#pageBar").html(pageBarHTML);
 		 				
-		 				
-		 				/*댓글을 쓰면 방금 쓴 댓글이 있는 가장 최근 페이지로 이동
-	 					if(currentShowPageNo == totalPage){
-	 						return false;
-	 					}
-		 					comment_pagination(totalPage);
-	 					현재 페이지가 가장 최근 페이지라면 함수를 호출하지 않고 종료되어야 함*/
-	 					
 	 			  }// end of if(json.totalPage > 0)------------------
 	 			 
 	 		  },

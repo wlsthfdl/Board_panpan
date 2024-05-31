@@ -6,9 +6,9 @@
 %>
 
     <!-- footer -->
-    <div id="footer">
+    <div id="footer" style="margin-top: 10px;">
         <div class="footer_wrap">
-            <div class="footer_img">
+            <div class="footer_img" style="height: 200px;">
                 <img src="<%= ctxPath %>/resources/image/footer.png"/>
             </div>
             <div class="footer_text">
