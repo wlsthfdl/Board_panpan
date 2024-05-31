@@ -25,7 +25,7 @@ public interface InterBoardDAO {
 	List<CategoryVO> get_category(int category_idx);
 	
 	//페이징처리 안한 게시글목록
-	List<BoardVO> get_boardList(HashMap<String, Object> paraMap);
+	//List<BoardVO> get_boardList(HashMap<String, Object> paraMap);
 
 	//게시글 한개 보기
 	BoardVO getView(Map<String, String> paraMap);
@@ -61,6 +61,12 @@ public interface InterBoardDAO {
 
 	//댓글작성후 최근 댓글띄우기 위해 c_cnt 가져오기
 	int getC_cnt(String b_idx_fk);
+	
+	//카테고리 별 게시글 총 개수 구해오기 (board_list 페이징)
+	int getTotalCnt(int category_idx);
+
+	//페이징처리 한 글 목록
+	List<BoardVO> boardListPagination(HashMap<String, Object> paraMap);
 
 
 

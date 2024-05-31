@@ -35,9 +35,14 @@
 	         };
 	             
 	     }); 
-	    
+		
+		
 	});
-	
+
+	function c_scroll() {
+		const offset = $('.article_comment').offset(); 
+		  $('html').animate({scrollTop : offset.top}, 300);
+	};
 	
 	// 댓글 '등록' 버튼을 눌렀을 때
 	function add_comment() {
@@ -56,9 +61,7 @@
 			  // 첨부파일이 있는 댓글쓰기인 경우 
 			  add_comment_withAttach(); 
 		  }
-		  
-		  var offset = $('.comment_area').offset(); 
-		  $('html').animate({scrollTop : offset.top}, 400);
+		
 	};
 	    
 	//파일 첨부 없는 댓글 쓰기
@@ -76,9 +79,17 @@
 	  			 /*댓글을 등록하면 c_cnt(가장 최신의 댓글)을 띄워주기 위함*/
 	  			 const c_cnt = json.c_cnt;
 	  			 const page = Math.ceil(c_cnt/10);
-	  			 
+	  			
 	  			 comment_pagination(page);
-				 
+	  		/*
+	  			 let cc = "";
+	  			 cc += "<input class='crrent_comment' type='hidden' value='"+ c_cnt +"' />";
+	  			 $(".view_comment").html(cc);
+	  			
+				console.log("cc:" + $(".crrent_comment").val());*/
+		    	//const offset = $('.crrent_comment').offset(); 
+		    	//$('html').animate({scrollTop : offset.top}, 400);
+		 
 	  			 $("#c_content").val("");
 	  		 },
 	  		 error: function(request, status, error){
@@ -108,6 +119,7 @@
 	  			 const page = Math.ceil(c_cnt/10);
 	  			 
 	  			 comment_pagination(page);
+	  			
 	  			 
 	  			 $("#c_content").val("");
 	  			 $("#c_attach").val("");
@@ -137,7 +149,7 @@
 	              if(json.length > 0) {
 	                $.each(json, function(index, item){
 	                   html += "<div class='comment_area'>" +
-	                   		"<div style='margin-left: 4px;'>" +
+	                   		"<div style='margin-left: 4px;'>" + 
 	                       "<div class='comment_nick'><img src='<%= ctxPath%>/resources/image/comment_nick (5).png'	width=20/> "+ item.nickname +"</div>" +
 	                       "<div class='comment_text'>" + item.c_content + "</div>";
 	                       
@@ -194,16 +206,16 @@
 		 				
 		 				// === [이전] 만들기 === //
 		 				if(pageNo != 1) {
-		 					pageBarHTML += "<li><a href='javascript:comment_pagination(\""+(pageNo-1)+"\")'><img src='<%=ctxPath%>/resources/image/pagenate/page_prev.png'/></a></li>";
+		 					pageBarHTML += "<li><a onclick='c_scroll()' href='javascript:comment_pagination(\""+(pageNo-1)+"\")'><img src='<%=ctxPath%>/resources/image/pagenate/page_prev.png'/></a></li>";
 		 				}
 		 				
 		 				while( !(loop > blockSize || pageNo > totalPage || totalPage == 1) ) {
 		 					
 		 					if(pageNo == currentShowPageNo) {
-		 						pageBarHTML += "<li class='current_p'>"+pageNo+"</li>";  
+		 						pageBarHTML += "<li class='current_p'/>"+pageNo+"</li>";  
 		 					}
 		 					else {
-		 						pageBarHTML += "<li><a href='javascript:comment_pagination(\""+pageNo+"\")'>"+pageNo+"</a></li>"; 
+		 						pageBarHTML += "<li><a onclick='c_scroll()' href='javascript:comment_pagination(\""+pageNo+"\")'>"+pageNo+"</a></li>"; 
 		 					}
 		 					
 		 					
@@ -214,7 +226,7 @@
 		 				
 		 				// === [다음] 만들기 === //
 		 				if( pageNo <= totalPage && totalPage != 1 ) {
-		 					pageBarHTML += "<li><a href='javascript:comment_pagination(\""+pageNo+"\")'><img src='<%=ctxPath%>/resources/image/pagenate/page_next.png'/></a></li>";
+		 					pageBarHTML += "<li><a onclick='c_scroll()' href='javascript:comment_pagination(\""+pageNo+"\")'><img src='<%=ctxPath%>/resources/image/pagenate/page_next.png'/></a></li>";
 		 				}
 		 				 
 		 				pageBarHTML += "</ul>";
@@ -232,7 +244,7 @@
 	   }// end of function makeCommentPageBar(currentShowPageNo) {}-------
 	   
 	
-	
+
 	
 	// 본인글일 때 게시글 삭제
   	function go_del() {
@@ -263,7 +275,7 @@
     							onclick="javascript:location.href='<%= ctxPath %>/board_view_2.fu?b_idx=${requestScope.boardvo.previousseq}&category_idx_fk=${catevo.category_idx}&goBackURL=${v_goBackURL}'" >이전글</button>	    	
 				    	<button type="button" class="base_bnt_2" ${empty requestScope.boardvo.nextseq ? 'hidden' : ''} 
 				    			onclick="javascript:location.href='<%= ctxPath %>/board_view_2.fu?b_idx=${requestScope.boardvo.nextseq}&category_idx_fk=${catevo.category_idx}&goBackURL=${v_goBackURL}'">다음글</button>
-						<button type="button" class="base_bnt" onclick= "javascript:location.href='<%= ctxPath %>/board_list.fu?category_idx=${catevo.category_idx}'">목록</button>
+						<button type="button" class="base_bnt" onclick= "javascript:location.href='<%= ctxPath %>${requestScope.goBackURL}'">목록</button>
                     </div>
                     
                     

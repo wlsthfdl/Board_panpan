@@ -269,7 +269,8 @@ public class FubaoBoardController {
 	@RequestMapping(value="/board_list.fu")
 	public ModelAndView board_list(ModelAndView mav, HttpServletRequest request) {
 		String category_param = request.getParameter("category_idx");
-	   
+		List<BoardVO> board_list = null;
+		
         try {
             int category_idx = Integer.parseInt(category_param);
 
@@ -277,23 +278,92 @@ public class FubaoBoardController {
 	        HttpSession session = request.getSession();
 	        session.setAttribute("readCountPermission", "yes");
 			
-	        
-			//카테고리
+			//카테고리 가져오기
 			List<CategoryVO> cate_list = service.get_category(category_idx);
 
-			//게시날짜가 오늘이면 시간으로 보여주고, 지난 날짜면 날짜를 보여준다.
-			Date sysdate = new Date();
-	        HashMap<String, Object> paraMap = new HashMap<>();
-			paraMap.put("sysdate", sysdate);
-			paraMap.put("category_idx",request.getParameter("category_idx"));
+			/* list pagination (카테고리 별) */
+			String str_currentShowPageNo = request.getParameter("currentShowPageNo");
+			
+			int totalCnt = 0;			//총 게시물 건수
+			int currentShowPageNo = 0;		//현재 페이지 번호
+			int startRno = 0;		//시작 행번호	 ex)11
+			int endRno = 0;			//끝 행번호		 ex)20
+			int totalPage = 0;		//총 페이지 수
+			int sizePerPage = 20;	//페이지 당 보여줄 게시물 건수
+			
+			totalCnt = service.getTotalCnt(category_idx);
+			
+			totalPage = (int)Math.ceil((double)totalCnt/sizePerPage);
 
-            String goBackURL = MyUtil.getCurrentURL(request);            
+            if(str_currentShowPageNo == null) {
+               currentShowPageNo = 1;
+            }else {
+               try {
+                  currentShowPageNo = Integer.parseInt(str_currentShowPageNo);
+                  if(currentShowPageNo < 1 || currentShowPageNo > totalPage ) {
+                     currentShowPageNo = 1;
+                  }
+                  
+               } catch(NumberFormatException e){
+                  currentShowPageNo = 1;
+               }
+            }
+            
+            startRno = ((currentShowPageNo - 1) * sizePerPage) + 1;
+            endRno = startRno + sizePerPage - 1;
+            
+            
+	        HashMap<String, Object> paraMap = new HashMap<>();
+
+            paraMap.put("startRno", String.valueOf(startRno));
+            paraMap.put("endRno", String.valueOf(endRno));
+			//게시날짜가 오늘이면 시간으로 보여주고, 지난 날짜면 날짜를 보여준다.
+            Date sysdate = new Date();
+			paraMap.put("sysdate", sysdate);
+			paraMap.put("category_idx", category_idx);
+
+			board_list = service.boardListPagination(paraMap);
+			//board_list = service.get_boardList(paraMap);
+
+			// == 페이지바 만들기 == //
+			int blockSize = 5;
+			int loop = 1;
+			int pageNo = ((currentShowPageNo - 1)/blockSize) * blockSize + 1;
 			
-			List<BoardVO> board_list = service.get_boardList(paraMap);
+			String pageBar = "<ul style='list-style: none;'>";
+			String url = "board_list.fu";
 			
-	        
+            //[이전]
+			if(pageNo != 1) {
+	               pageBar += "<li><a class='arrow prev' href='"+url+"?category_idx="+category_idx+"&currentShowPageNo="+(pageNo-1)+"'></a></li>";
+	        }
+
+            while( !(loop > blockSize || pageNo > totalPage) ) {
+               
+               if(pageNo == currentShowPageNo) {
+                  pageBar += "<li><a class='active'>"+pageNo+"</a></li>";  
+               }
+               else {
+                  pageBar += "<li><a href='"+url+"?category_idx="+category_idx+"&currentShowPageNo="+pageNo+"'>"+pageNo+"</a></li>"; 
+               }
+               
+               loop++;
+               pageNo++;
+               
+            }
+           
+            //[다음]
+            if( pageNo <= totalPage ) {
+               pageBar += "<li><a class='arrow next' href='"+url+"?category_idx="+category_idx+"&currentShowPageNo="+pageNo+"'></a></li>";
+            }
+            pageBar += "</ul>";
+			mav.addObject("pageBar", pageBar);
+			/* list pagination (카테고리 별) 끝 */
+			
+            String goBackURL = MyUtil.getCurrentURL(request); 
             mav.addObject("goBackURL",goBackURL.replaceAll("&", " "));			
-			mav.addObject("cate_list",cate_list);
+			
+            mav.addObject("cate_list",cate_list);
 			mav.addObject("board_list",board_list);
 			mav.setViewName("board/list.tiles2");
         } catch (NumberFormatException e) {

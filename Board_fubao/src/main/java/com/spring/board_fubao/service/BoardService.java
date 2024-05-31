@@ -149,12 +149,12 @@ public class BoardService implements InterBoardService{
 		return cate_list;
 	}
 
-	//페이징 처리 안한 글목록
+	/*페이징 처리 안한 글목록
 	@Override
 	public List<BoardVO> get_boardList(HashMap<String, Object> paraMap) {
 		List<BoardVO> board_list = dao.get_boardList(paraMap);
 		return board_list;
-	}
+	}*/
 
 	//게시글 조회 (조회수 증가)
 	@Override
@@ -266,6 +266,20 @@ public class BoardService implements InterBoardService{
 	public int getC_cnt(String b_idx_fk) {
 		int c_cnt = dao.getC_cnt(b_idx_fk);
 		return c_cnt;
+	}
+
+	//카테고리 별 게시글 총 개수 구해오기 (board_list 페이징)
+	@Override
+	public int getTotalCnt(int category_idx) {
+		int totalCnt = dao.getTotalCnt(category_idx);
+		return totalCnt;
+	}
+
+	//페이징처리한 글목록
+	@Override
+	public List<BoardVO> boardListPagination(HashMap<String, Object> paraMap) {
+		List<BoardVO> board_list = dao.boardListPagination(paraMap);
+		return board_list;
 	}
 
     

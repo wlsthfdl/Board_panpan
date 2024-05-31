@@ -61,12 +61,12 @@ public class BoardDAO implements InterBoardDAO{
 		return cate_list;
 	} 
 	
-	//페이징처리 안한 게시글목록
+	/*페이징처리 안한 게시글목록
 	@Override
 	public List<BoardVO> get_boardList(HashMap<String, Object> paraMap) {
 		List<BoardVO> board_list = sqlsession.selectList("board.get_boardList", paraMap);
 		return board_list;
-	}
+	}*/
 
 	// 글 한 개 보기
 	@Override
@@ -152,6 +152,20 @@ public class BoardDAO implements InterBoardDAO{
 	public int getC_cnt(String b_idx_fk) {
 		int c_cnt = sqlsession.selectOne("board.getC_cnt",b_idx_fk);
 		return c_cnt;
+	}
+
+	//카테고리 별 게시글 총 개수 구해오기 (board_list 페이징)
+	@Override
+	public int getTotalCnt(int category_idx) {
+		int totalCnt = sqlsession.selectOne("board.getTotalCnt", category_idx);
+		return totalCnt;
+	}
+
+	//페이징 처리한 글목록
+	@Override
+	public List<BoardVO> boardListPagination(HashMap<String, Object> paraMap) {
+		List<BoardVO> board_list = sqlsession.selectList("board.boardListPagination", paraMap);
+		return board_list;
 	}
 
 

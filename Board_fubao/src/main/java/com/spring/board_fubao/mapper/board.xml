@@ -44,7 +44,7 @@
 		where category_idx = #{category_idx}
 	</select>
 	
-	<!-- 게시글목록 조회 -->
+	<!-- 게시글목록 조회 
 	<select id="get_boardList" resultType="com.spring.board_fubao.model.BoardVO" parameterType="HashMap">
 	    SELECT b_idx, id_fk, nickname, category_idx_fk, b_title,
 	           b_content,
@@ -58,7 +58,7 @@
 	    WHERE category_idx_fk = #{category_idx} and b_status = 1
 	    ORDER BY b_idx DESC
 	</select>
-	
+	-->
 	
 	<!-- 글1개 조회하기-->
 	<select id="getView" parameterType="HashMap" resultType="com.spring.board_fubao.model.BoardVO">
@@ -164,10 +164,35 @@
 		where c_status = 1 and b_idx_fk = #{b_idx_fk}
 	</select>
 	
+	<!-- 댓글 개수 알아오기 -->
 	<select id="getC_cnt" parameterType="String" resultType="int">
 		select count(*)
 		from tbl_comment
 		where c_status = 1 and b_idx_fk = #{b_idx_fk}
 	</select>
 	
+	<!-- 카테고리 별 총 게시물 개수 -->
+	<select id="getTotalCnt" parameterType="int" resultType="int">
+		select count(*)
+		from tbl_board
+		where category_idx_fk = #{category_idx}
+	</select>
+	
+	<!-- 페이징처리된 글목록 가져오기 -->
+	<select id="boardListPagination" parameterType="HashMap" resultType="com.spring.board_fubao.model.BoardVO">
+		select b_idx, id_fk, nickname, category_idx_fk, b_title, b_date, b_hit, c_cnt
+		from 
+		(
+		  select row_number() over(order by b_idx desc) AS rno,
+		         b_idx, id_fk, nickname, category_idx_fk, b_title,
+		         CASE
+	               WHEN to_char(b_date, 'yyyy-MM-dd') = to_char(#{sysdate}, 'yyyy-MM-dd') THEN to_char(b_date, 'hh24:mi')
+	               ELSE to_char(b_date, 'yyyy-MM-dd')
+	           	 END AS b_date,
+		         b_hit, c_cnt
+		  from tbl_board
+		  where b_status = 1 and category_idx_fk = #{category_idx}
+		) V 
+		where rno between #{startRno} and #{endRno}
+	</select>
 </mapper>

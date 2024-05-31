@@ -37,7 +37,7 @@ public interface InterBoardService {
 	int write_end(BoardVO boardvo);
 
 	//페이징 처리 안 한 게시글 목록 가져오기
-	List<BoardVO> get_boardList(HashMap<String, Object> paraMap);
+	//List<BoardVO> get_boardList(HashMap<String, Object> paraMap);
 
 	//게시글조회 (조회수 증가)
 	BoardVO getView(Map<String, String> paraMap);
@@ -71,6 +71,12 @@ public interface InterBoardService {
 
 	//댓글작성후 최근 댓글띄우기 위해 c_cnt 가져오기
 	int getC_cnt(String b_idx_fk);
+
+	//카테고리 별 게시글 총 개수 구해오기 (board_list 페이징)
+	int getTotalCnt(int category_idx);
+
+	//페이징처리한 글목록 가져오기
+	List<BoardVO> boardListPagination(HashMap<String, Object> paraMap);
 
 	
 }

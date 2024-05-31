@@ -66,7 +66,9 @@
                 </div>
                 <div class="list_paginate">
                     <div class="article_paginate">
-                        <ul>
+                        ${requestScope.pageBar}
+                        
+                        <!--<ul>
                             <li><a class="arrow prev" href="#"></a></li>
                             <li><a href="" class="active">1</a></li>
                             <li><a href="">2</a></li>
@@ -79,7 +81,7 @@
                             <li><a href="">9</a></li>
                             <li><a href="">10</a></li>
                             <li><a class="arrow next" href="#"></a></li>
-                        </ul>
+                        </ul> -->
                     </div>
                 </div>
             </div>
