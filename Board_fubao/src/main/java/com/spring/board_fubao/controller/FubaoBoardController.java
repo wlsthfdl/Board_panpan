@@ -135,7 +135,12 @@ public class FubaoBoardController {
 	// 로그인 폼페이지 요청 
 	@RequestMapping(value="/login.fu")
 	public ModelAndView login(ModelAndView mav, HttpServletRequest request) {
+		String redirectUrl = request.getParameter("redirect");
+		System.out.println("redirectUrl 1 : " + redirectUrl);
 
+		if (redirectUrl != null && !redirectUrl.isEmpty()) {
+	        request.getSession().setAttribute("redirectUrl", redirectUrl);
+	    }
 
 		mav.setViewName("member/login.tiles1");
 		
@@ -154,7 +159,7 @@ public class FubaoBoardController {
 	    paraMap.put("id", id);
 	    paraMap.put("pwd", Sha256.encrypt(pwd));
 
-	    mav = service.login_end(mav, request, paraMap);		    		 
+	    mav = service.login_end(mav, request, paraMap, response);		    		 
     
 	    return mav;
 	}
@@ -546,11 +551,17 @@ public class FubaoBoardController {
    
    @RequestMapping(value="/requiredLogin_comment.fu")
 	public ModelAndView requiredLogin_comment(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
-	   String returnUrl = (String) request.getAttribute("returnUrl");
+	   String b_idx = request.getParameter("b_idx");
+	   String goBackURL = request.getParameter("goBackURL");
+	   String category_idx = request.getParameter("category_idx_fk");
 	   
-	   System.out.println("returnUrl" + returnUrl);
+	   System.out.println("goBackURL" + goBackURL);
 	   
-	   mav.setViewName("redirect:" + returnUrl);
+	   mav.addObject("b_idx", b_idx);
+	   mav.addObject("goBackURL", goBackURL);
+	   mav.addObject("category_idx", category_idx);
+	   
+	   mav.setViewName("board/view.tiles2");
 	   return mav;
 	}
    

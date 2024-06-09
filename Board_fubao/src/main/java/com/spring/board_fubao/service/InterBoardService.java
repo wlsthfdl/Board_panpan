@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.ModelAndView;
 
@@ -31,7 +32,7 @@ public interface InterBoardService {
 	void encryptPassword(MemberVO membervo);
 
 	//로그인 처리
-	ModelAndView login_end(ModelAndView mav, HttpServletRequest request, Map<String, String> paraMap);
+	ModelAndView login_end(ModelAndView mav, HttpServletRequest request, Map<String, String> paraMap, HttpServletResponse response);
 
 	//게시글쓰기 처리
 	int write_end(BoardVO boardvo);

@@ -1,5 +1,6 @@
 package com.spring.board_fubao.service;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
@@ -95,7 +97,7 @@ public class BoardService implements InterBoardService{
 
 	// 로그인처리
 	@Override
-	public ModelAndView login_end(ModelAndView mav, HttpServletRequest request, Map<String, String> paraMap) {
+	public ModelAndView login_end(ModelAndView mav, HttpServletRequest request, Map<String, String> paraMap, HttpServletResponse response) {
 		MemberVO login_user = dao.get_login_member(paraMap);
 
 		if(login_user == null) {	//로그인 실패시
@@ -121,6 +123,19 @@ public class BoardService implements InterBoardService{
 				
 				session.setAttribute("login_user", login_user);
 
+				
+				String redirectUrl = (String) session.getAttribute("redirectUrl");
+				System.out.println("redirectUrl 2: " + redirectUrl);
+
+				if (redirectUrl != null && !redirectUrl.isEmpty()) {
+			        mav.setViewName("redirect:" + redirectUrl);
+
+			    } else {
+			        mav.setViewName("redirect:/index.fu");
+
+			    }
+				
+				
 				String goBackURL = (String) session.getAttribute("goBackURL");
 
 				System.out.println("goback : " + goBackURL);

@@ -382,8 +382,10 @@
                             
                             <c:if test="${sessionScope.login_user == null}">
                             	<div class="comment_inbox" style="height: 58px;">
-                            	  <c:set var="root" value="${pageContext.request.contextPath}"/>
-        							<a href="${root}/requiredLogin_comment.fu?redirect=${fn:escapeXml(currentUrl)}">지금 가입하고 댓글에 참여해보세요! > </a>
+                            	   <%--<c:set var="root" value="${pageContext.request.contextPath}"/>
+        							<a href="${root}/login.fu?redirect=${fn:escapeXml(currentUrl)}">지금 가입하고 댓글에 참여해보세요! > </a>
+        							<a href="<%= ctxPath %>/requiredLogin_comment.fu?b_idx=${requestScope.boardvo.b_idx}&category_idx_fk=${catevo.category_idx}&goBackURL=${v_goBackURL}">지금 가입하고 댓글에 참여해보세요! > </a>--%>
+	                           		<a href="${pageContext.request.contextPath}/login.fu?returnUrl=${currentUrl}">지금 가입하고 댓글에 참여해보세요! > </a>
 	                            </div>
                             </c:if>
                             
