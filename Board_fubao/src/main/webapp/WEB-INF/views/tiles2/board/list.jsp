@@ -14,6 +14,7 @@
   function goView(b_idx, category_idx_fk) {
 	  
     const goBackURL = "${requestScope.goBackURL}";
+    //console.log(goBackURL);
 	location.href = "<%= ctxPath%>/board_view.fu?b_idx="+b_idx+"&category_idx_fk="+category_idx_fk+"&goBackURL="+goBackURL;
 	
   }

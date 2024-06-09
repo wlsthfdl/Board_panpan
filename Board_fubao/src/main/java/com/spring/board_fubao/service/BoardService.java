@@ -122,7 +122,8 @@ public class BoardService implements InterBoardService{
 				session.setAttribute("login_user", login_user);
 
 				String goBackURL = (String) session.getAttribute("goBackURL");
-				
+
+				System.out.println("goback : " + goBackURL);
 				if(goBackURL != null) {
 					mav.setViewName("redirect:"+goBackURL);
 					session.removeAttribute("goBackURL"); // 세션에서 제거

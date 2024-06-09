@@ -13,6 +13,10 @@
 <script type="text/javascript">
 
 	$(document).ready(function(){
+		const goBack = "${requestScope.goBackURL}";
+		console.log(goBack);
+		
+		
 		//댓글 띄워주기
 		comment_pagination(1);
 	
@@ -78,7 +82,7 @@
 				 
 	  			 /*댓글을 등록하면 c_cnt(가장 최신의 댓글)을 띄워주기 위함*/
 	  			 const c_cnt = json.c_cnt;
-	  			 const page = Math.ceil(c_cnt/10);
+	  			 const page = Math.ceil(c_cnt/30);
 	  			
 	  			 comment_pagination(page);
 	  		/*
@@ -103,35 +107,38 @@
 	
 	//파일첨부 있는 댓글 쓰기
 	function add_comment_withAttach() {
-		const queryString = $("form[name='c_frm']").serialize();
+		const form = $("form[name='c_frm']");
+		const formData = new FormData(form[0]);
 		
-	      $("form[name='c_frm']").ajaxForm({
+	      $.ajax({
 	  		 url:"<%= request.getContextPath()%>/add_comment_withAttach.fu",
-	  		 data:queryString,
 	  		 type:"post",
-	  		 enctype:"multipart/form-data",
+	  		 enctype: "multipart/form-data",
+	  		 data: formData,
+	  		 processData: false, 
+	         contentType: false, 
 	  		 dataType:"json",
 	  		 success:function(json){
-	  			 console.log("~~ 확인용 : " + JSON.stringify(json));
+	  			 console.log("~~add_comment_withAttach 확인용 : " + JSON.stringify(json));
 	  			 
 	  			 /*댓글을 등록하면 c_cnt(가장 최신의 댓글)을 띄워주기 위함*/
 	  			 const c_cnt = json.c_cnt;
-	  			 const page = Math.ceil(c_cnt/10);
+	  			 const page = Math.ceil(c_cnt/30);
 	  			 
-	  			 comment_pagination(page);
-	  			
-	  			 
-	  			 $("#c_content").val("");
+	             comment_pagination(page);
+
 	  			 $("#c_attach").val("");
+	  			 $("#c_content").val("");
 	  		 },
 	  		 error: function(request, status, error){
 				alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
 		     }
 	      });
 		  
-	      $("form[name='c_frm']").submit();
 	      
 	};
+	
+	
 	
 	
 	   // 댓글 내용을 페이징 처리 + 첨부파일 띄우기
@@ -143,7 +150,7 @@
 	                "currentShowPageNo": currentShowPageNo},
 	           dataType:"json",
 	           success:function(json){
-	              //console.log("~~ 확인용 : " + JSON.stringify(json));
+	              console.log("~~ comment_pagination 확인용 : " + JSON.stringify(json));
 	        
 	              let html = "";
 	              if(json.length > 0) {
@@ -152,19 +159,27 @@
 	                   		"<div style='margin-left: 4px;'>" + 
 	                       "<div class='comment_nick'><img src='<%= ctxPath%>/resources/image/comment_nick (5).png'	width=20/> "+ item.nickname +"</div>" +
 	                       "<div class='comment_text'>" + item.c_content + "</div>";
-	                       
-	                   		if(item.file_name != null){
-	                        	  html += "<div class='comment_img'><img class='c_image' src='<%= ctxPath%>/resources/image/comment_upload/"+ item.file_name + "' /></div>";
-	                          }
-	                          
-	                       
+			               	
+	                       if(item.file_name){
+		                  	  html += "<div class='comment_img'><img class='c_image' src='<%= ctxPath%>/resources/files/" + item.file_name + "' /></div>";
+		                  	  
+		                  	  /*html += "<div class='comment_img'><img class='c_image'/></div>";
+	                    	   const url = "/board_fubao/resources/image/comment_upload/" + item.file_name;
+	                    	   console.log(url);
+		                       $('.c_image').attr('src', url);  
+	                       */
+	                       }
+	                      
 	                      html += "<div class='comment_info_date'>" + item.c_date + "</div>" +
 	                           "</div>" +
 	                          "</div>"; 
-	                 }); 
+	                 });
+	                
 	              }  
-	              
+	             
+
 	              $("#view_comment").html(html);
+	              
 	              
 	              // === 페이지바 함수 호출 === //
 	              makeCommentPageBar(currentShowPageNo);
@@ -182,7 +197,7 @@
 	 	  $.ajax({
 	 		  url:"<%= request.getContextPath()%>/getCommentTotalPage.fu",
 	 		  data:{"b_idx_fk":"${requestScope.boardvo.b_idx}",
-	 			    "sizePerPage":"10"},
+	 			    "sizePerPage":"30"},
 	 		  type:"get",
 	 		  dataType:"json",
 	 		  success:function(json){
@@ -325,7 +340,7 @@
                             </div>
                         </div>
                         <!-- 댓글쓰기 폼 -->
-                        <form name="c_frm" id="c_frm">
+                        <form name="c_frm" id="c_frm" enctype="multipart/form-data">
                         <input type="hidden" name="b_idx_fk" id="b_idx_fk" value="${requestScope.boardvo.b_idx}" />
                         <input type="hidden" name="id_fk" id="id_fk" value="${sessionScope.login_user.id}" />
                         <input type="hidden" name="nickname" id="nickname" value="${sessionScope.login_user.nickname}" />
@@ -333,13 +348,7 @@
                         
                         <!-- 댓글 보여주기 -->
                         <div id="view_comment">
-                        <!-- ex)
-                        	<div style="margin-left: 4px;">
-	                            <div class="comment_nick">왕밤코</div>
-	                            <div class="comment_text">반갑습니다 임모!</div>
-	                            <div class="comment_info_date">2024.05.04 15:50</div>
-                            </div> 
-                             -->
+                       
                         </div>
                         
                         <!-- 페이지바 -->
@@ -368,10 +377,13 @@
 	                                </div>
 	                            </div>
                             </c:if>
+                            <%-- 현재 페이지의 URL을 얻어 currentUrl 변수에 저장 --%>
+							<c:set var="currentUrl" value="${pageContext.request.requestURL}?${pageContext.request.queryString}" />
                             
                             <c:if test="${sessionScope.login_user == null}">
                             	<div class="comment_inbox" style="height: 58px;">
-	                                <a href="<%= ctxPath %>/login.fu">지금 가입하고 댓글에 참여해보세요! > </a>
+                            	  <c:set var="root" value="${pageContext.request.contextPath}"/>
+        							<a href="${root}/requiredLogin_comment.fu?redirect=${fn:escapeXml(currentUrl)}">지금 가입하고 댓글에 참여해보세요! > </a>
 	                            </div>
                             </c:if>
                             

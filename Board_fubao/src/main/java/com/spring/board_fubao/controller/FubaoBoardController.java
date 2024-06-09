@@ -1,6 +1,7 @@
 package com.spring.board_fubao.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -15,6 +16,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.crypto.dsig.keyinfo.RetrievalMethod;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -24,6 +26,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -131,8 +134,9 @@ public class FubaoBoardController {
 	
 	// 로그인 폼페이지 요청 
 	@RequestMapping(value="/login.fu")
-	public ModelAndView login(ModelAndView mav) {
-		
+	public ModelAndView login(ModelAndView mav, HttpServletRequest request) {
+
+
 		mav.setViewName("member/login.tiles1");
 		
 		return mav;
@@ -141,7 +145,7 @@ public class FubaoBoardController {
 	
 	//로그인 처리
 	@RequestMapping(value="/login_end.fu", method= {RequestMethod.POST})
-	public ModelAndView login_end(ModelAndView mav, HttpServletRequest request) {
+	public ModelAndView login_end(ModelAndView mav, HttpServletRequest request, HttpServletResponse response) {
 		
 		String id = request.getParameter("id");
 	    String pwd = request.getParameter("pwd");
@@ -178,18 +182,23 @@ public class FubaoBoardController {
 	
 	// '게시글쓰기'클릭시 불러올 페이지 요청
 	@RequestMapping(value="/board_write.fu")
-	public ModelAndView board_write(ModelAndView mav, HttpServletRequest request) {
+	public ModelAndView requiredLogin_board_write(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
 		HttpSession session = request.getSession();
+		
 		MemberVO login_user = (MemberVO) session.getAttribute("login_user");
-		int role = login_user.getRole();
-		System.out.println(role);
-	   //카테고리 조회해오기
-	   List<CategoryVO> cate_list_all = service.get_all_category(role);
-	   
-	   System.out.println(cate_list_all);
-	   mav.addObject("cate_list_all", cate_list_all);
-	   mav.setViewName("board/write.tiles2");
-	   
+		
+		if(login_user != null) {
+			int role = login_user.getRole();
+	
+			System.out.println(role);
+		   //카테고리 조회해오기
+		   List<CategoryVO> cate_list_all = service.get_all_category(role);
+		   
+		   System.out.println(cate_list_all);
+		   mav.addObject("cate_list_all", cate_list_all);
+		}
+		   mav.setViewName("board/write.tiles2");
+		   
 	   return mav;
 	}
 
@@ -377,7 +386,7 @@ public class FubaoBoardController {
 
    // 게시글 한 개 보기 페이지 요청
    @RequestMapping(value="/board_view.fu")
-   public ModelAndView board_view(ModelAndView mav, HttpServletRequest request, CategoryVO catevo) {
+   public ModelAndView board_view(ModelAndView mav, HttpServletRequest request, HttpServletResponse response, CategoryVO catevo) {
 	   String b_idx = request.getParameter("b_idx");
 	   String goBackURL = request.getParameter("goBackURL");
 	   String category_idx = request.getParameter("category_idx_fk");
@@ -462,6 +471,8 @@ public class FubaoBoardController {
 	   return mav;
    
    }
+
+	
 	
    
    //본인 글 수정하기
@@ -533,7 +544,18 @@ public class FubaoBoardController {
 	   return mav;
    }
    
-  
+   @RequestMapping(value="/requiredLogin_comment.fu")
+	public ModelAndView requiredLogin_comment(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
+	   String returnUrl = (String) request.getAttribute("returnUrl");
+	   
+	   System.out.println("returnUrl" + returnUrl);
+	   
+	   mav.setViewName("redirect:" + returnUrl);
+	   return mav;
+	}
+   
+   
+   
    // 댓글쓰기 ajax (첨부파일 없음)
    @ResponseBody
    @RequestMapping(value="/add_comment.fu", method = {RequestMethod.POST}, produces="text/plain;charset=UTF-8" )
@@ -562,7 +584,7 @@ public class FubaoBoardController {
 	   
    }
    
-
+  
    
    // 게시글에 달린 댓글 조회해오기
    @ResponseBody		//바로 웹브라우저에 찍어준다.
@@ -590,46 +612,46 @@ public class FubaoBoardController {
    
    // 댓글쓰기 첨부파일 있음
    @ResponseBody
-   @RequestMapping(value="/add_comment_withAttach.fu", method = {RequestMethod.POST}, produces="text/plain;charset=UTF-8" )
+   @RequestMapping(value="/add_comment_withAttach.fu", method = {RequestMethod.POST}, produces="application/json;charset=UTF-8")
    public String addComment_withAttach(CommentVO commentvo, MultipartHttpServletRequest mrequest, HttpServletRequest request) {
 	  
 	      MultipartFile attach = commentvo.getAttach();
 	      
 	      if( !attach.isEmpty() ) {
-	     
+	    	  
 	         HttpSession session = mrequest.getSession();
-	         
-	         String root = session.getServletContext().getRealPath("/").substring(0, 3);
-	         
-	  	     String path_whole = root + "Users"+File.separator+"user"+File.separator+"git"+File.separator+"Board_fubao"+File.separator+"Board_fubao"
-	  	    		 			+File.separator+"src"+File.separator+"main"+File.separator+"webapp"+File.separator+"resources"+File.separator+"image"+File.separator+"comment_upload";
 
-	         System.out.println("~~~~ 확인용  path_whole => " + path_whole);	      
+	         //String root = session.getServletContext().getRealPath("/").substring(0, 3);
+	         String root = session.getServletContext().getRealPath("/");
+
+	         String path_whole = root+"resources"+File.separator+"files";
+
+	  	     /*String path_whole = root + "Users"+File.separator+"user"+File.separator+"git"+File.separator+"Board_fubao"+File.separator+"Board_fubao"
+	  	    		 			+File.separator+"src"+File.separator+"main"+File.separator+"webapp"+File.separator+"resources"+File.separator+"image"+File.separator+"comment_upload";
+	  	      */
+	         //System.out.println("~~~~ 확인용  path_whole => " + path_whole);	      
 	       
 	         String new_fileName = "";
 	         // WAS(톰캣)의 디스크에 저장될 파일명 
 	         
 	         byte[] bytes = null;
-	         // 첨부파일의 내용물을 담는 것 
-	         
 	         long fileSize = 0;
-	         // 첨부파일의 크기 
 	         
 	         try {
 	            bytes = attach.getBytes();
 	            // 첨부파일의 내용물을 읽어오는 것
 	            
 	            String originalFilename = attach.getOriginalFilename();
-	            System.out.println("~~~~ 확인용 originalFilename => " + originalFilename);
+	            //System.out.println("~~~~ 확인용 originalFilename => " + originalFilename);
 	            
 	            new_fileName = fileManager.doFileUpload(bytes, originalFilename, path_whole);
-	            System.out.println(">>> 확인용 newFileName => " + new_fileName);
+	            //System.out.println(">>> 확인용 newFileName => " + new_fileName);
 	     
 	            commentvo.setFile_name(new_fileName);
 	            
 	            commentvo.setOrg_file_name(originalFilename);
 	            
-	            fileSize = attach.getSize(); // 첨부파일의 크기(단위는 byte임)
+	            fileSize = attach.getSize(); 
 	            commentvo.setFile_size(String.valueOf(fileSize));
 	            
 	         } catch (Exception e) {
@@ -653,6 +675,8 @@ public class FubaoBoardController {
 	   jsonObj.put("nickname", commentvo.getNickname());
 	   jsonObj.put("c_cnt", c_cnt);
 	   
+
+	   
 	   return jsonObj.toString();
    }
    
@@ -660,7 +684,7 @@ public class FubaoBoardController {
    
    // === #128. 원게시글에 딸린 댓글들을 페이징 처리해서 조회해오기 (Ajax) ===
    @ResponseBody
-   @RequestMapping(value="/comment_pagination.fu", method = {RequestMethod.GET}, produces="text/plain;charset=UTF-8")
+   @RequestMapping(value="/comment_pagination.fu", method = {RequestMethod.GET}, produces="application/json;charset=UTF-8")
    public String commentList(HttpServletRequest request) {
 	   
 	   String b_idx_fk = request.getParameter("b_idx_fk");
@@ -671,7 +695,7 @@ public class FubaoBoardController {
 		   currentShowPageNo = "1";
 	   }
 	   
-	   int sizePerPage = 10;			//페이지당 8개의 댓글만
+	   int sizePerPage = 30;			//페이지당 30개 댓글만
 	   int startRno = ((Integer.parseInt(currentShowPageNo) - 1) * sizePerPage) + 1;
 	   int endRno = startRno + sizePerPage - 1;
 	   
@@ -724,6 +748,6 @@ public class FubaoBoardController {
 	}
 	
    
-   
+	
    
 }
