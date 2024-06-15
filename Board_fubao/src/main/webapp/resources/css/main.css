@@ -1053,10 +1053,25 @@ font-weight: 400;
 }
 
 .comment_nick{
+	display:flex;
     margin-bottom: 4px;
     font-size: 10pt;
     font-weight: 600;
 }
+
+.c_del{
+ 	margin-left: auto;
+ 	font-weight: normal;
+ 	font-size: 9pt;
+ 	color:grey;
+}
+
+.c_del:hover{
+	font-weight: bold;
+	cursor: pointer;
+	color: green;
+}
+
 .comment_text{
     font-size: 11pt;
 }
@@ -1190,6 +1205,11 @@ font-weight: 400;
 	padding-right: 15px;
 }
 
+.a_like{
+	border: 0;
+  	background-color: transparent;
+ 	padding-right: 3px;
+}
 
 .right_area{
 	float:right;

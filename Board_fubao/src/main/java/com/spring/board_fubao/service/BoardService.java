@@ -156,13 +156,6 @@ public class BoardService implements InterBoardService{
 		return cate_list;
 	}
 
-	/*페이징 처리 안한 글목록
-	@Override
-	public List<BoardVO> get_boardList(HashMap<String, Object> paraMap) {
-		List<BoardVO> board_list = dao.get_boardList(paraMap);
-		return board_list;
-	}*/
-
 	//게시글 조회 (조회수 증가)
 	@Override
 	public BoardVO getView(Map<String, String> paraMap) {
@@ -287,6 +280,58 @@ public class BoardService implements InterBoardService{
 	public List<BoardVO> boardListPagination(HashMap<String, Object> paraMap) {
 		List<BoardVO> board_list = dao.boardListPagination(paraMap);
 		return board_list;
+	}
+
+	//게시글 좋아요 insert 기능 
+	@Transactional(propagation=Propagation.REQUIRED, isolation=Isolation.READ_COMMITTED, rollbackFor= {Throwable.class})
+	@Override
+	public int boardLike(Map<String, String> paraMap) {
+		int n = 0 , result = 0;
+		n = dao.boardLike(paraMap);
+		if(n==1) {
+			result = dao.updateB_like(paraMap);
+		}
+		return result;
+	}
+	
+	
+	//좋아요 되어있는지 체크
+	@Override
+	public int checkLikeList(Map<String, String> paraMap) {
+		int n = dao.checkLikeList(paraMap);
+		return n;
+	}
+
+	//좋아요 취소
+	@Transactional(propagation=Propagation.REQUIRED, isolation=Isolation.READ_COMMITTED, rollbackFor= {Throwable.class})
+	@Override
+	public int boardLikeDelete(Map<String, String> paraMap) {
+		int n = 0 , result = 0;
+		n = dao.boardLikeDelete(paraMap);
+		if(n==1) {
+			result = dao.updateB_like_minus(paraMap);
+		}
+		return result;
+	}
+
+	//좋아요 개수 띄우기
+	@Override
+	public int boardLikeCnt(String b_idx_fk) {
+		int b_like = dao.boardLikeCnt(b_idx_fk);
+		return b_like;
+	}
+
+	
+	//댓글삭제
+	@Override
+	public int comment_del(Map<String, String> paraMap) {
+		int n = dao.comment_del(paraMap);
+		int m = 0;
+		if(n==1) {
+			m = dao.updateC_cnt(paraMap);
+		}
+		
+		return n;
 	}
 
     

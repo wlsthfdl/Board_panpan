@@ -396,7 +396,11 @@ public class FubaoBoardController {
 	   String category_idx = request.getParameter("category_idx_fk");
 	   
 	   //카테고리 번호
-	   List<CategoryVO> cate_list = service.get_category(Integer.parseInt(category_idx));
+	   if(category_idx != null) {
+		   List<CategoryVO> cate_list = service.get_category(Integer.parseInt(category_idx));
+		   mav.addObject("cate_list", cate_list);
+
+	   }
 	   
 	   if(goBackURL != null && goBackURL.contains(" ")) {
 		   goBackURL = goBackURL.replaceAll(" ", "&");
@@ -443,7 +447,6 @@ public class FubaoBoardController {
 	   } catch (NumberFormatException e) {
 		   //무응답
 	   }
-	   mav.addObject("cate_list", cate_list);
 	   mav.setViewName("board/view.tiles2");
 		
 		return mav;
@@ -548,21 +551,6 @@ public class FubaoBoardController {
 	   return mav;
    }
    
-   @RequestMapping(value="/requiredLogin_comment.fu")
-	public ModelAndView requiredLogin_comment(HttpServletRequest request, HttpServletResponse response, ModelAndView mav) {
-	   String b_idx = request.getParameter("b_idx");
-	   String goBackURL = request.getParameter("goBackURL");
-	   String category_idx = request.getParameter("category_idx_fk");
-	   
-	   System.out.println("goBackURL" + goBackURL);
-	   
-	   mav.addObject("b_idx", b_idx);
-	   mav.addObject("goBackURL", goBackURL);
-	   mav.addObject("category_idx", category_idx);
-	   
-	   mav.setViewName("board/view.tiles2");
-	   return mav;
-	}
    
    
    
@@ -726,12 +714,11 @@ public class FubaoBoardController {
 			   jsonObj.put("c_date", cmtvo.getC_date());
 			   jsonObj.put("c_idx", cmtvo.getC_idx());
 
-			   // === 댓글읽어오기에 첨부파일 기능을 넣은 경우 시작 ===
+			   // === 댓글읽어오기에 첨부파일 기능을 넣은 경우===
 			   jsonObj.put("file_name", cmtvo.getFile_name());
 			   jsonObj.put("org_file_name", cmtvo.getOrg_file_name());
 			   jsonObj.put("file_size", cmtvo.getFile_size());
 
-			   // === 댓글읽어오기에 첨부파일 기능을 넣은 경우 끝 ===
 			   jsonArr.put(jsonObj);
 		   } //end of for ----------------------------
 	   }
@@ -758,6 +745,87 @@ public class FubaoBoardController {
 	}
 	
    
+	//게시글 좋아요 기능 
+	@ResponseBody
+	@RequestMapping(value="/board_like.fu", method= {RequestMethod.POST})   
+	public String board_like(HttpServletRequest request) {
+		String id_fk = request.getParameter("id_fk");
+		String b_idx_fk = request.getParameter("b_idx_fk");
+		
+		Map<String, String> paraMap = new HashMap<>();
+		paraMap.put("id_fk", id_fk);
+		paraMap.put("b_idx_fk", b_idx_fk);
+		
+		int n = service.boardLike(paraMap);
+		
+		int b_like = service.boardLikeCnt(b_idx_fk);
+
+	    JSONObject jsonObj = new JSONObject();
+	    jsonObj.put("b_like", b_like);
+	    jsonObj.put("n", n);
+		return jsonObj.toString();
+	}
 	
+	// 좋아요 취소 기능
+	@ResponseBody
+	@RequestMapping(value="/board_like_delete.fu", method= {RequestMethod.POST})   
+	public String board_like_delete(HttpServletRequest request) {
+		String id_fk = request.getParameter("id_fk");
+		String b_idx_fk = request.getParameter("b_idx_fk");
+		
+		Map<String, String> paraMap = new HashMap<>();
+		paraMap.put("id_fk", id_fk);
+		paraMap.put("b_idx_fk", b_idx_fk);
+		
+		int n = service.boardLikeDelete(paraMap);
+		int b_like = service.boardLikeCnt(b_idx_fk);
+
+		
+	    JSONObject jsonObj = new JSONObject();
+	    jsonObj.put("n", n);
+	    jsonObj.put("b_like", b_like);
+		return jsonObj.toString();
+	}
+	
+	//좋아요 되어있는지 체크
+	@ResponseBody
+	@RequestMapping(value="/check_like.fu", method= {RequestMethod.POST})   
+	public String check_like(HttpServletRequest request) {
+		String id_fk = request.getParameter("id_fk");
+		String b_idx_fk = request.getParameter("b_idx_fk");
+		
+		Map<String, String> paraMap = new HashMap<>();
+		paraMap.put("id_fk", id_fk);
+		paraMap.put("b_idx_fk", b_idx_fk);
+		
+		int n = service.checkLikeList(paraMap);
+
+		
+	    JSONObject jsonObj = new JSONObject();
+	    jsonObj.put("n", n);
+		return jsonObj.toString();
+	}
+	
+	
+	//댓글 삭제
+	@ResponseBody
+	@RequestMapping(value="/comment_del.fu", method= {RequestMethod.POST})   
+	public String comment_del(HttpServletRequest request, ModelAndView mav) {
+		String c_idx = request.getParameter("c_idx");
+		String b_idx_fk = request.getParameter("b_idx_fk");
+		
+		Map<String, String> paraMap = new HashMap<>();
+		paraMap.put("c_idx", c_idx);
+		paraMap.put("b_idx_fk", b_idx_fk);
+		
+		int n = service.comment_del(paraMap);
+
+		int c_cnt = service.getC_cnt(b_idx_fk);
+		
+	    JSONObject jsonObj = new JSONObject();
+	    jsonObj.put("n", n);
+	    jsonObj.put("c_cnt", c_cnt);
+		return jsonObj.toString();
+	}
    
 }

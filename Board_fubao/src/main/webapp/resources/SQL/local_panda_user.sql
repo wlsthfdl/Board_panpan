@@ -75,6 +75,16 @@ CREATE TABLE TBL_ATTACH (
     constraint ATTACH_FK foreign key(b_idx_fk) references TBL_BOARD(b_idx)
 );
 
+-- ** 게시글 좋아요 테이블** --
+CREATE TABLE TBL_LIKE(
+    id_fk        varchar2(40) not null          -- 아이디
+    ,b_idx_fk    number not null                -- 글 번호
+    ,constraint  tbl_like_pk primary key(id_fk, b_idx_fk)  
+    ,constraint  tbl_like_fk foreign key(id_fk) references TBL_MEMBER(id)
+    ,constraint  tbl_like_fk_2 foreign key(b_idx_fk) references TBL_BOARD(b_idx) on delete cascade
+);
+
+
 -- ** 시퀀스 ** --
 
 create sequence b_idx

@@ -44,21 +44,6 @@
 		where category_idx = #{category_idx}
 	</select>
 	
-	<!-- 게시글목록 조회 
-	<select id="get_boardList" resultType="com.spring.board_fubao.model.BoardVO" parameterType="HashMap">
-	    SELECT b_idx, id_fk, nickname, category_idx_fk, b_title,
-	           b_content,
-	           CASE
-	               WHEN to_char(b_date, 'yyyy-MM-dd') = to_char(#{sysdate}, 'yyyy-MM-dd') 
-	               THEN to_char(b_date, 'hh24:mi')
-	               ELSE to_char(b_date, 'yyyy-MM-dd')
-	           END AS b_date,
-	           b_like, b_hit, b_status, c_cnt
-	    FROM tbl_board
-	    WHERE category_idx_fk = #{category_idx} and b_status = 1
-	    ORDER BY b_idx DESC
-	</select>
-	-->
 	
 	<!-- 글1개 조회하기-->
 	<select id="getView" parameterType="HashMap" resultType="com.spring.board_fubao.model.BoardVO">
@@ -86,7 +71,7 @@
 		where b_idx = #{b_idx}
 	</update>
 	
-	<!-- 카테고리 list 조회 -->
+	<!-- 카테고리별 게시글 목록 조회 -->
 	<select id="get_all_category" resultType="com.spring.board_fubao.model.CategoryVO" parameterType="int">
 		<if test='role == 1'>
 			select *
@@ -145,10 +130,10 @@
 	
 	<!-- 페이징처리한 댓글 조회 -->
 	<select id="get_commentListPaging" parameterType="HashMap" resultType="com.spring.board_fubao.model.CommentVO">
-		select nickname, c_content, c_date, file_name, org_file_name, file_size
+		select c_idx, nickname, c_content, c_date, file_name, org_file_name, file_size
 		from 
 		(
-		 select row_number() over(order by c_idx) AS rno,
+		 select row_number() over(order by c_idx) AS rno, c_idx,
 		        nickname, c_content, to_char(c_date, 'yyyy-mm-dd hh24:mi:ss') AS c_date,
 		        file_name, org_file_name, file_size
 		 from tbl_comment
@@ -195,4 +180,50 @@
 		) V 
 		where rno between #{startRno} and #{endRno}
 	</select>
+	
+	<!-- 게시글 좋아요 기능 -->
+	<insert id="boardLike" parameterType="HashMap">
+		insert into TBL_LIKE (id_fk , b_idx_fk) 
+		values (#{id_fk}, #{b_idx_fk})
+	</insert>
+	
+	<!-- 좋아요 체크 -->
+	<select id="checkLikeList" parameterType="HashMap" resultType="int">
+		select count(*)
+		from TBL_LIKE
+		where id_fk = #{id_fk} and b_idx_fk = #{b_idx_fk}
+	</select>
+	
+	<!-- 게시글 좋아요 취소 기능 -->
+	<delete id="boardLikeDelete" parameterType="HashMap">
+		delete from TBL_LIKE
+		where id_fk = #{id_fk} and b_idx_fk = #{b_idx_fk}
+	</delete>
+	
+	<!-- 좋아요 개수(b_like 컬럼) 1증가 -->
+	<update id="updateB_like" parameterType="HashMap">
+		update tbl_board set b_like = b_like + 1
+	    where b_idx = #{b_idx_fk}
+	</update>
+	
+	<!-- 좋아요 개수(b_like 컬럼) 1감소 -->
+	<update id="updateB_like_minus" parameterType="HashMap">
+		update tbl_board set b_like = b_like - 1
+	    where b_idx = #{b_idx_fk}
+	</update>
+	
+	<!-- 좋아요 개수 띄우기 -->
+	<select id="boardLikeCnt" parameterType="String" resultType="int">
+		select b_like
+		from tbl_board
+	    where b_idx = #{b_idx_fk}
+	</select>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="comment_del" parameterType="HashMap">
+		delete
+		from tbl_comment
+		where c_idx = #{c_idx}
+	</delete>
+	
 </mapper>

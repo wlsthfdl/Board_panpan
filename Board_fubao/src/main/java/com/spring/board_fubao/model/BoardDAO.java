@@ -168,5 +168,54 @@ public class BoardDAO implements InterBoardDAO{
 		return board_list;
 	}
 
+	//게시글 좋아요 기능
+	@Override
+	public int boardLike(Map<String, String> paraMap) {
+		int n = sqlsession.insert("board.boardLike", paraMap);
+		return n;
+	}
+
+	//좋아요 되어있는지 체크
+	@Override
+	public int checkLikeList(Map<String, String> paraMap) {
+		int n = sqlsession.selectOne("board.checkLikeList", paraMap);
+		return n;
+	}
+
+	//좋아요 취소 기능
+	@Override
+	public int boardLikeDelete(Map<String, String> paraMap) {
+		int n = sqlsession.delete("board.boardLikeDelete", paraMap);
+		return n;
+	}
+
+	//좋아요 개수(b_like 컬럼) 1증가
+	@Override
+	public int updateB_like(Map<String, String> paraMap) {
+		int n = sqlsession.update("board.updateB_like", paraMap);
+		return n;
+	}
+
+	//좋아요 개수 1감소
+	@Override
+	public int updateB_like_minus(Map<String, String> paraMap) {
+		int n = sqlsession.update("board.updateB_like_minus", paraMap);
+		return n;
+	}
+
+	//좋아요 개수 띄우기
+	@Override
+	public int boardLikeCnt(String b_idx_fk) {
+		int b_like = sqlsession.selectOne("board.boardLikeCnt", b_idx_fk);
+ 		return b_like;
+	}
+
+	//댓글 삭제
+	@Override
+	public int comment_del(Map<String, String> paraMap) {
+		int n = sqlsession.delete("board.comment_del", paraMap);
+		return n;
+	}
+
 
 }

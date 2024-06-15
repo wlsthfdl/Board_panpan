@@ -14,72 +14,155 @@
 <script type="text/javascript">
 
 	$(document).ready(function(){
-		const goBack = "${requestScope.goBackURL}";
-		console.log(goBack);
+		const id = "${sessionScope.login_user.id}";
+		const b_idx = "${requestScope.boardvo.b_idx}";
+		let like_flag = false;
 		
+		// 좋아요 리스트에 등록 되어 있는지 확인
+		$.ajax({
+			url:"<%= ctxPath%>/check_like.fu",
+        	type:"POST",
+        	data: {
+        		"id_fk": id,
+        		"b_idx_fk": b_idx
+        	},
+        	dataType: "JSON",
+        	success:function(json){
+        		if(json.n == '1') {
+        			$(".a_like > img").attr({ src: "<%= ctxPath %>/resources/image/heart_after.png" });
+        			like_flag = true;
+        		}
+        		if(json.n == '0') {
+        			$(".a_like > img").attr({ src: "<%= ctxPath %>/resources/image/heart_before.png" });
+        			like_flag = false;
+        		}
+        	}, 	
+            error: function(request, status, error){
+              alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+	          }
+		});
+		
+		
+		//좋아요 기능
+		$(".a_like").click(function() {
+			if(id==''){
+				alert("로그인 후 이용하실 수 있습니다.");
+				window.location.href = "<%= ctxPath%>/login.fu";
+			}else{
+					//좋아요 처음 누를 때 (insert)
+					if(like_flag == false){
+						$.ajax({
+				        	url:"<%= ctxPath%>/board_like.fu",
+				        	type:"POST",
+				        	data: {
+				        		"id_fk": id,
+				        		"b_idx_fk": b_idx
+				        	},
+				        	dataType: "JSON",
+				        	success:function(json){
+				        		if(json.n == '1') {
+				        			$(".a_like > img").attr({ src: "<%= ctxPath %>/resources/image/heart_after.png" });
+				        			like_flag = true;
+				        			$(".likeCnt").text(json.b_like);
+				        		}
+				        	}, 	
+				            error: function(request, status, error){
+			                  alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+					          }
+				           });  
+					}else{ //좋아요 두 번 누르면 좋아요 취소
+						$.ajax({
+				        	url:"<%= ctxPath%>/board_like_delete.fu",
+				        	type:"POST",
+				        	data: {
+				        		"id_fk": id,
+				        		"b_idx_fk": b_idx
+				        	},
+				        	dataType: "JSON",
+				        	success:function(json){
+				        		if(json.n == '1') {
+				        			$(".a_like > img").attr({ src: "<%= ctxPath %>/resources/image/heart_before.png" });
+				        			like_flag = false;
+				        			$(".likeCnt").text(json.b_like);
+				        			return false;
+				        		}
+				        	}, 	
+				            error: function(request, status, error){
+			                  alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+					          }
+				           });  
+					}
+			}
+			
+		});
 		
 		//댓글 띄워주기
 		comment_pagination(1);
-	
+
 		//이미지 파일 선택시 이미지 띄워주기
-		$(document).on("change", "input#c_attach", function(e){
-  			
-			$(".comment_inbox").css({"height":"140px"});
-			
-			$("#previewImg").css({"width":"60px", "height":"45px"});
-			
+		$(document).on("change", "input#c_attach", function(e) {
+
+			$(".comment_inbox").css({
+				"height" : "140px"
+			});
+
+			$("#previewImg").css({
+				"width" : "60px",
+				"height" : "45px"
+			});
+
 			const input_file = $(e.target).get(0);
-			
-	        const fileReader = new FileReader();
-	         
-	        fileReader.readAsDataURL(input_file.files[0]); // FileReader.readAsDataURL() --> 파일을 읽고, result속성에 파일을 나타내는 URL을 저장 시켜준다.
-	      
-	        fileReader.onload = function() { // FileReader.onload --> 파일 읽기 완료 성공시에만 작동하도록 하는 것임. 
-	             //console.log(fileReader.result);
-	             document.getElementById("previewImg").src = fileReader.result;
-	         };
-	             
-	     }); 
-		
-		
-	});
+
+			const fileReader = new FileReader();
+
+			fileReader.readAsDataURL(input_file.files[0]); // FileReader.readAsDataURL() --> 파일을 읽고, result속성에 파일을 나타내는 URL을 저장 시켜준다.
+
+			fileReader.onload = function() { // FileReader.onload --> 파일 읽기 완료 성공시에만 작동하도록 하는 것임. 
+				//console.log(fileReader.result);
+				document.getElementById("previewImg").src = fileReader.result;
+			};
+
+		});
+
+	}); //end of $(document).ready(function() ---------------------
 
 	function c_scroll() {
-		const offset = $('.article_comment').offset(); 
-		  $('html').animate({scrollTop : offset.top}, 300);
+		const offset = $('.article_comment').offset();
+		$('html').animate({
+			scrollTop : offset.top
+		}, 300);
 	};
-	
+
 	// 댓글 '등록' 버튼을 눌렀을 때
 	function add_comment() {
-		  const c_content = $(".comment_inbox_text").val().trim(); 
-		  
-		  if(c_content == "") {
-			  alert("내용을 입력하세요.");
-			  return false;
-		  }
-		  
-		  if($("input#c_attach").val() == "") {
-			  // 첨부파일이 없는 댓글쓰기인 경우 
-			  add_comment_noAttach();
-		  }
-		  else {
-			  // 첨부파일이 있는 댓글쓰기인 경우 
-			  add_comment_withAttach(); 
-		  }
-		
+		const c_content = $(".comment_inbox_text").val().trim();
+
+		if (c_content == "") {
+			alert("내용을 입력하세요.");
+			return false;
+		}
+
+		if ($("input#c_attach").val() == "") {
+			// 첨부파일이 없는 댓글쓰기인 경우 
+			add_comment_noAttach();
+		} else {
+			// 첨부파일이 있는 댓글쓰기인 경우 
+			add_comment_withAttach();
+		}
+
 	};
-	    
+
 	//파일 첨부 없는 댓글 쓰기
 	function add_comment_noAttach() {
 		const queryString = $("form[name='c_frm']").serialize();
 
 		$.ajax({
-			url: "<%= request.getContextPath()%>/add_comment.fu",
+			url : "<%= request.getContextPath()%>/add_comment.fu",
 			data: queryString,
 			type: "post",
 			dataType: "json",
 			success:function(json){
-	  			 console.log("~~ 확인용 : " + JSON.stringify(json));
+	  			 //console.log("~~ 확인용 : " + JSON.stringify(json));
 				 
 	  			 /*댓글을 등록하면 c_cnt(가장 최신의 댓글)을 띄워주기 위함*/
 	  			 const c_cnt = json.c_cnt;
@@ -120,7 +203,7 @@
 	         contentType: false, 
 	  		 dataType:"json",
 	  		 success:function(json){
-	  			 console.log("~~add_comment_withAttach 확인용 : " + JSON.stringify(json));
+	  			 //console.log("~~add_comment_withAttach 확인용 : " + JSON.stringify(json));
 	  			 
 	  			 /*댓글을 등록하면 c_cnt(가장 최신의 댓글)을 띄워주기 위함*/
 	  			 const c_cnt = json.c_cnt;
@@ -158,8 +241,15 @@
 	                $.each(json, function(index, item){
 	                   html += "<div class='comment_area'>" +
 	                   		"<div style='margin-left: 4px;'>" + 
-	                       "<div class='comment_nick'><img src='<%= ctxPath%>/resources/image/comment_nick (5).png'	width=20/> "+ item.nickname +"</div>" +
-	                       "<div class='comment_text'>" + item.c_content + "</div>";
+	                       "<div class='comment_nick'><img src='<%= ctxPath%>/resources/image/comment_nick (5).png'	width=20/> "+ item.nickname;
+	                       
+	                       if("${sessionScope.login_user.nickname}" == item.nickname){
+	                       		html += "<div class='c_del' onclick='c_del("+item.c_idx+")'>삭제</div>" +"</div>";
+	                       }else{
+	                    	   html += "</div>";
+	                       }
+	                       
+	                       html += "<div class='comment_text'>" + item.c_content + "</div>";
 			               	
 	                       if(item.file_name){
 		                  	  html += "<div class='comment_img'><img class='c_image' src='<%= ctxPath%>/resources/files/" + item.file_name + "' /></div>";
@@ -259,7 +349,25 @@
 	 	  
 	   }// end of function makeCommentPageBar(currentShowPageNo) {}-------
 	   
-	
+	//본인 댓글일 때 댓글 삭제
+	function c_del(c_idx){
+		alert("정말 삭제하시겠습니까?");
+
+		$.ajax({
+			url : "<%= request.getContextPath()%>/comment_del.fu",
+			data : {
+				c_idx : c_idx,
+				"b_idx_fk":"${requestScope.boardvo.b_idx}"
+			},
+			dataType: "json",
+			type : "post",
+			success : function(json){
+				if(json.n == '1'){
+					comment_pagination(1);
+				}
+			}
+		});		
+	}
 
 	
 	// 본인글일 때 게시글 삭제
@@ -335,9 +443,11 @@
                                 <span>${requestScope.boardvo.c_cnt}</span>
                             </div>
                             <div class="article_like">
-                                <img src="<%= ctxPath %>/resources/image/heart_after.png" width="22">
-                                	좋아요
-                                <span>${requestScope.boardvo.b_like}</span>
+                                <button class="a_like">
+                                	<img src="<%= ctxPath %>/resources/image/heart_before.png" width="22">
+                                </button>
+                               	 좋아요
+                                <span class="likeCnt">${requestScope.boardvo.b_like}</span>
                             </div>
                         </div>
                         <!-- 댓글쓰기 폼 -->
@@ -349,7 +459,6 @@
                         
                         <!-- 댓글 보여주기 -->
                         <div id="view_comment">
-                       
                         </div>
                         
                         <!-- 페이지바 -->
@@ -381,7 +490,7 @@
                             
                             <c:if test="${sessionScope.login_user == null}">
                             	<div class="comment_inbox" style="height: 58px;">
-        							<a href="<%= ctxPath %>/login.fu?">지금 가입하고 댓글에 참여해보세요! > </a>
+        							<a href="<%= ctxPath %>/login.fu">지금 가입하고 댓글에 참여해보세요! > </a>
 	                            </div>
                             </c:if>
                             
