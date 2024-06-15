@@ -123,23 +123,14 @@ public class BoardService implements InterBoardService{
 				
 				session.setAttribute("login_user", login_user);
 
-				
 				String redirectUrl = (String) session.getAttribute("redirectUrl");
-				System.out.println("redirectUrl 2: " + redirectUrl);
+				String goBackURL = (String) session.getAttribute("goBackURL");
 
 				if (redirectUrl != null && !redirectUrl.isEmpty()) {
 			        mav.setViewName("redirect:" + redirectUrl);
+					session.removeAttribute("redirectUrl"); // 세션에서 제거
 
-			    } else {
-			        mav.setViewName("redirect:/index.fu");
-
-			    }
-				
-				
-				String goBackURL = (String) session.getAttribute("goBackURL");
-
-				System.out.println("goback : " + goBackURL);
-				if(goBackURL != null) {
+			    }else if(goBackURL != null) {
 					mav.setViewName("redirect:"+goBackURL);
 					session.removeAttribute("goBackURL"); // 세션에서 제거
 				}

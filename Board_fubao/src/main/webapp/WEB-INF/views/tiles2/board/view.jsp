@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.net.URLEncoder" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -377,15 +378,10 @@
 	                                </div>
 	                            </div>
                             </c:if>
-                            <%-- 현재 페이지의 URL을 얻어 currentUrl 변수에 저장 --%>
-							<c:set var="currentUrl" value="${pageContext.request.requestURL}?${pageContext.request.queryString}" />
                             
                             <c:if test="${sessionScope.login_user == null}">
                             	<div class="comment_inbox" style="height: 58px;">
-                            	   <%--<c:set var="root" value="${pageContext.request.contextPath}"/>
-        							<a href="${root}/login.fu?redirect=${fn:escapeXml(currentUrl)}">지금 가입하고 댓글에 참여해보세요! > </a>
-        							<a href="<%= ctxPath %>/requiredLogin_comment.fu?b_idx=${requestScope.boardvo.b_idx}&category_idx_fk=${catevo.category_idx}&goBackURL=${v_goBackURL}">지금 가입하고 댓글에 참여해보세요! > </a>--%>
-	                           		<a href="${pageContext.request.contextPath}/login.fu?returnUrl=${currentUrl}">지금 가입하고 댓글에 참여해보세요! > </a>
+        							<a href="<%= ctxPath %>/login.fu?">지금 가입하고 댓글에 참여해보세요! > </a>
 	                            </div>
                             </c:if>
                             

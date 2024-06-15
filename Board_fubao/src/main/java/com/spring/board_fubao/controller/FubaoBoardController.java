@@ -135,12 +135,11 @@ public class FubaoBoardController {
 	// 로그인 폼페이지 요청 
 	@RequestMapping(value="/login.fu")
 	public ModelAndView login(ModelAndView mav, HttpServletRequest request) {
-		String redirectUrl = request.getParameter("redirect");
-		System.out.println("redirectUrl 1 : " + redirectUrl);
-
-		if (redirectUrl != null && !redirectUrl.isEmpty()) {
-	        request.getSession().setAttribute("redirectUrl", redirectUrl);
-	    }
+		String referer = request.getHeader("Referer");
+				
+		if(referer != null && !referer.isEmpty()) {
+	        request.getSession().setAttribute("redirectUrl", referer);
+		}
 
 		mav.setViewName("member/login.tiles1");
 		
