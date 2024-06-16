@@ -186,7 +186,7 @@
 		select b_idx, id_fk, nickname, category_idx_fk, b_title, b_date, b_hit, c_cnt
 		from 
 		(
-		  select row_number() over(order by b_idx desc) AS rno,
+		  select row_number() over(order by b_hit desc) AS rno,
 		         b_idx, id_fk, nickname, category_idx_fk, b_title,
 		         CASE
 	               WHEN to_char(b_date, 'yyyy-MM-dd') = to_char(#{sysdate}, 'yyyy-MM-dd') THEN to_char(b_date, 'hh24:mi')
@@ -195,7 +195,6 @@
 		         b_hit, c_cnt
 		  from tbl_board
 		  where b_status = 1
-		  order by b_hit desc
 		) V 
 		where rno between #{startRno} and #{endRno}
 	</select>

@@ -301,8 +301,8 @@ public class FubaoBoardController {
 			
 			if(category_idx != 10) {
 				totalCnt = service.getTotalCnt(category_idx);
-			}else {		//인기글은 25개만 보여줌
-				totalCnt = 25;
+			}else {		//인기글은 20개만 보여줌
+				totalCnt = 20;
 			}
 			
 			
