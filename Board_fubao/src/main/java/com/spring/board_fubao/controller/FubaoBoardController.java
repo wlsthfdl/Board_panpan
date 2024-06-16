@@ -819,12 +819,9 @@ public class FubaoBoardController {
 		paraMap.put("b_idx_fk", b_idx_fk);
 		
 		int n = service.comment_del(paraMap);
-
-		int c_cnt = service.getC_cnt(b_idx_fk);
 		
 	    JSONObject jsonObj = new JSONObject();
 	    jsonObj.put("n", n);
-	    jsonObj.put("c_cnt", c_cnt);
 		return jsonObj.toString();
 	}
    

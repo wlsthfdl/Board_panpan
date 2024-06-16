@@ -226,4 +226,10 @@
 		where c_idx = #{c_idx}
 	</delete>
 	
+	<!-- 댓글 삭제시 댓글개수 (c_cnt) 수정 -->
+	<update id="updateC_cnt" parameterType="HashMap">
+		update tbl_board set c_cnt = c_cnt - 1
+		where b_idx = #{b_idx_fk}	
+	</update>
+	
 </mapper>

@@ -217,5 +217,12 @@ public class BoardDAO implements InterBoardDAO{
 		return n;
 	}
 
+	//댓글 삭제시 댓글 개수(c_cnt) 수정
+	@Override
+	public int updateC_cnt(Map<String, String> paraMap) {
+		int n = sqlsession.update("board.updateC_cnt", paraMap);
+		return n;
+	}
+
 
 }

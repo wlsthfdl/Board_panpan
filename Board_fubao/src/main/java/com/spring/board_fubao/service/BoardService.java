@@ -331,7 +331,7 @@ public class BoardService implements InterBoardService{
 			m = dao.updateC_cnt(paraMap);
 		}
 		
-		return n;
+		return m;
 	}
 
     
