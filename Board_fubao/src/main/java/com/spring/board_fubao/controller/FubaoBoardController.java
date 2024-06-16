@@ -1,22 +1,18 @@
 package com.spring.board_fubao.controller;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.xml.crypto.dsig.keyinfo.RetrievalMethod;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -26,7 +22,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -304,7 +299,12 @@ public class FubaoBoardController {
 			int totalPage = 0;		//총 페이지 수
 			int sizePerPage = 20;	//페이지 당 보여줄 게시물 건수
 			
-			totalCnt = service.getTotalCnt(category_idx);
+			if(category_idx != 10) {
+				totalCnt = service.getTotalCnt(category_idx);
+			}else {		//인기글은 25개만 보여줌
+				totalCnt = 25;
+			}
+			
 			
 			totalPage = (int)Math.ceil((double)totalCnt/sizePerPage);
 
@@ -335,9 +335,16 @@ public class FubaoBoardController {
 			paraMap.put("sysdate", sysdate);
 			paraMap.put("category_idx", category_idx);
 
-			board_list = service.boardListPagination(paraMap);
-			//board_list = service.get_boardList(paraMap);
-
+			
+			//인기글인 경우(category_idx == 10)와 일반 카테고리인 경우
+			if(category_idx != 10) {
+				board_list = service.boardListPagination(paraMap);
+			}else {
+				board_list = service.boardListHitsPagination(paraMap);
+			}
+			
+			
+			
 			// == 페이지바 만들기 == //
 			int blockSize = 5;
 			int loop = 1;

@@ -78,6 +78,8 @@ public interface InterBoardService {
 
 	//페이징처리한 글목록 가져오기
 	List<BoardVO> boardListPagination(HashMap<String, Object> paraMap);
+	//페이징처리한 글목록 가져오기(인기글)
+	List<BoardVO> boardListHitsPagination(HashMap<String, Object> paraMap);
 
 	//좋아요 insert
 	int boardLike(Map<String, String> paraMap);
@@ -94,6 +96,7 @@ public interface InterBoardService {
 	//댓글 삭제
 	int comment_del(Map<String, String> paraMap);
 
+	
 
 	
 }

@@ -282,6 +282,14 @@ public class BoardService implements InterBoardService{
 		return board_list;
 	}
 
+	//페이징처리한 글목록(인기글)
+	@Override
+	public List<BoardVO> boardListHitsPagination(HashMap<String, Object> paraMap) {
+		List<BoardVO> board_list = dao.boardListHitsPagination(paraMap);
+		return board_list;
+	}
+
+	
 	//게시글 좋아요 insert 기능 
 	@Transactional(propagation=Propagation.REQUIRED, isolation=Isolation.READ_COMMITTED, rollbackFor= {Throwable.class})
 	@Override
@@ -334,6 +342,7 @@ public class BoardService implements InterBoardService{
 		return m;
 	}
 
+	
     
 	
 	

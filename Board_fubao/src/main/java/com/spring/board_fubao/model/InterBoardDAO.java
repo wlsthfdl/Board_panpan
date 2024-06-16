@@ -67,6 +67,8 @@ public interface InterBoardDAO {
 
 	//페이징처리 한 글 목록
 	List<BoardVO> boardListPagination(HashMap<String, Object> paraMap);
+	//페이징처리 한 글 목록(인기글)
+	List<BoardVO> boardListHitsPagination(HashMap<String, Object> paraMap);
 
 	//좋아요 기능
 	int boardLike(Map<String, String> paraMap);

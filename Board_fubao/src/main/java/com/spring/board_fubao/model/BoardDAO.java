@@ -167,6 +167,12 @@ public class BoardDAO implements InterBoardDAO{
 		List<BoardVO> board_list = sqlsession.selectList("board.boardListPagination", paraMap);
 		return board_list;
 	}
+	//페이징 처리한 글 목록(인기글)
+	@Override
+	public List<BoardVO> boardListHitsPagination(HashMap<String, Object> paraMap) {
+		List<BoardVO> board_list = sqlsession.selectList("board.boardListHitsPagination", paraMap);
+		return board_list;
+	}
 
 	//게시글 좋아요 기능
 	@Override
@@ -223,6 +229,7 @@ public class BoardDAO implements InterBoardDAO{
 		int n = sqlsession.update("board.updateC_cnt", paraMap);
 		return n;
 	}
+
 
 
 }
