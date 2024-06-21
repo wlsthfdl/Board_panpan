@@ -1,5 +1,6 @@
 package com.spring.board_fubao.common;
 
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.renderable.ParameterBlock;
 import java.io.BufferedInputStream;
@@ -10,6 +11,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 
+import javax.imageio.ImageIO;
 import javax.media.jai.JAI;
 import javax.media.jai.RenderedOp;
 import javax.servlet.ServletOutputStream;
@@ -127,11 +129,32 @@ public class FileManager {
 		
 		fos.close();
 		is.close();
-		
+
 		return newFilename;
 	}	
 	
-	
+	//이미지 리사이징
+    public void resizeImage(String pathname, int maxWidth) throws Exception {
+        BufferedImage originalImage = ImageIO.read(new File(pathname));
+        int width = originalImage.getWidth();
+        int height = originalImage.getHeight();
+
+        if (width > maxWidth) {
+            double aspectRatio = (double) height / width;
+            width = maxWidth;
+            height = (int) (width * aspectRatio);
+
+            BufferedImage resizedImage = new BufferedImage(width, height, originalImage.getType());
+            Graphics2D g = resizedImage.createGraphics();
+            g.drawImage(originalImage, 0, 0, width, height, null);
+            g.dispose();
+
+            String formatName = pathname.substring(pathname.lastIndexOf(".") + 1); // 확장자 추출
+            ImageIO.write(resizedImage, formatName, new File(pathname));
+        }
+    }
+    
+    
 	// == 파일 다운로드 하기 ==
 	// saveFilename : 서버에 저장된 파일명(현재의 년월일시분초에다가 현재 나노세컨즈nanoseconds 값을 결합하여 확장자를 붙여서 만든것)
 	// originalFilename : 클라이언트가 업로드한 파일명(파일명이 영어로 되어진 경우도 있지만 한글로 되어진 경우가 있다는 것에 유의하자)
@@ -282,7 +305,8 @@ public class FileManager {
        height = bi.getHeight();		
 		
 	   return height;
-	}	
+	}
+
 		
 }
 

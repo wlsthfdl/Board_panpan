@@ -50,6 +50,8 @@ public class FubaoBoardController {
 	/*메인 페이지*/
 	@RequestMapping(value="/index.fu")
 	public ModelAndView index(ModelAndView mav, HttpServletRequest request) {
+		
+		
 		mav.setViewName("board/home.tiles2");
 		
 		return mav;
@@ -245,11 +247,25 @@ public class FubaoBoardController {
 			
 			String newFilename = fileManager.doFileUpload(is, filename, path);
 			
+			System.out.println("newFilename : " + newFilename);
+			/*
 			int width = fileManager.getImageWidth(path+File.separator+newFilename);
 			
 		    if(width > 600) {
 		       width = 600;
 		    }
+		    
+		    
+		    // 이미지 리사이즈
+            int originalWidth = fileManager.getImageWidth(fullPath);
+            if (originalWidth > 600) {
+                fileManager.resizeImage(fullPath, 600);
+            }
+		    
+			 */
+			 fileManager.resizeImage(path + File.separator + newFilename, 600); // 이미지 리사이즈
+
+	         int width = fileManager.getImageWidth(path + File.separator + newFilename);
 
 			System.out.println(">>>> 확인용 width ==> " + width);
 			 // >>>> 확인용 width ==> 600
