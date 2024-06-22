@@ -317,17 +317,19 @@ body #gnb-menu{
 }
 
 #main_area .main_news .news_photo_box{
+  	display: grid;
+    grid-template-columns: repeat(2, 410px);
     width: auto;
-    height: 492px;
+    height: 222px;
     padding-left: 6px;
 }
 
 #main_area .main_news .news_photo_box li{
-    display: inline-block;
+    display: flex;
     list-style: none;
     margin-top: 4px;
-    height: 238px;
-    width: 132px;
+    height: 28px;
+    width: 50%;
 }
 
 #main_area .main_news .news_photo_box img{
@@ -341,6 +343,7 @@ body #gnb-menu{
     margin: 0;
     font-size: 10pt;
     height: 25px;
+
 }
 
 
@@ -349,14 +352,16 @@ body #gnb-menu{
     margin: 4px 0 0 3px;
     color: #2e2e2e;
     display: inline-block;
-    width: 95px;
+    width:238px;
     white-space:nowrap; 
     overflow:hidden;
+    font-weight: 500;
     text-overflow:ellipsis; 
 }
 
 
 .dd_tit .main_box_sub:hover{
+	font-weight:bold;
     color: #e95e0e;
 }
 
@@ -364,12 +369,19 @@ body #gnb-menu{
 .dd_tit .num{
     font-weight: 900;
     color: #e95e0e;
+    margin-left: 4px;
+    width: 30px;
+}
+.box_nick_area{
+	font-size: 10pt;
+    font-weight: 500;
+    color:grey;
+    width: 120px;
+	text-align: center;
+
 }
 
-.box_nick_area{
-    margin: 4px 0 0 3px;
-    font-size: 10pt;
-    font-weight: 500;
+.box_nick_area p{
 }
 
 .dd_date{
@@ -380,7 +392,7 @@ body #gnb-menu{
 
 
 .news_photo_box .d_date{
-    display: inline-block;
+    display: block;
     width: 52px;    
 }
 

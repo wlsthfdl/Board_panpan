@@ -342,6 +342,13 @@ public class BoardService implements InterBoardService{
 		return m;
 	}
 
+	//메인페이지 인기글 조회
+	@Override
+	public List<BoardVO> boardListHitsMain() {
+		List<BoardVO> boardList = dao.boardListHitsMain();
+		return boardList;
+	}
+
 	
     
 	

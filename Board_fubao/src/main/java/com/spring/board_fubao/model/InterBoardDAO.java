@@ -94,6 +94,9 @@ public interface InterBoardDAO {
 	//댓글 개수 감소
 	int updateC_cnt(Map<String, String> paraMap);
 
+	//메인페이지 인기글 조회
+	List<BoardVO> boardListHitsMain();
+
 
 
 }

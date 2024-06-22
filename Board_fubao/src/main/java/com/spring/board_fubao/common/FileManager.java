@@ -129,7 +129,7 @@ public class FileManager {
 		
 		fos.close();
 		is.close();
-
+		
 		return newFilename;
 	}	
 	
@@ -150,11 +150,10 @@ public class FileManager {
             g.dispose();
 
             String formatName = pathname.substring(pathname.lastIndexOf(".") + 1); // 확장자 추출
+            System.out.println(formatName);
             ImageIO.write(resizedImage, formatName, new File(pathname));
         }
     }
-    
-    
 	// == 파일 다운로드 하기 ==
 	// saveFilename : 서버에 저장된 파일명(현재의 년월일시분초에다가 현재 나노세컨즈nanoseconds 값을 결합하여 확장자를 붙여서 만든것)
 	// originalFilename : 클라이언트가 업로드한 파일명(파일명이 영어로 되어진 경우도 있지만 한글로 되어진 경우가 있다는 것에 유의하자)
@@ -305,8 +304,7 @@ public class FileManager {
        height = bi.getHeight();		
 		
 	   return height;
-	}
-
+	}	
 		
 }
 

@@ -50,8 +50,9 @@ public class FubaoBoardController {
 	/*메인 페이지*/
 	@RequestMapping(value="/index.fu")
 	public ModelAndView index(ModelAndView mav, HttpServletRequest request) {
+		List<BoardVO> boardList = service.boardListHitsMain();
 		
-		
+		mav.addObject("boardList", boardList);
 		mav.setViewName("board/home.tiles2");
 		
 		return mav;
@@ -195,7 +196,6 @@ public class FubaoBoardController {
 		   //카테고리 조회해오기
 		   List<CategoryVO> cate_list_all = service.get_all_category(role);
 		   
-		   System.out.println(cate_list_all);
 		   mav.addObject("cate_list_all", cate_list_all);
 		}
 		   mav.setViewName("board/write.tiles2");
@@ -226,19 +226,20 @@ public class FubaoBoardController {
 
    // ==== #스마트에디터. 드래그앤드롭을 사용한 다중사진 파일업로드 ====
    @RequestMapping(value="/image/multiplePhotoUpload.fu", method= {RequestMethod.POST} )
-	public void multiplePhotoUpload(HttpServletRequest request, HttpServletResponse response) {
-		// 절대경로
-		HttpSession session = request.getSession();
-		String root = session.getServletContext().getRealPath("/");
-		String path = root + "resources"+File.separator+"photo_upload";
-		
-		//	System.out.println("~~~~ 확인용 path => " + path);
-		// ~~~~ 확인용  webapp 의 절대경로 => C:\NCS\workspace(spring)\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\Board\resources\photo_upload 
-		
-		File dir = new File(path);
-		if(!dir.exists()) {
-			dir.mkdirs();
-		}
+	public void multiplePhotoUpload(HttpServletRequest request, HttpServletResponse response, BoardVO boardvo) {
+	   		// 절대경로
+			HttpSession session = request.getSession();
+			String root = session.getServletContext().getRealPath("/");
+			String path = root + "resources"+File.separator+"photo_upload";
+			
+			System.out.println("~~~~ 확인용 path => " + path);
+			// ~~~~ 확인용  webapp 의 절대경로 => C:\NCS\workspace(spring)\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\Board\resources\photo_upload 
+			
+			File dir = new File(path);
+			if(!dir.exists()) {
+				dir.mkdirs();
+			}
+			
 		
 		try {
 			String filename = request.getHeader("file-name"); // 파일명(문자열)을 받는다 - 일반 원본파일명
@@ -246,30 +247,22 @@ public class FubaoBoardController {
 			InputStream is = request.getInputStream(); // is는 네이버 스마트 에디터를 사용하여 사진첨부하기 된 이미지 파일임.
 			
 			String newFilename = fileManager.doFileUpload(is, filename, path);
-			
 			System.out.println("newFilename : " + newFilename);
-			/*
-			int width = fileManager.getImageWidth(path+File.separator+newFilename);
 			
+			/*
+		    int width = fileManager.getImageWidth(path + File.separator + newFilename);
 		    if(width > 600) {
 		       width = 600;
-		    }
-		    
-		    
-		    // 이미지 리사이즈
-            int originalWidth = fileManager.getImageWidth(fullPath);
-            if (originalWidth > 600) {
-                fileManager.resizeImage(fullPath, 600);
-            }
-		    
-			 */
-			 fileManager.resizeImage(path + File.separator + newFilename, 600); // 이미지 리사이즈
+		    }*/
+			
+			fileManager.resizeImage(path + File.separator + newFilename, 600); // 이미지 리사이즈
 
-	         int width = fileManager.getImageWidth(path + File.separator + newFilename);
+	        int width = fileManager.getImageWidth(path + File.separator + newFilename);
 
-			System.out.println(">>>> 확인용 width ==> " + width);
-			 // >>>> 확인용 width ==> 600
-			 // >>>> 확인용 width ==> 121
+		    
+		    System.out.println(">>>> 확인용 width ==> " + width);
+	
+	
 				
 			String ctxPath = request.getContextPath(); //  /board
 			
@@ -427,9 +420,10 @@ public class FubaoBoardController {
 	   
 	   if(goBackURL != null && goBackURL.contains(" ")) {
 		   goBackURL = goBackURL.replaceAll(" ", "&");
+		   mav.addObject("goBackURL",goBackURL);
+
 	   }
 	   
-	   mav.addObject("goBackURL",goBackURL);
 	   
 	   try {
 		   Integer.parseInt(b_idx);

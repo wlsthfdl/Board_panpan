@@ -96,6 +96,9 @@ public interface InterBoardService {
 	//댓글 삭제
 	int comment_del(Map<String, String> paraMap);
 
+	//메인페이지 인기글 목록 조회
+	List<BoardVO> boardListHitsMain();
+
 	
 
 	

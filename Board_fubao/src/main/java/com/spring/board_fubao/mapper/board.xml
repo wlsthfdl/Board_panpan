@@ -251,4 +251,14 @@
 		where b_idx = #{b_idx_fk}	
 	</update>
 	
+	
+	<select id="boardListHitsMain" resultType="com.spring.board_fubao.model.BoardVO">
+		select b_idx, id_fk, nickname, b_title, b_hit, c_cnt, category_idx_fk
+		from ( select row_number() over(order by b_hit desc) AS rno,
+        		b_idx, id_fk, nickname, b_title, b_hit, c_cnt, category_idx_fk
+        		from tbl_board
+        		where b_status = 1)
+		where rno between 1 and 14
+	</select>
+	
 </mapper>
