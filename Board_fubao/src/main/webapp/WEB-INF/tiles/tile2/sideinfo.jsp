@@ -35,19 +35,19 @@
                </ul>
            </div>
            <c:if test="${not empty sessionScope.login_user}">              
-           		<div class="info_box">
+           		<!-- <div class="info_box">
 	               <li class="b_write"><a href="<%= ctxPath %>/" style="text-decoration: none; color: black;">내가 쓴 게시글</a></li>
 	               <li class="b_comment"><a href="<%= ctxPath %>" style="text-decoration: none; color: black;">내가 쓴 댓글</a></li>
-	           </div>
+	           </div> -->
 	           <div class="side_write_btn">
 	               <div><a href="<%= ctxPath%>/board_write.fu" style="text-decoration: none; color: white;">게시글쓰기</a></div>
 	           </div>
 	       </c:if>
 	       <c:if test="${empty sessionScope.login_user}">
-               <div class="info_box">
+             <!-- <div class="info_box">
 	               <li class="b_write"><a href="<%= ctxPath %>/login.fu" style="text-decoration: none; color: black;">내가 쓴 게시글</a></li>
 	               <li class="b_comment"><a href="<%= ctxPath %>/login.fu" style="text-decoration: none; color: black;">내가 쓴 댓글</a></li>
-	           </div>
+	           	  </div>  --> 
       	       <div class="side_write_btn">
              		<div><a href="<%= ctxPath%>/board_write.fu" style="text-decoration: none; color: white;">게시글쓰기</a></div>
           	   </div>

@@ -137,7 +137,7 @@ body #gnb-menu{
     border: dotted 1px #8bb772;
     border-radius: 10px;
     background-color: #ffffff;
-    height: 326px;
+    height: 278px;
 }
 
 #user_info .my_info{
@@ -493,15 +493,16 @@ body #gnb-menu{
     */
     border-bottom: 1px solid rgb(233, 233, 233);
     height: 10px;
+    text-align: center;
+
 }
 
-.list_content tbody tr td:nth-child(4){
-    text-align: center;
+.list_content tbody tr td:nth-child(2){
+    text-align: left;
 }
-.list_content tbody tr td:nth-child(5){
-    text-align: center;
+.list_content tbody tr td:nth-child(1){
+    text-align: left;
 }
-
 
 .list_paginate{
     width: 835px;
