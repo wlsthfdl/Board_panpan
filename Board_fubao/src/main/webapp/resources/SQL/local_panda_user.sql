@@ -63,18 +63,6 @@ CREATE TABLE TBL_CATEGORY (
     constraint CATEGORY_PK primary key(category_idx)
 );
 
-
--- ** 첨부파일 테이블 ** --
-CREATE TABLE TBL_ATTACH (
-	file_idx       NUMBER            NOT NULL, -- 파일번호
-	b_idx_fk       NUMBER            NOT NULL, -- 글번호
-	org_file_name  VARCHAR2(400)     NOT NULL, -- 원본파일명
-	save_file_name VARCHAR2(400)     NOT NULL, -- 파일명
-	file_size      NUMBER            NOT NULL,  -- 파일크기
-    constraint ATTACH_PK primary key(file_idx),
-    constraint ATTACH_FK foreign key(b_idx_fk) references TBL_BOARD(b_idx)
-);
-
 -- ** 게시글 좋아요 테이블** --
 CREATE TABLE TBL_LIKE(
     id_fk        varchar2(40) not null          -- 아이디

@@ -126,6 +126,9 @@ public class BoardService implements InterBoardService{
 				String redirectUrl = (String) session.getAttribute("redirectUrl");
 				String goBackURL = (String) session.getAttribute("goBackURL");
 
+				//System.out.println("redirectUrl : " + redirectUrl);
+				//System.out.println("goBackURL : " + goBackURL);
+				
 				if (redirectUrl != null && !redirectUrl.isEmpty()) {
 			        mav.setViewName("redirect:" + redirectUrl);
 					session.removeAttribute("redirectUrl"); // 세션에서 제거

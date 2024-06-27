@@ -34,10 +34,10 @@
                     <table>
                         <thead>
                             <tr>
-                                <th style="width: 9%;"></th>
+                                <th style="width: 6%;"></th>
                                 <th style="width: 54%;">제목</th>
                                 <th style="width: 17%;">작성자</th>
-                                <th style="width: 11%;">작성일</th>
+                                <th style="width: 14%;">작성일</th>
                                 <th style="width: 9%;">조회</th>
                             </tr>
                         </thead>

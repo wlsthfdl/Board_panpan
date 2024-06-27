@@ -9,6 +9,12 @@
 
 %>    
 
+
+<script type="text/javascript">
+
+</script>
+
+
 <div id="content_area" style="height: 850px;">
     <div class="join_complete">
         <h2>BAO Gallery</h2>
@@ -16,7 +22,7 @@
             <h3>회원가입이 완료되었습니다.</h3>
             <h4>BAO Gallery의 모든 기능을 이용하실 수 있습니다.</h4>
         </div>
-        <input type="button" class="complete_btn" value="로그인하기" onclick="location.href='./login.fu'"/>
+        <input type="button" class="complete_btn" value="홈으로" onclick="location.href='<%= ctxPath%>/index.fu'"/>
     </div>
 </div>
         

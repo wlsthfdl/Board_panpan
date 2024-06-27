@@ -81,7 +81,6 @@ public class FubaoBoardController {
       } catch (Throwable e) {
             e.printStackTrace();
       }
-      System.out.println(n);
       JSONObject jsonObj = new JSONObject();
       jsonObj.put("n", n);
 
@@ -101,7 +100,7 @@ public class FubaoBoardController {
       } catch (Throwable e) {
             e.printStackTrace();
       }
-      System.out.println(n);
+      
       JSONObject jsonObj = new JSONObject();
       jsonObj.put("n", n);
 
@@ -131,7 +130,7 @@ public class FubaoBoardController {
  
 	
 	// 로그인 폼페이지 요청 
-	@RequestMapping(value="/login.fu")
+	@RequestMapping(value="/login.fu", method= {RequestMethod.GET})
 	public ModelAndView login(ModelAndView mav, HttpServletRequest request) {
 		String referer = request.getHeader("Referer");
 				
@@ -223,16 +222,15 @@ public class FubaoBoardController {
 	}
 	
 
-
-   // ==== #스마트에디터. 드래그앤드롭을 사용한 다중사진 파일업로드 ====
-   @RequestMapping(value="/image/multiplePhotoUpload.fu", method= {RequestMethod.POST} )
-	public void multiplePhotoUpload(HttpServletRequest request, HttpServletResponse response, BoardVO boardvo) {
-	   		// 절대경로
+	// ==== #스마트에디터. 드래그앤드롭을 사용한 다중사진 파일업로드 ====
+	   @RequestMapping(value="/image/multiplePhotoUpload.fu", method= {RequestMethod.POST} )
+		public void multiplePhotoUpload(HttpServletRequest request, HttpServletResponse response) {
+			// 절대경로
 			HttpSession session = request.getSession();
 			String root = session.getServletContext().getRealPath("/");
 			String path = root + "resources"+File.separator+"photo_upload";
 			
-			System.out.println("~~~~ 확인용 path => " + path);
+			//	System.out.println("~~~~ 확인용 path => " + path);
 			// ~~~~ 확인용  webapp 의 절대경로 => C:\NCS\workspace(spring)\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\Board\resources\photo_upload 
 			
 			File dir = new File(path);
@@ -240,47 +238,38 @@ public class FubaoBoardController {
 				dir.mkdirs();
 			}
 			
-		
-		try {
-			String filename = request.getHeader("file-name"); // 파일명(문자열)을 받는다 - 일반 원본파일명
-			
-			InputStream is = request.getInputStream(); // is는 네이버 스마트 에디터를 사용하여 사진첨부하기 된 이미지 파일임.
-			
-			String newFilename = fileManager.doFileUpload(is, filename, path);
-			System.out.println("newFilename : " + newFilename);
-			
-			/*
-		    int width = fileManager.getImageWidth(path + File.separator + newFilename);
-		    if(width > 600) {
-		       width = 600;
-		    }*/
-			
-			fileManager.resizeImage(path + File.separator + newFilename, 600); // 이미지 리사이즈
-
-	        int width = fileManager.getImageWidth(path + File.separator + newFilename);
-
-		    
-		    System.out.println(">>>> 확인용 width ==> " + width);
-	
-	
+			try {
+				String filename = request.getHeader("file-name"); // 파일명(문자열)을 받는다 - 일반 원본파일명
 				
-			String ctxPath = request.getContextPath(); //  /board
-			
-			String strURL = "";
-			strURL += "&bNewLine=true&sFileName="+newFilename; 
-			strURL += "&sWidth="+width;
-			strURL += "&sFileURL="+ctxPath+"/resources/photo_upload/"+newFilename;
-			
-			// === 웹브라우저 상에 사진 이미지를 쓰기 === //
-			PrintWriter out = response.getWriter();
-			out.print(strURL);
-			
-			} catch(Exception e) {
-				e.printStackTrace();
+				InputStream is = request.getInputStream(); // is는 네이버 스마트 에디터를 사용하여 사진첨부하기 된 이미지 파일임.
+				
+				String newFilename = fileManager.doFileUpload(is, filename, path);
+				
+				int width = fileManager.getImageWidth(path+File.separator+newFilename);
+				
+			    if(width > 600) {
+			       width = 600;
+			    }
+				System.out.println(">>>> 확인용 width ==> " + width);
+				 // >>>> 확인용 width ==> 600
+				 // >>>> 확인용 width ==> 121
+					
+				String ctxPath = request.getContextPath(); //  /board
+				
+				String strURL = "";
+				strURL += "&bNewLine=true&sFileName="+newFilename; 
+				strURL += "&sWidth="+width;
+				strURL += "&sFileURL="+ctxPath+"/resources/photo_upload/"+newFilename;
+				
+				// === 웹브라우저 상에 사진 이미지를 쓰기 === //
+				PrintWriter out = response.getWriter();
+				out.print(strURL);
+				
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+				
 			}
-			
-		}
-
 
 	//게시판 목록 별 불러오기
 	@RequestMapping(value="/board_list.fu")

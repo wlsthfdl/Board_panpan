@@ -14,6 +14,8 @@
 <script type="text/javascript">
 
 	$(document).ready(function(){
+		
+		
 		const id = "${sessionScope.login_user.id}";
 		const b_idx = "${requestScope.boardvo.b_idx}";
 		let like_flag = false;
@@ -115,6 +117,7 @@
 
 			const fileReader = new FileReader();
 
+			
 			fileReader.readAsDataURL(input_file.files[0]); // FileReader.readAsDataURL() --> 파일을 읽고, result속성에 파일을 나타내는 URL을 저장 시켜준다.
 
 			fileReader.onload = function() { // FileReader.onload --> 파일 읽기 완료 성공시에만 작동하도록 하는 것임. 
@@ -148,6 +151,7 @@
 		} else {
 			// 첨부파일이 있는 댓글쓰기인 경우 
 			add_comment_withAttach();
+			document.getElementById("previewImg").src = "<%= ctxPath %>/resources/image/empty.png";
 		}
 
 	};
@@ -210,9 +214,10 @@
 	  			 const page = Math.ceil(c_cnt/30);
 	  			 
 	             comment_pagination(page);
-
-	  			 $("#c_attach").val("");
-	  			 $("#c_content").val("");
+	             
+	  			 $("#c_content").val('');
+	  			 $("#c_attach").val('');
+	  			
 	  		 },
 	  		 error: function(request, status, error){
 				alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
@@ -234,7 +239,7 @@
 	                "currentShowPageNo": currentShowPageNo},
 	           dataType:"json",
 	           success:function(json){
-	              console.log("~~ comment_pagination 확인용 : " + JSON.stringify(json));
+	              //console.log("~~ comment_pagination 확인용 : " + JSON.stringify(json));
 	        
 	              let html = "";
 	              if(json.length > 0) {
@@ -338,6 +343,7 @@
 		 				pageBarHTML += "</ul>";
 
 		 				$("div#pageBar").html(pageBarHTML);
+
 		 				
 	 			  }// end of if(json.totalPage > 0)------------------
 	 			 
