@@ -47,12 +47,6 @@
       	<beans:property name="maxUploadSize" value="10485760" />
    </beans:bean> 
    
-   <beans:bean id="aes" class="com.spring.board_fubao.common.AES256">
-      <beans:constructor-arg>
-         <beans:value>abcd0070#gclass$</beans:value>    <!-- abcd0070#gclass$ 은 각자 com.spring.board.common.SecretMyKey 에 사용되던 암호화/복호화 키 이다. -->    
-      </beans:constructor-arg>
-   </beans:bean>
-	
    
  	<!-- <context:component-scan base-package="com.spring.gotgongbang" /> -->
 	<context:component-scan base-package="com.spring.*" name-generator="com.spring.board_fubao.common.FullBeanNameGenerator"/>

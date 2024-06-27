@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.spring.board_fubao.common.AES256;
 import com.spring.board_fubao.common.FileManager;
 import com.spring.board_fubao.model.BoardVO;
 import com.spring.board_fubao.model.CategoryVO;
@@ -28,7 +27,6 @@ import com.spring.board_fubao.model.CommentVO;
 import com.spring.board_fubao.model.InterBoardDAO;
 import com.spring.board_fubao.model.MemberVO;
 
-import oracle.security.o3logon.b;
 
 @Service
 public class BoardService implements InterBoardService{
@@ -36,12 +34,7 @@ public class BoardService implements InterBoardService{
 	@Autowired  
 	private InterBoardDAO dao;
 	
-	@Autowired
-    private AES256 aes;   
 	
-    @Autowired     
-    private FileManager fileManager;
-	  
     
     
 	// 암호화
