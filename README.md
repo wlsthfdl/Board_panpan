@@ -55,16 +55,21 @@ Email : jk120926@gmail.com
 
 * 회원가입
   
+<img src="https://github.com/wlsthfdl/Board_fubao/assets/98313929/593c1ff5-0e8c-4a90-b086-f98009159dd8" width="400" height="650"/>
 
 
 * 로그인
 
+<img src="https://github.com/wlsthfdl/Board_fubao/assets/98313929/df4c480f-4462-4e9e-8595-cdf3cfa5882d" width="600" height="350"/>
+
 
 * 게시글쓰기
 
+<img src="https://github.com/wlsthfdl/Board_fubao/assets/98313929/b3f6073a-8a5f-4470-a01a-913aa033f1d2" width="650" height="400"/>
 
 
-* 댓글쓰기/삭제
+* 댓글쓰기
+
 
 
 
