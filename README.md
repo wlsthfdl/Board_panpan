@@ -55,24 +55,24 @@ Email : jk120926@gmail.com
 
 * 메인 페이지
 
-<img src="https://github.com/wlsthfdl/Board_fubao/assets/98313929/44943b3c-da74-4106-b18a-4daaeb10c795" width="600" height="450"/>
+<img src="https://github.com/wlsthfdl/Board_fubao/assets/98313929/a1e81d5d-082e-4461-ba0a-44c2d69ac97e" width="660" height="780"/>
 
 ---
 
 * 회원가입 페이지
-  
-<img src="https://github.com/wlsthfdl/Board_fubao/assets/98313929/593c1ff5-0e8c-4a90-b086-f98009159dd8" width="400" height="650"/>
+
+<img src="https://github.com/wlsthfdl/Board_fubao/assets/98313929/47d3a5cc-9747-4485-9aa8-c3e5d64d2aba" width="440" height="430"/>
 
 ---
 * 로그인 페이지
 
-<img src="https://github.com/wlsthfdl/Board_fubao/assets/98313929/df4c480f-4462-4e9e-8595-cdf3cfa5882d" width="600" height="350"/>
+<img src="https://github.com/wlsthfdl/Board_fubao/assets/98313929/1e0640f6-9bad-4d4b-bac6-8df922d5a119" width="680" height="460"/>
 
 ---
 
 * 게시글 쓰기 페이지
 
-<img src="https://github.com/wlsthfdl/Board_fubao/assets/98313929/b3f6073a-8a5f-4470-a01a-913aa033f1d2" width="650" height="430"/>
+<img src="https://github.com/wlsthfdl/Board_fubao/assets/98313929/74bed0d1-19fc-4c8f-992a-d81d47157ae4" width="680" height="460"/>
 
 ---
 
@@ -82,9 +82,15 @@ Email : jk120926@gmail.com
 
 ---
 
-* 게시글 보기 / 댓글 작성하기 페이지
+* 게시글 보기
 
-<img src="https://github.com/wlsthfdl/Board_fubao/assets/98313929/e9a605b9-a4ee-45dd-bc0a-c92213dde9c4" width="550" height="580"/>
+
+---
+
+
+*댓글 작성하기 페이지
+
+<img src="https://github.com/wlsthfdl/Board_fubao/assets/98313929/9c765a89-e90e-4d69-8681-c3c63fb85fab" width="650" height="400"/>
 
 ---
 
