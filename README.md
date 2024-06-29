@@ -44,3 +44,13 @@ Email : jk120926@gmail.com
   <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
   <br>
 </div>
+
+
+
+## 화면 구성
+
+* 메인페이지
+* 회원가입
+* 로그인
+* 게시글쓰기/수정/삭제
+* 댓글쓰기/삭제
