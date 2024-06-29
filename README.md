@@ -55,7 +55,7 @@ Email : jk120926@gmail.com
 
 * 메인페이지
 
-<img src="https://github.com/wlsthfdl/Board_fubao/assets/98313929/a1e81d5d-082e-4461-ba0a-44c2d69ac97e" width="660" height="780"/>
+<img src="https://github.com/wlsthfdl/Board_fubao/assets/98313929/a1e81d5d-082e-4461-ba0a-44c2d69ac97e" width="760" height="890"/>
 
 ---
 
@@ -66,25 +66,25 @@ Email : jk120926@gmail.com
 ---
 * 로그인
   
-<img src="https://github.com/wlsthfdl/Board_fubao/assets/98313929/1e0640f6-9bad-4d4b-bac6-8df922d5a119" width="680" height="460"/>
+<img src="https://github.com/wlsthfdl/Board_fubao/assets/98313929/1e0640f6-9bad-4d4b-bac6-8df922d5a119" width="720" height="490"/>
 
 ---
 
 * 게시글 쓰기
 
-<img src="https://github.com/wlsthfdl/Board_fubao/assets/98313929/74bed0d1-19fc-4c8f-992a-d81d47157ae4" width="680" height="460"/>
+<img src="https://github.com/wlsthfdl/Board_fubao/assets/98313929/74bed0d1-19fc-4c8f-992a-d81d47157ae4" width="720" height="540"/>
 
 ---
 
 * 게시글 리스트
   
-<img src="https://github.com/wlsthfdl/Board_fubao/assets/98313929/e9064baa-4b0b-41ca-9b02-5fb9574dd9c4" width="680" height="530"/>
+<img src="https://github.com/wlsthfdl/Board_fubao/assets/98313929/e9064baa-4b0b-41ca-9b02-5fb9574dd9c4" width="710" height="545"/>
 
 ---
 
 * 게시글 보기
 
-<img src="https://github.com/wlsthfdl/Board_fubao/assets/98313929/880c9b7a-4468-4501-bf5a-4568bd54a3b5" width="650" height="360"/>
+<img src="https://github.com/wlsthfdl/Board_fubao/assets/98313929/880c9b7a-4468-4501-bf5a-4568bd54a3b5" width="710" height="385"/>
 
 
 ---
@@ -92,13 +92,13 @@ Email : jk120926@gmail.com
 
 * 댓글 작성하기 페이지
 
-<img src="https://github.com/wlsthfdl/Board_fubao/assets/98313929/9c765a89-e90e-4d69-8681-c3c63fb85fab" width="650" height="400"/>
+<img src="https://github.com/wlsthfdl/Board_fubao/assets/98313929/9c765a89-e90e-4d69-8681-c3c63fb85fab" width="710" height="420"/>
 
 ---
 
 * 좋아요 기능 
 
-![likeee](https://github.com/wlsthfdl/Board_fubao/assets/98313929/575cb5dd-d593-4ce7-9b58-2ec79b26900e)
+<img src="https://github.com/wlsthfdl/Board_fubao/assets/98313929/575cb5dd-d593-4ce7-9b58-2ec79b26900e" width="710" height="300"/>
 
 
 
