@@ -53,22 +53,36 @@ Email : jk120926@gmail.com
 
 <img src="https://github.com/wlsthfdl/Board_fubao/assets/98313929/44943b3c-da74-4106-b18a-4daaeb10c795" width="600" height="450"/>
 
+---
+
 * 회원가입
   
 <img src="https://github.com/wlsthfdl/Board_fubao/assets/98313929/593c1ff5-0e8c-4a90-b086-f98009159dd8" width="400" height="650"/>
 
-
+---
 * 로그인
 
 <img src="https://github.com/wlsthfdl/Board_fubao/assets/98313929/df4c480f-4462-4e9e-8595-cdf3cfa5882d" width="600" height="350"/>
 
+---
 
-* 게시글쓰기
+* 게시글 쓰기
 
-<img src="https://github.com/wlsthfdl/Board_fubao/assets/98313929/b3f6073a-8a5f-4470-a01a-913aa033f1d2" width="650" height="400"/>
+<img src="https://github.com/wlsthfdl/Board_fubao/assets/98313929/b3f6073a-8a5f-4470-a01a-913aa033f1d2" width="650" height="430"/>
+
+---
+
+* 글목록
+  
+<img src="https://github.com/wlsthfdl/Board_fubao/assets/98313929/e9064baa-4b0b-41ca-9b02-5fb9574dd9c4" width="650" height="480"/>
+
+---
+* 게시글 보기 / 댓글 작성하기
+
+<img src="https://github.com/wlsthfdl/Board_fubao/assets/98313929/e9a605b9-a4ee-45dd-bc0a-c92213dde9c4" width="550" height="580"/>
 
 
-* 댓글쓰기
+
 
 
 
