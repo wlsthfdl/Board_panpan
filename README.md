@@ -50,8 +50,11 @@ Email : jk120926@gmail.com
 ## 화면 구성
 
 * 메인페이지
-  
+
+<img src="https://github.com/wlsthfdl/Board_fubao/assets/98313929/44943b3c-da74-4106-b18a-4daaeb10c795" width="600" height="450"/>
+
 * 회원가입
+  
 
 
 * 로그인
