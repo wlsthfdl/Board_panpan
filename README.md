@@ -12,8 +12,7 @@ Email : jk120926@gmail.com
 ## 🕐 개발기간 
 진행기간 : 2024.04.05 ~ 2024.06.22
 
-## 기술 스택
-<div align=center><h1>📚 STACKS</h1></div>
+## 📚 Stacks
 
 <div align=center> 
    <img src="https://img.shields.io/badge/java 8-007396?style=for-the-badge&logo=java&logoColor=white"> 
