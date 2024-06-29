@@ -78,11 +78,13 @@ Email : jk120926@gmail.com
 
 * 게시글 리스트
   
-<img src="https://github.com/wlsthfdl/Board_fubao/assets/98313929/e9064baa-4b0b-41ca-9b02-5fb9574dd9c4" width="650" height="480"/>
+<img src="https://github.com/wlsthfdl/Board_fubao/assets/98313929/e9064baa-4b0b-41ca-9b02-5fb9574dd9c4" width="680" height="530"/>
 
 ---
 
 * 게시글 보기
+
+<img src="https://github.com/wlsthfdl/Board_fubao/assets/98313929/880c9b7a-4468-4501-bf5a-4568bd54a3b5" width="650" height="360"/>
 
 
 ---
