@@ -7,14 +7,20 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
-    <!-- ==== #15. myBatis(JDBC)설정 연결문자열 설정하기  ==== -->
+    <!-- ==== #15. myBatis(JDBC)설정 연결문자열 설정하기  ==== 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
-	<!--	<property name="url" value="jdbc:oracle:thin:@211.238.142.189:1521:xe" /> -->
    		<property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:xe" /> 
 		<property name="username" value="JS" />
-
 		<property name="password" value="1234" />
+	</bean>
+	 -->
+	<!-- ==== #15. myBatis(JDBC)설정 연결문자열 설정하기 (mySql) ==== -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
+   		<property name="url" value="jdbc:mysql://database-1.c7oguuwiwiyg.ap-northeast-2.rds.amazonaws.com:3306/board_db?serverTimezone=Asia/Seoul" /> 
+		<property name="username" value="admin" />
+		<property name="password" value="java1234" />
 	</bean>
 	
 	<!-- ==== #15. myBatis(JDBC)설정 mapper 파일 위치 지정하기  ==== -->
