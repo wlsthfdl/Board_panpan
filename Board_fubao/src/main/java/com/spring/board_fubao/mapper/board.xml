@@ -7,19 +7,19 @@
 
 	<!-- 회원가입 insert -->
 	<insert id="insertMember" parameterType="com.spring.board_fubao.model.MemberVO">
-		insert into TBL_MEMBER (id, nickname, name, pwd, birthday, registerday, mobile,
+		insert into tbl_member (id, nickname, name, pwd, birthday, registerday, mobile,
 				status, role)
 		values (#{id}, #{nickname}, #{name}, #{pwd}, #{birthday}, default, #{mobile}, default, default)
 	</insert>
 		
 	<!-- 아이디 중복 검사 -->
 	<select id="id_check" parameterType="String" resultType="int">
-	 	select count(*) from TBL_MEMBER where id=#{id}
+	 	select count(*) from tbl_member where id=#{id}
 	</select>
 	
 	<!-- 닉네임 중복 검사 -->
 	<select id="nickname_check" parameterType="String" resultType="int">
-	 	select count(*) from TBL_MEMBER where nickname=#{nickname}
+	 	select count(*) from tbl_member where nickname=#{nickname}
 	</select>
 
 	<!-- 로그인처리 -->
@@ -40,7 +40,7 @@
 	<!-- 카테고리별 게시글 목록 가져오기 -->
 	<select id="get_category" resultType="com.spring.board_fubao.model.CategoryVO" parameterType="int">
 		select *
-		from TBL_CATEGORY
+		from tbl_category
 		where category_idx = #{category_idx}
 	</select>
 	
@@ -75,12 +75,12 @@
 	<select id="get_all_category" resultType="com.spring.board_fubao.model.CategoryVO" parameterType="int">
 		<if test='role == 1'>
 			select *
-			from TBL_CATEGORY
+			from tbl_category
 			where category_idx not in(2,3,4,10)
 		</if>
 		<if test='role == 0'>
 			select *
-			from TBL_CATEGORY
+			from tbl_category
 			where category_idx in(2,3,4)
 		</if>
 	</select>
@@ -202,20 +202,20 @@
 	
 	<!-- 게시글 좋아요 기능 -->
 	<insert id="boardLike" parameterType="HashMap">
-		insert into TBL_LIKE (id_fk , b_idx_fk) 
+		insert into tbl_like (id_fk , b_idx_fk) 
 		values (#{id_fk}, #{b_idx_fk})
 	</insert>
 	
 	<!-- 좋아요 체크 -->
 	<select id="checkLikeList" parameterType="HashMap" resultType="int">
 		select count(*)
-		from TBL_LIKE
+		from tbl_like
 		where id_fk = #{id_fk} and b_idx_fk = #{b_idx_fk}
 	</select>
 	
 	<!-- 게시글 좋아요 취소 기능 -->
 	<delete id="boardLikeDelete" parameterType="HashMap">
-		delete from TBL_LIKE
+		delete from tbl_like
 		where id_fk = #{id_fk} and b_idx_fk = #{b_idx_fk}
 	</delete>
 	
@@ -257,7 +257,7 @@
 		from ( select row_number() over(order by b_hit desc) AS rno,
         		b_idx, id_fk, nickname, b_title, b_hit, c_cnt, category_idx_fk
         		from tbl_board
-        		where b_status = 1)
+        		where b_status = 1) V
 		where rno between 1 and 14
 	</select>
 	
