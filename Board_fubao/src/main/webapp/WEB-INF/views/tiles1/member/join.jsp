@@ -12,6 +12,7 @@
 
 <script type="text/javascript">
 
+	//submit 전 필수입력 사항을 전부 입력했는지 알아오기 위함
 	let flag_input_id = false;
 	let flag_input_pwd = false;
 	let flag_input_pwd_check = false;
@@ -20,6 +21,7 @@
 	let flag_input_mobile = false;
 	let flag_input_birthday = false;
 	
+	//submit 전 중복체크 여부를 알아오기 위함
 	let flag_id_check = false;
 	let flag_nickname_check = false;
 	
@@ -47,7 +49,7 @@
                 $("input#id").parent().find("span.error_2").show();
 	    		flag_input_id = false;
 			}
-	    	else if(!bool) {
+	    	else if(!bool) {		//정규표현식에 부합하지 않을 때
 				$("input#id").parent().find("span.duplicate").hide();
                 $("input#id").parent().find("span.error_2").hide();
                 $("input#id").parent().find("span.error_3").show();
@@ -89,7 +91,7 @@
 		                 $("input#id").parent().find("span.available").hide();
 	                     $("input#id").parent().find("span.error").show();
 	                     $("input#id").val("");
-	                  }else if(!json.n && $("#id").val().trim() != ""){   //사용가능, ""이 아닐 경우
+	                  }else if(!json.n && $("#id").val().trim() != ""){   //사용가능하며 공백이 아닐 경우
 	                	  flag_id_check = true;
 	                	  $("input#id").parent().find("span.error").hide();
 	                	  $("input#id").parent().find("span.available").show();
@@ -114,7 +116,7 @@
 
 	    		flag_input_pwd = false;
 			}
-	    	else if(!bool) {
+	    	else if(!bool) {		//정규표현식에 부합하지 않을 때
                 $("input#pwd").parent().find("span.error_2").hide();
                 $("input#pwd").parent().find("span.error").show();
                 $("input#pwd").val("");
@@ -203,7 +205,7 @@
 	               type:"post",
 	               success:function(text){
 	                  const json = JSON.parse(text);
-	                  console.log("확인용 json: " + json);
+	                  //console.log("확인용 json: " + json);
 	                
 	                  if(json.n){   //사용 불가 
 		                 $("input#nickname").parent().find("span.available").hide();
@@ -233,7 +235,7 @@
 
 	    		flag_input_mobile = false;
 			}
-	    	else if(!bool) {                
+	    	else if(!bool) { 	//정규표현식에 부합하지 않을 때
 	    		$("input#mobile").parent().find("span.error_2").hide();
                 $("input#mobile").parent().find("span.error").show();
                 $("input#mobile").val("");
@@ -257,7 +259,7 @@
 
 	    		flag_input_birthday = false;
 			}
-	    	else if(!bool) {
+	    	else if(!bool) {		//정규표현식에 부합하지 않을 때		
                 $("input#birthday").parent().find("span.error_2").hide();
                 $("input#birthday").parent().find("span.error").show();
                 $("input#birthday").val("");
@@ -329,6 +331,8 @@
 	});	//end of $(document).ready(function(){})--------------------
 
 	
+	
+	//회원가입 submit
 	function go_register() {
 		
 		if(flag_input_id == false){
