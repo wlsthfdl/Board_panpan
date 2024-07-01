@@ -196,7 +196,7 @@
 		  from tbl_board
 		  where b_status = 1
 		) V 
-		where rno between #{startRno} and #{endRno}
+		where rno between #{startRno} and 20
 	</select>
 	
 	

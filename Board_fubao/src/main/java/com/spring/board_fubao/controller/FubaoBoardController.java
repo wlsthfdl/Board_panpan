@@ -295,7 +295,7 @@ public class FubaoBoardController {
 			int startRno = 0;		//시작 행번호	 ex)11
 			int endRno = 0;			//끝 행번호		 ex)20
 			int totalPage = 0;		//총 페이지 수
-			int sizePerPage = 20;	//페이지 당 보여줄 게시물 건수
+			int sizePerPage = 18;	//페이지 당 보여줄 게시물 건수
 			
 			if(category_idx != 10) {
 				totalCnt = service.getTotalCnt(category_idx);
@@ -375,9 +375,13 @@ public class FubaoBoardController {
                pageBar += "<li><a class='arrow next' href='"+url+"?category_idx="+category_idx+"&currentShowPageNo="+pageNo+"'></a></li>";
             }
             pageBar += "</ul>";
-			mav.addObject("pageBar", pageBar);
-			/* list pagination (카테고리 별) 끝 */
-			
+            
+            if(category_idx != 10) {
+            	mav.addObject("pageBar", pageBar);
+            }
+
+        	/* list pagination (카테고리 별) 끝 */
+            
             String goBackURL = MyUtil.getCurrentURL(request); 
             mav.addObject("goBackURL",goBackURL.replaceAll("&", " "));			
 			
@@ -409,9 +413,9 @@ public class FubaoBoardController {
 	   
 	   if(goBackURL != null && goBackURL.contains(" ")) {
 		   goBackURL = goBackURL.replaceAll(" ", "&");
-		   mav.addObject("goBackURL",goBackURL);
 
 	   }
+	   mav.addObject("goBackURL",goBackURL);
 	   
 	   
 	   try {
