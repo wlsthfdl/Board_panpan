@@ -15,7 +15,7 @@
 </script>
 
 
-<div id="content_area" style="height: 850px;">
+<div id="content_area" style="height: 710px; background-color: #f7ffee;">
     <div class="join_complete">
         <h2>BAO Gallery</h2>
         <div>

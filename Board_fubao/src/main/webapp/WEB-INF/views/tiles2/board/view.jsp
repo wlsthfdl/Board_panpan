@@ -246,7 +246,7 @@
 	                $.each(json, function(index, item){
 	                   html += "<div class='comment_area'>" +
 	                   		"<div style='margin-left: 4px;'>" + 
-	                       "<div class='comment_nick'><img src='<%= ctxPath%>/resources/image/comment_nick (5).png'	width=20/> "+ item.nickname;
+	                       "<div class='comment_nick'><img src='<%= ctxPath%>/resources/image/comment_nick (5).png'	width=20/>&nbsp;"+ item.nickname;
 	                       
 	                       if("${sessionScope.login_user.nickname}" == item.nickname){
 	                       		html += "<div class='c_del' onclick='c_del("+item.c_idx+")'>삭제</div>" +"</div>";
@@ -391,7 +391,7 @@
 </script>
         <!-- main area -->
         <div id="main_area">
-           <div class="board_viewbox" style="height: auto; padding-bottom: 29px;">
+           <div class="board_viewbox" style="height: auto; padding-bottom: 300px;">
               <form name="del_frm" enctype="multipart/form-data">
               <input type="hidden" name="b_idx" value="${requestScope.boardvo.b_idx}" />
               <input type="hidden" name="category_idx" value="${requestScope.boardvo.category_idx_fk}" />
@@ -405,7 +405,7 @@
     							onclick="javascript:location.href='<%= ctxPath %>/board_view_2.fu?b_idx=${requestScope.boardvo.previousseq}&category_idx_fk=${catevo.category_idx}&goBackURL=${v_goBackURL}'" >이전글</button>	    	
 				    	<button type="button" class="base_bnt_2" ${empty requestScope.boardvo.nextseq ? 'hidden' : ''} 
 				    			onclick="javascript:location.href='<%= ctxPath %>/board_view_2.fu?b_idx=${requestScope.boardvo.nextseq}&category_idx_fk=${catevo.category_idx}&goBackURL=${v_goBackURL}'">다음글</button>
-						<button type="button" class="base_bnt" onclick= "javascript:location.href='<%= ctxPath %>${requestScope.goBackURL}'">목록</button>
+						<button type="button" class="base_bnt" onclick= "javascript:location.href='<%= request.getContextPath()%>${requestScope.goBackURL}'">목록</button>
                     </div>
                     
                     
