@@ -32,9 +32,9 @@
 	<!-- 게시글쓰기 -->
 	<insert id="write_end" parameterType="com.spring.board_fubao.model.BoardVO">
 		insert into tbl_board (b_idx, id_fk, nickname, category_idx_fk, b_title,
-		b_content, b_date, b_like, b_hit, b_status, c_cnt)
-		values (b_idx.nextval, #{id_fk}, #{nickname}, #{category_idx_fk}, #{b_title},
-		#{b_content}, default, 0, default, default, default)
+								b_content, b_date, b_like, b_hit, b_status, c_cnt)
+				values (null, #{id_fk}, #{nickname}, #{category_idx_fk}, #{b_title},
+						#{b_content}, default, default, default, default, default)
 	</insert>
 
 	<!-- 카테고리별 게시글 목록 가져오기 -->
@@ -55,7 +55,7 @@
 		select lag(b_idx,1) over(order by b_idx desc) AS previousseq
 		     , lag(b_title,1) over(order by b_idx desc) AS previoussubject
 		     , b_idx, id_fk, nickname, b_title, b_content, b_hit
-		     , to_char(b_date, 'yyyy-mm-dd hh24:mi:ss') as b_date 
+		     , date_format(b_date, '%Y-%m-%d %H:%i:%s') as b_date
 		     , b_like , c_cnt , category_idx_fk
 		     , lead(b_idx,1) over(order by b_idx desc) AS nextseq
 		     , lead(b_title,1) over(order by b_idx desc) AS nextsubject 
@@ -102,14 +102,14 @@
 	<!-- 댓글쓰기 -->
 	<insert id="add_comment" parameterType="com.spring.board_fubao.model.CommentVO">
 		insert into tbl_comment(c_idx, id_fk, b_idx_fk, nickname, c_content, c_date, c_status)  	   
-	    values(c_idx.nextval, #{id_fk}, #{b_idx_fk}, #{nickname}, #{c_content}, default, default)
+	    values(null, #{id_fk}, #{b_idx_fk}, #{nickname}, #{c_content}, default, default)
 	</insert>
 	
 	<!-- 댓글쓰기 첨부파일 -->
 	<insert id="add_commentWithFile" parameterType="com.spring.board_fubao.model.CommentVO">
 		insert into tbl_comment(c_idx, id_fk, b_idx_fk, nickname, c_content, c_date, c_status,
 					file_name, org_file_name, file_size)  	   
-	    values(c_idx.nextval, #{id_fk}, #{b_idx_fk}, #{nickname}, #{c_content}, default, default,
+	    values(null, #{id_fk}, #{b_idx_fk}, #{nickname}, #{c_content}, default, default,
 	    			#{file_name}, #{org_file_name}, #{file_size})
 	</insert>
 	
@@ -128,7 +128,7 @@
 		order by c_idx asc
 	</select>
 	
-	<!-- 페이징처리한 댓글 조회 -->
+	<!-- 페이징처리한 댓글 조회 
 	<select id="get_commentListPaging" parameterType="HashMap" resultType="com.spring.board_fubao.model.CommentVO">
 		select c_idx, nickname, c_content, c_date, file_name, org_file_name, file_size
 		from 
@@ -140,8 +140,23 @@
 		 where c_status = 1 and b_idx_fk = #{b_idx_fk}
 		) V 
 		where rno between #{startRno} and #{endRno}
+	</select>-->
+	<select id="get_commentListPaging" parameterType="HashMap" resultType="com.spring.board_fubao.model.CommentVO">
+    select c_idx, nickname, c_content, c_date, file_name, org_file_name, file_size
+    from 
+    (
+        select @rownum := @rownum + 1 AS rno, c_idx,
+               nickname, c_content, date_format(c_date, '%Y-%m-%d %H:%i:%s') AS c_date,
+               file_name, org_file_name, file_size
+        from tbl_comment, (SELECT @rownum := 0) r
+        where c_status = 1 and b_idx_fk = #{b_idx_fk}
+        order by c_idx
+    ) V 
+    where rno between #{startRno} and #{endRno}
 	</select>
-	
+
+
+
 	<!--원글 글번호에 해당하는 댓글의 totalPage 알아오기-->
 	<select id="getCommentTotalPage" parameterType="HashMap" resultType="int">
 		select ceil(count(*)/#{sizePerPage})
@@ -163,7 +178,7 @@
 		where category_idx_fk = #{category_idx}
 	</select>
 	
-	<!-- 페이징처리된 글목록 가져오기 -->
+	<!-- 페이징처리된 글목록 가져오기 
 	<select id="boardListPagination" parameterType="HashMap" resultType="com.spring.board_fubao.model.BoardVO">
 		select b_idx, id_fk, nickname, category_idx_fk, b_title, b_date, b_hit, c_cnt
 		from 
@@ -179,9 +194,29 @@
 		  where b_status = 1 and category_idx_fk = #{category_idx}
 		) V 
 		where rno between #{startRno} and #{endRno}
+	</select>-->
+	
+	<!-- 페이징처리된 글목록 가져오기 -->
+	<select id="boardListPagination" parameterType="HashMap" resultType="com.spring.board_fubao.model.BoardVO">
+    select b_idx, id_fk, nickname, category_idx_fk, b_title, b_date, b_hit, c_cnt
+    from
+    (
+        select @rownum := @rownum + 1 AS rno,
+               b_idx, id_fk, nickname, category_idx_fk, b_title,
+               CASE
+                   WHEN date_format(b_date, '%Y-%m-%d') = date_format(#{sysdate}, '%Y-%m-%d') THEN date_format(b_date, '%H:%i')
+                   ELSE date_format(b_date, '%Y-%m-%d')
+               END AS b_date,
+               b_hit, c_cnt
+        from tbl_board, (SELECT @rownum := 0) r
+        where b_status = 1 and category_idx_fk = #{category_idx}
+        order by b_idx desc
+    ) V
+    where rno between #{startRno} and #{endRno}
 	</select>
 	
-	<!-- 페이징처리된 글목록 가져오기(인기글) -->
+	
+	<!-- 페이징처리된 글목록 가져오기(인기글) 
 	<select id="boardListHitsPagination" parameterType="HashMap" resultType="com.spring.board_fubao.model.BoardVO">
 		select b_idx, id_fk, nickname, category_idx_fk, b_title, b_date, b_hit, c_cnt
 		from 
@@ -197,8 +232,24 @@
 		  where b_status = 1
 		) V 
 		where rno between #{startRno} and 20
+	</select> -->
+	<select id="boardListHitsPagination" parameterType="HashMap" resultType="com.spring.board_fubao.model.BoardVO">
+    select b_idx, id_fk, nickname, category_idx_fk, b_title, b_date, b_hit, c_cnt
+    from 
+    (
+        select @rownum := @rownum + 1 AS rno,
+               b_idx, id_fk, nickname, category_idx_fk, b_title,
+               CASE
+                   WHEN date_format(b_date, '%Y-%m-%d') = date_format(#{sysdate}, '%Y-%m-%d') THEN date_format(b_date, '%H:%i')
+                   ELSE date_format(b_date, '%Y-%m-%d')
+               END AS b_date,
+               b_hit, c_cnt
+        from tbl_board, (SELECT @rownum := 0) r
+        where b_status = 1
+        order by b_hit desc
+    ) V 
+    where rno between #{startRno} and 20
 	</select>
-	
 	
 	<!-- 게시글 좋아요 기능 -->
 	<insert id="boardLike" parameterType="HashMap">
@@ -251,7 +302,7 @@
 		where b_idx = #{b_idx_fk}	
 	</update>
 	
-	
+	<!-- 메인 인기글 불러오기 
 	<select id="boardListHitsMain" resultType="com.spring.board_fubao.model.BoardVO">
 		select b_idx, id_fk, nickname, b_title, b_hit, c_cnt, category_idx_fk
 		from ( select row_number() over(order by b_hit desc) AS rno,
@@ -259,6 +310,19 @@
         		from tbl_board
         		where b_status = 1) V
 		where rno between 1 and 14
+	</select>
+	-->
+	<!-- 메인 인기글 불러오기 -->
+	<select id="boardListHitsMain" resultType="com.spring.board_fubao.model.BoardVO">
+    select b_idx, id_fk, nickname, b_title, b_hit, c_cnt, category_idx_fk
+    from (
+        select @rownum := @rownum + 1 AS rno,
+               b_idx, id_fk, nickname, b_title, b_hit, c_cnt, category_idx_fk
+        from tbl_board, (SELECT @rownum := 0) r
+        where b_status = 1
+        order by b_hit desc
+    ) V
+    where rno between 1 and 14
 	</select>
 	
 </mapper>
