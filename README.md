@@ -41,9 +41,11 @@ Email : jk120926@gmail.com
 <img src="https://img.shields.io/badge/apache tomcat-F8DC75?style=for-the-badge&logo=apachetomcat&logoColor=white">
 ![Apache Maven](https://img.shields.io/badge/Apache%20Maven-C71A36?style=for-the-badge&logo=Apache%20Maven&logoColor=white)
   <br>
-  
+
   <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
   <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
+  <img src="https://img.shields.io/badge/aws-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white"/>
+
   <br>
 </div>
 
@@ -127,4 +129,13 @@ Email : jk120926@gmail.com
 
 
 
+## :information_desk_person: AWS
+
+
+![스크린샷 2024-07-05 204742](https://github.com/wlsthfdl/Board_fubao/assets/98313929/99a3d39f-d9af-4b61-93e6-fab41f546b4f)
+
+
+
+
+![스크린샷 2024-07-05 211315](https://github.com/wlsthfdl/Board_fubao/assets/98313929/56582cd9-acda-4719-ba6f-6b20c915d7f4)
 
