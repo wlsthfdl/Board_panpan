@@ -191,7 +191,7 @@ public class FubaoBoardController {
 		if(login_user != null) {
 			int role = login_user.getRole();
 	
-			System.out.println(role);
+			//System.out.println(role);
 		   //카테고리 조회해오기
 		   List<CategoryVO> cate_list_all = service.get_all_category(role);
 		   
@@ -250,7 +250,7 @@ public class FubaoBoardController {
 			    if(width > 600) {
 			       width = 600;
 			    }
-				System.out.println(">>>> 확인용 width ==> " + width);
+				//System.out.println(">>>> 확인용 width ==> " + width);
 				 // >>>> 확인용 width ==> 600
 				 // >>>> 확인용 width ==> 121
 					
@@ -544,7 +544,7 @@ public class FubaoBoardController {
    public ModelAndView board_delete(ModelAndView mav, HttpServletRequest request) {
 	   
 	   String b_idx = request.getParameter("b_idx");
-	   System.out.println(b_idx);
+	   //System.out.println(b_idx);
 	   int n = service.del(b_idx);
 	   
 	   String category_idx = request.getParameter("category_idx");
