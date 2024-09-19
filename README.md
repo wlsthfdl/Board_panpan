@@ -1,4 +1,4 @@
-# 🐼 Bao Family Gallery
+# Bao Family Gallery
 ![main](https://github.com/wlsthfdl/Board_fubao/assets/98313929/801ee99c-8d4f-4685-88fe-16b10d71495c)
 
 ## 😐 개발자 소개(개인 프로젝트)
@@ -10,8 +10,10 @@ Age: 만 25세
 
 Email : jk120926@gmail.com
 
+## 개발 목적
+학습용
 
-## 🕐 개발기간 
+## 🕐 개발 기간 
 진행기간 : 2024.04.05 ~ 2024.06.22
 
 ## 📚 Stacks
